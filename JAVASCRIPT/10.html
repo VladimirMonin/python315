@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lesson 10. 15.11.2023</title>
+    <!-- Подключение Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous" />
+
+    <style></style>
+</head>
+
+<body>
+    <nav>
+        <ul>
+            <li>Знакомство с регулярными выражениями</li>
+            <li>Добавление регулярного выражения в <code>pattern</code> атрибут</li>
+            <li>Работа с <code>test()</code> методом</li>
+            <li>Работа с <code>replace()</code> методом</li>
+            <li>Работа с <code>cookie</code></li>
+            <li>Работа с <code>localStorage</code></li>
+            <li>Работа с <code>sessionStorage</code></li>
+
+        </ul>
+    </nav>
+
+
+
+    <!-- type password - ввод пароля required - обязательное поле pattern - регулярное выражение title - подсказка -->
+    <form action="">
+        <label for="userPas">Сложный пароль:</label>
+        <input type="password" placeholder="Введите пароль" pattern="^(?=.*[A-Z].*[A-Z])[A-Za-z]{8,}$"
+            title="Пароль должен содержать A-Z a-z не менее 8 символов" name="userPas" required>
+        <input type="submit" value="Отправить">
+    </form>
+
+    <p id="result"></p>
+    <button id="sessionTest" onclick="printOnPage()">Напечатай это</button>
+
+
+
+    <script>
+        // Работа с регулярными выражениями в JS 
+        // Список функций и методов для работы с регулярными выражениями в JS
+        // RegExp - конструктор для создания регулярного выражения
+
+        // match() - проверяет строку на совпадение с регулярным выражением. Возвращает массив с совпадениями
+        // search() - проверяет строку на совпадение с регулярным выражением. Возвращает индекс первого совпадения
+        // replace() - заменяет совпадения с регулярным выражением на строку
+        // split() - разбивает строку на массив по разделителю, указанному в регулярном выражении
+        // test() - проверяет строку на совпадение с регулярным выражением. Возвращает true или false
+        // exec() - проверяет строку на совпадение с регулярным выражением. Возвращает массив с совпадениями
+
+        // test() - Мы можем протестировать строку на совпадение с регулярным выражением, используя метод test()
+
+        let str = 'Я люблю JavaScript';
+
+        let reg = /JavaScript/;
+
+        console.log(reg.test(str)); // true
+
+        // Пробуем регулярку из формы "^(?=.*[A-Z].*[A-Z])[A-Za-z]{8,}$"
+
+        let str2 = "JavaScript";
+
+        let reg2 = /^(?=.*[A-Z].*[A-Z])[A-Za-z]{8,}$/;
+
+        console.log(reg2.test(str2)); // true
+
+        // Делаем реплейс на Python
+
+        let str3 = "Я люблю JavaScript";
+
+        let reg3 = /JavaScript/;
+
+        console.log(str3.replace(reg3, "Python")); // Я люблю Python
+
+        // Куки. Локальное храналище. Сессионное хранилище.
+
+        // Работа с cookie в JS. Добавление, удаление, получение, изменение данных в виде строки (без JSON сериализации / десириализации)
+
+        // Добавление сoockie ключ:значение. 
+        // Добавляем ключ test со значением 123
+
+        // document.cookie = "test=123";
+
+        // Получение сoockie ключ:значение.
+        // Получаем значение ключа test
+
+        // Получаем все куки в виде строки
+        // console.log(document.cookie); // test=123
+
+        // SameSite=None - куки будут отправляться на сервер при переходе по ссылке на другой сайт
+
+        let getTest = document.cookie.split("test=")[1];
+
+        // Получаем значение ключа test
+        console.log(getTest); // 123
+
+        // Удаление сoockie ключ:значение.
+        // Удаляем ключ test со значением 123
+
+        // test= - удаляем ключ test со значением 123
+        // expires=Thu, 01 Jan 1970 00:00:00 GMT - устанавливаем дату истечения срока действия куки
+        document.cookie = "test=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+
+        // Получаем все куки в виде строки
+        console.log(document.cookie); // Все куки которые есть на это доменное имя
+
+        // Запись в LocalStorage
+
+        // Добавляем ключ test со значением 123
+        localStorage.setItem("test", "123");
+
+        // Получение из LocalStorage
+        localStorageTest = localStorage.getItem("test");
+
+        console.log(`LocalStorage: ${localStorageTest}`); // LocalStorage: 123
+
+        // Удаление из LocalStorage
+        localStorage.removeItem("test");
+
+        // Запись в SessionStorage
+        // sessionStorage.setItem("sessionTest", "sessionTest");
+
+        // Получение из SessionStorage
+        sessionStorageTest = sessionStorage.getItem("sessionTest");
+
+        console.log(`SessionStorage: ${sessionStorageTest}`); // SessionStorage: sessionTest
+
+        // Удаление из SessionStorage
+        sessionStorage.removeItem("sessionTest");
+
+        // Функция записи в LocalStorage принимает ключ возвращает значение
+        function setLocalStorage(key, value) {
+            localStorage.setItem(key, value);
+        }
+
+        // Функция чтения из LocalStorage принимает ключ возвращает значение
+        function getLocalStorage(key) {
+            return localStorage.getItem(key);
+        }
+
+        // Функция которая выводит в консоль и в p result данные из промпта
+        function printOnPage() {
+            // Получаем данные из промпта
+            let data = prompt("Введите данные");
+
+            // Выводим данные в консоль
+            console.log(data);
+
+            // Выводим данные в p#result
+            document.querySelector("#result").textContent = data;
+
+            // Записываем данные в LocalStorage
+            setLocalStorage("data", data);
+        }
+
+        // Listener по загрузке документа проверяет - есть ли данные в LocalStorage по ключу data
+        // Если есть, выводит это значение в p#result
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // Получаем данные из LocalStorage по ключу data
+            let data = getLocalStorage("data");
+
+            // Проверяем есть ли данные в LocalStorage по ключу data
+            if (data) {
+                // Если есть, выводим это значение в p#result
+                document.querySelector("#result").textContent = data;
+            }
+        });
+
+
+
+        // Практика :)
+        // Попробуйте записать данные в LocalStorage (сделайте и код вывода в консоль)
+        // Запустите страницу в LiveServer
+        // Закомментируйте код записи в LocalStorage
+        // Перезагрузите страницу
+        // Проверьте есть ли данные в LocalStorage
+
+        // Сохранение данных в LocalStorage
+
+        // let practiceData = "Practice data";
+
+        // localStorage.setItem("practiceData", practiceData);
+
+        // Получение данных из LocalStorage
+
+        let practiceDataGet = localStorage.getItem("practiceData");
+
+        console.log(practiceDataGet);
+
+
+
+    </script>
+</body>
+
+</html>

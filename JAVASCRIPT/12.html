@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let weatherJson = { "coord": { "lon": 30.2642, "lat": 59.8944 }, "weather": [{ "id": 804, "main": "Clouds", "description": "пасмурно", "icon": "04d" }], "base": "stations", "main": { "temp": -5, "feels_like": -5, "temp_min": -5.51, "temp_max": -4.55, "pressure": 1018, "humidity": 93 }, "visibility": 9000, "wind": { "speed": 1, "deg": 0 }, "clouds": { "all": 100 }, "dt": 1700483452, "sys": { "type": 1, "id": 8926, "country": "RU", "sunrise": 1700460441, "sunset": 1700486511 }, "timezone": 10800, "id": 498817, "name": "Санкт-Петербург", "cod": 200 }
+        let weatherJsonString = '{ "coord": { "lon": 30.2642, "lat": 59.8944 }, "weather": [{ "id": 804, "main": "Clouds", "description": "пасмурно", "icon": "04d" }], "base": "stations", "main": { "temp": -5, "feels_like": -5, "temp_min": -5.51, "temp_max": -4.55, "pressure": 1018, "humidity": 93 }, "visibility": 9000, "wind": { "speed": 1, "deg": 0 }, "clouds": { "all": 100 }, "dt": 1700483452, "sys": { "type": 1, "id": 8926, "country": "RU", "sunrise": 1700460441, "sunset": 1700486511 }, "timezone": 10800, "id": 498817, "name": "Санкт-Петербург", "cod": 200 }'
+        
+        // Преобразование строки в объект
+        // let weatherObj = JSON.parse(weatherJsonString);
+
+        // Преобразование объекта в строку
+        // let weatherString = JSON.stringify(weatherObj);
+
+        // console.log(weatherObj);
+        // console.log(weatherString);
+
+        // Практика с JSON
+        // 1. Сделайте промпт, в котором пользователь введет названия фруктов
+        // 2. Разбейте их по пробелам в массив
+        // 3. Массив сделайте JSON строкой
+        // 4. Выведите на экран результат в консоль
+
+        // 1 и 2
+        // let fruits = prompt('Введите названия фруктов через пробел').split(' ');
+
+        // // 3
+        // let fruitsJson = JSON.stringify(fruits);
+
+        // // 4
+        // console.log(fruitsJson);
+        // Практика. 
+        
+        let apiKey = '23496c2a58b99648af590ee8a29c5348'
+        let city = prompt('Введите город')
+        let units = 'metric'
+        let lang = 'ru'
+        let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${units}&lang=${lang}`
+
+        // Делаем fetch запрос на сервер
+        // результат выводим в консоль
+
+        // fetch - это функция которая делает асинхронный запрос на сервер
+        // fetch(url)
+        //     // Формируется promise (ожидание)
+        //     .then(data => data.json()) // Преобразование данных в json
+        //     .then(data => console.log(data)) // Вывод данных в консоль
+        //     //  catch - отлавливает ошибки
+        //     .catch(err => console.log(err)) // Вывод ошибки в консоль
+
+        // Упакуем это в функцию ES6 2015 года fetch.then.catch
+
+        function fetchRequest(url) {
+            fetch(url)
+                .then(data => data.json())
+                .then(data => console.log(data))
+                .catch(err => console.log(err))
+        }
+
+        // fetchRequest(url)
+
+        // Упакуем это в функцию ES7 2017 года async await
+        // async - указание на то что функция асинхронная
+        async function fetchRequestAsync(url) {
+            // await - указание на то что нужно дождаться результата выполнения функции fetch
+            // Получаем данные с сервера
+            let data = await fetch(url)
+            // await - указание на то что нужно дождаться результата выполнения функции data.json()
+            // Получаем только тело ответа
+            // data.json() - преобразование данных в json формат, тип данных - object
+            data = await data.json()
+            console.log(data)
+            console.log(typeof data)
+        }
+
+        // Тестируем последнюю функцию
+        fetchRequestAsync(url)
+    </script>
+</body>
+
+</html>

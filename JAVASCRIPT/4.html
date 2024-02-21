@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Python 315. Циклы в JS. Итерация по массивам и объектам">
+    <title>Lesson 4. Циклы в JS.</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        body {
+            /* font-family: sans-serif; */
+            width: 95%;
+            margin: 0 auto;
+            background-color: #f4f7f2;
+        }
+
+        pre code {
+            font-size: 1.2em;
+            /* background-color: #dfecd7; */
+        }
+
+        /* Делаем h2 крупнее */
+        h2 {
+            font-size: 1.5em;
+        }
+
+        /* Убираем промежутки между элементами списка */
+        ul {
+            padding-inline-start: 0;
+            /* Убираем отступы сверху и снизу между элементами списка */
+            margin-block-start: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <ul>
+            <li>Повторение цикла <code>for</code></li>
+            <li>Инициализация - Условие - Итерация в цикле <code>for</code></li>
+            <li>Операторы управления циклом: <code>break</code> и <code>continue</code></li>
+            <li>Практика - картавая задачка. Проверяем массив в цикле на наличие буквы р</li>
+            <li>Синтаксис цикла <code>while</code></li>
+            <li>Объект <code>math</code> и <code>time</code>?</li>
+            <li>Разбор сложных моментов генератора пословиц</li>
+            <li>Практика с выводом в HTML список массива из промпта</li>
+            <li>Событие по нажатию кнопки onclick</li>
+        </ul>
+    </header>
+    <article>
+        <h1>Циклы и условия в JavaScript</h1>
+
+        <p>В JavaScript, цикл <code>for</code> традиционно содержит три части в своем объявлении:</p>
+
+        <ol>
+            <li><strong>Инициализация</strong>: Здесь переменная обычно инициализируется. Этот блок выполняется один раз
+                в начале выполнения цикла.</li>
+            <li><strong>Условие</strong>: Это логическое выражение, которое проверяется перед каждым выполнением тела
+                цикла. Если условие возвращает <code>true</code>, тело цикла выполняется. Если возвращает
+                <code>false</code>, цикл завершается.
+            </li>
+            <li><strong>Итерация</strong>: Этот блок кода выполняется после каждого прохода тела цикла.</li>
+        </ol>
+
+        <p>Пример:</p>
+        <code>
+        for (let i = 0; i &lt; 10; i++) {<br>
+        &nbsp;&nbsp;console.log(i);<br>
+        }
+    </code>
+
+        <ul>
+            <li><strong>Инициализация</strong>: <code>let i = 0</code> - здесь создается переменная <code>i</code> и
+                инициализируется значением <code>0</code>.</li>
+            <li><strong>Условие</strong>: <code>i &lt; 10</code> - перед каждым проходом цикла проверяется, меньше ли
+                значение <code>i</code> чем <code>10</code>.</li>
+            <li><strong>Итерация</strong>: <code>i++</code> - после каждого прохода тела цикла значение <code>i</code>
+                увеличивается на 1.</li>
+        </ul>
+
+        <p>Теперь, если вы имели в виду цикл <code>for</code> с тремя разными условиями внутри его тела (а не в его
+            объявлении), то это будет выглядеть несколько иначе. Вы можете иметь несколько условий в теле цикла, и, в
+            зависимости от результатов этих условий, выполнять различные блоки кода. Вот пример:</p>
+
+        <code>
+        for (let i = 0; i &lt; 10; i++) {<br>
+        &nbsp;&nbsp;if (i &lt; 3) {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;console.log(i + " меньше 3");<br>
+        &nbsp;&nbsp;} else if (i &lt; 6) {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;console.log(i + " меньше 6, но больше или равно 3");<br>
+        &nbsp;&nbsp;} else {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;console.log(i + " больше или равно 6");<br>
+        &nbsp;&nbsp;}<br>
+        }
+    </code>
+
+        <p>Здесь у нас есть цикл, который выполняется 10 раз, и в зависимости от значения <code>i</code> в каждой
+            итерации, выводится разное сообщение.</p>
+
+        <p>
+            Мы можем вынести все три параметра за пределы цикла
+        </p>
+        
+        <code>
+            <pre>
+            // For - выносим инициализацию и итерацию и условие в отдельные строки
+            let i = 0
+            for (;;) {
+                console.log(i)
+                i++
+                if (i == 5) {
+                    break
+                }
+            }
+        </pre>
+        </code>
+    
+    </article>
+    <article>
+
+        <h2>Цикл <code>while</code> в JavaScript</h2>
+        <p>
+            Цикл <code>while</code> выполняется, пока указанное условие истинно (<code>true</code>). Отличие от цикла
+            <code>for</code> заключается в том, что в <code>while</code> нет явно выделенных мест для инициализации и
+            итерации.
+        </p>
+
+        <pre>
+    <code>
+    let i = 0; // инициализация вне цикла
+    
+    while (i &lt; 5) { // условие
+        console.log(i);
+        i++; // итерация внутри цикла
+    }
+    </code>
+    </pre>
+
+        <p>
+            В этом примере инициализация проходит до начала цикла, условие проверяется перед каждой итерацией, и
+            итерация происходит внутри тела цикла.
+        </p>
+
+        <h2>Цикл <code>do...while</code></h2>
+
+        <p>
+            Это вариация цикла <code>while</code>, гарантирующая, что тело цикла выполнится хотя бы один раз, даже если
+            условие с самого начала является ложным (<code>false</code>).
+        </p>
+
+        <pre>
+    <code>
+    let i = 0;
+    
+    do {
+        console.log(i);
+        i++;
+    } while (i &lt; 5);
+    </code>
+    </pre>
+
+        <p>
+            Основное различие между <code>while</code> и <code>do...while</code> заключается в моменте проверки условия.
+            В цикле <code>while</code> условие проверяется до входа в цикл, а в <code>do...while</code> — после
+            выполнения тела цикла.
+        </p>
+
+    </article>
+    <article>
+        <h2>Анализ строк JS кода</h2>
+
+        <h3>1. Генерация случайного индекса</h3>
+        <p>
+            Строка <code>Math.floor(Math.random() * proverbs.length);</code> используется для генерации случайного
+            индекса из массива <code>proverbs</code>:
+        </p>
+        <code>
+        Math.random() // возвращает случайное число от 0 до 1 (не включая 1).<br>
+        proverbs.length // возвращает длину массива proverbs.<br>
+        Math.random() * proverbs.length // умножение случайного числа на длину массива.<br>
+        Math.floor() // округляет переданное число в меньшую сторону.
+        </code>
+
+        <h3>2. Удаление элемента из массива</h3>
+        <p>
+            Строка <code>proverbs.splice(proverbIndex, 1);</code> удаляет один элемент из массива <code>proverbs</code>
+            по индексу <code>proverbIndex</code>:
+        </p>
+        <code>
+        splice() // метод массива для добавления, удаления или замены элементов.<br>
+        proverbIndex // индекс элемента для удаления.<br>
+        1 // количество элементов для удаления.
+        </code>
+
+        <h3>3. Добавление элемента к HTML-документу</h3>
+        <p>
+            Строка <code>ulElement.appendChild(liElement);</code> добавляет элемент <code>liElement</code> к элементу
+            <code>ulElement</code>:
+        </p>
+        <code>
+        appendChild() // метод DOM для добавления дочернего элемента к родительскому.<br>
+        ulElement // родительский элемент.<br>
+        liElement // дочерний элемент.
+        </code>
+    </article>
+    <article>
+        <h2>Добавление дочернего элемента в DOM</h2>
+        <p>
+            Для добавления дочернего элемента в DOM используется метод <code>appendChild()</code>. Он принимает один
+            аргумент — элемент, который нужно добавить.
+        </p>
+        <p>
+            Вот пример добавления элемента <code>li</code> в элемент <code>ul</code> с id "test" с текстом «Hello, World!»:
+        </p>
+        <code>
+        let ulElement = document.getElementById("test");<br>
+        let liElement = document.createElement("li");<br>
+        liElement.textContent = "Hello, World!";<br>
+        ulElement.appendChild(liElement);
+    </code>
+    <h3>Пример</h3>
+    <p>Этот список будет наполнен!</p>
+    <ul id="test">
+    </ul>
+    <button onclick="getList()" type="button" class="btn btn-dark">Наполни этот список!</button>
+
+    </article>
+    <script>
+        // Цикл for по элементам массива и по индексам массива
+        // let fruits = ["Яблоко", "Апельсин", "Слива", "Груша", "Банан", "Ананас"];
+        // console.log("Массив: " + fruits);
+
+        // Цикл по элементам массива
+        // console.log("Цикл по элементам массива");
+        // for (let item of fruits) { //  Яблоко,Апельсин,Слива
+        //     console.log(item);
+        // }
+
+        // Цикл по индексам массива
+        // console.log("Цикл по индексам массива");
+        // for (let item in fruits) { //  0,1,2
+        //     console.log(item);
+        // }
+
+        // Цикл for по массиву с тремя параметрами
+        // Инициализация - Условие - Итерация
+        // console.log("Цикл for по массиву с тремя параметрами");
+        // for (let i = 0; i < fruits.length; i++) {
+        //     console.log(fruits[i]);
+        // }
+
+        // Операторы управления циклом: break и continue
+        // console.log("Операторы управления циклом: break и continue");
+        // // Пропускаем фрукты начинающиеся на букву А
+        // for (let fruit of fruits) {
+        //     if (fruit[0] == "А") {
+        //         break;
+        //     }
+        //     console.log(fruit);
+        // }
+
+        // Практика - картавая задачка
+        // Мы запрашиваем пользовательский ввод данных, слова через пробел
+        // Разбиваем его на массив по пробелу
+        // Проходим циклом с проверкой на букву Р
+        // Печатаем только те слова, которые не содержат букву "р"
+
+        // Проверка на вхождение буквы "р" в слово
+        // let word = 'трактор'
+        // if (word.indexOf('р') != -1) {
+        //     console.log("Слово " + word + " содержит букву р");
+        // } else {
+        //     console.log("Слово " + word + " не содержит букву р");
+        // }
+
+        // Решение практики
+        // let userInput = prompt("Введите слова через пробел").split(' ')
+
+        // const resultWord = {
+        //     "bad words": [],
+        //     goodWords: []
+        // }
+
+        // for (let word of userInput) {
+
+        //     if (word.toLowerCase().indexOf('р') != -1) {
+        //         resultWord["bad words"].push(word)
+        //     } else {
+        //         resultWord.goodWords.push(word)
+        //     }
+
+        // }
+        // console.log(`Плохие слова: ${resultWord["bad words"]}`)
+        // console.log(`Хорошие слова: ${resultWord.goodWords}`)
+
+        // For - выносим инициализацию и итерацию и условие в отдельные строки
+        // let i = 0
+        // for (; ;) {
+        //     console.log(i)
+        //     i++
+        //     if (i == 5) {
+        //         break
+        //     }
+        // }
+
+        // Цикл while. While - пока. Пока условие выполняется, цикл выполняется
+        // Бесконечный цикл - цикл, который не остановится никогда. Важно, чтобы были условия для выхода из цикла
+
+        // Запускаем бесконечный цикл
+        // let count = 0
+        // while (true) {
+        //     console.log(`Итерация ${count}`)
+        //     count ++
+        //     // Без этого цикл станет бесконечным
+        //     if (count == 10) {
+        //         break
+        //     }
+        // }
+
+        let fruit = ["Яблоко", "Апельсин", "Слива", "Груша", "Банан", "Ананас"];
+        console.log("Массив: " + fruit);
+            // Цикл while пока существует массив
+            // На каждой итерации мы удаляем один элемент
+            // Цикл будет выполняться, пока в массиве есть элементы
+            // while (fruit.length) {
+            //     // Генерируем случайный индекс
+            //     let fruitIndex = Math.floor(Math.random() * fruit.length);
+            //     // Выводим случайный элемент
+            //     let randomItem = fruit[fruitIndex];
+            //     let randomItemO = ''
+            //     // Если в слове есть буква а, то меняем её на букву о
+            //     if (randomItem.indexOf('а') != -1) {
+            //         randomItemO = randomItem.replace('а', 'о');
+            //     }
+            //     if (randomItemO) {
+            //         console.log(randomItemO);
+            //     } else {
+            //         console.log(randomItem);
+            //     }
+                
+                // Удаляем элемент из массива
+                // splice - метод массива для удаления элементов
+                // Принимает два параметра: индекс элемента и количество элементов для удаления
+            //     fruit.splice(fruitIndex, 1);
+            // }
+            // Добавить новый элемент в массив фруктов по индексу длины массива в конец массива
+            // fruit[0] = "Апельсин";
+            // fruit.push("Апельсин");
+            // console.log(fruit)
+
+            // Наполним ul id test фруктами из массива 
+            // let ulElement = document.getElementById("test");
+            // for (let item of fruit) {
+            //     let liElement = document.createElement("li");
+            //     liElement.textContent = item;
+            //     ulElement.appendChild(liElement);
+            // }
+
+            // Практика
+            // 0. Создаем ul без li с ID test на странице
+            // 1. Пользовательский ввод через prompt
+            // 2. Разбиваем строку на массив по пробелу
+            // 3. Проходим циклом по массиву
+            // 4. Добавляем каждый элемент в ul id test
+
+            function getList() {
+                let userInput = prompt("Введите слова через пробел").split(' ')
+                let ulElement = document.getElementById("test");
+                for (let item of userInput) {
+                    let liElement = document.createElement("li");
+                    liElement.textContent = item;
+                    ulElement.appendChild(liElement);
+                }
+            }
+    </script>
+</body>
+
+</html>

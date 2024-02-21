@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>To-Do List</title>
+<style>
+  .task {
+    margin: 5px;
+    padding: 5px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+  }
+  .done {
+    text-decoration: line-through;
+  }
+  #completed-tasks {
+    margin-top: 20px;
+    display: none;
+  }
+</style>
+</head>
+<body>
+
+<h2>Активные задачи</h2>
+<div id="task-list"></div>
+<input type="text" id="task-input" />
+<button id="add-task-btn">Добавить</button>
+
+<h2>Выполненные задачи</h2>
+<div id="completed-tasks"></div>
+
+<script>
+  function addTask() {
+    var input = document.getElementById('task-input');
+    var taskList = document.getElementById('task-list');
+    var taskText = input.value.trim();
+
+    if(taskText === '') {
+      alert('Пожалуйста, введите задачу.');
+      return;
+    }
+
+    var taskDiv = document.createElement('div');
+    taskDiv.textContent = taskText;
+    taskDiv.classList.add('task');
+
+    var deleteBtn = document.createElement('button');
+    deleteBtn.textContent = 'Удалить';
+    deleteBtn.onclick = function() {
+      taskDiv.classList.add('done');
+      document.getElementById('completed-tasks').appendChild(taskDiv);
+      deleteBtn.remove();
+      updateCompletedTasksVisibility();
+    };
+
+    taskDiv.appendChild(deleteBtn);
+    taskList.appendChild(taskDiv);
+    input.value = '';
+
+    updateCompletedTasksVisibility();
+  }
+
+  document.getElementById('add-task-btn').onclick = addTask;
+
+  function updateCompletedTasksVisibility() {
+    var completedTasks = document.getElementById('completed-tasks');
+    if (completedTasks.children.length > 0) {
+      completedTasks.style.display = 'block';
+    } else {
+      completedTasks.style.display = 'none';
+    }
+  }
+</script>
+
+</body>
+</html>

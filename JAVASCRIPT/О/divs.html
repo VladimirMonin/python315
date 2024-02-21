@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HW_6</title>
+    <style>
+        .container {
+            background-color: honeydew;
+            height: 100vh;
+            width: 80vw;
+            /* auto - автоматически подстраивает ширину под содержимое */
+            margin: 0 auto;
+            max-width: 1000px;
+            min-width: 500px;
+            align-items: center;
+
+        }
+
+
+        .product_pod {
+            width: 20vh;
+            height: 30vh;
+            background-color: red;
+            /* Указываем отступы со всех сторон в формате 4 значений */
+            margin: 20px 10px 20px 10px;
+
+            /* Альтернативный вариант - точное указание отступа */
+            /* margin-top margin-bottom margin-left margin-right */
+
+            display: inline-block;
+            border: 5px solid black;
+            border-radius: 10px;
+            text-align: center;
+
+
+
+        }
+
+        /* product_pod hover */
+        .product_pod:hover {
+            box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.5);
+            /* box-shadow: 0 0 10px 5px #000000; */
+
+            /* Увеличение размеров */
+            transform: scale(1.1);
+            /* Плавность всех анимаций */
+            transition: all 0.5s ease;
+
+        }
+
+
+        /* float: left; */
+        /* Отcтупы пишутся в 4 цифры. 
+            Первая цифра - отступ сверху
+            Вторая цифра - отступ справа
+            Третья цифра - отступ снизу
+            Четвертая цифра - отступ слева */
+        /* span {
+            width: 200px;
+            height: 200px;
+            padding: 20px;
+            margin: 20px;
+            border: 1px solid black;
+        } */
+
+        .product_pod img {
+            display: block;
+            /* Это позволяет применить margin: auto; */
+            margin-left: auto;
+            margin-right: auto;
+            width: 60%;
+            /* или любая другая ширина, которая вам нужна */
+            margin-top: 25%;
+            margin-bottom: 25%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="product_pod"><img src="./icons/Food_C203-128.png" alt="">Продукт</div>
+        <div class="product_pod"><img src="./icons/Food_C205-128.png" alt="">Продукт</div>
+        <div class="product_pod"><img src="./icons/Food_C217-128.png" alt="">Продукт</div>
+        <div class="product_pod"><img src="./icons/Food_C238-128.png" alt="">Продукт</div>
+        <div class="product_pod"><img src="./icons/Food_C203-128.png" alt="">Продукт</div>
+        <div class="product_pod"><img src="./icons/Food_C205-128.png" alt="">Продукт</div>
+        <div class="product_pod"><img src="./icons/Food_C217-128.png" alt="">Продукт</div>
+        <div class="product_pod"><img src="./icons/Food_C238-128.png" alt="">Продукт</div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Заголовок H1 -->
+        <div class="row">
+            <div class="col-md-12">
+                <h1>HW_15 - Решение</h1>
+            </div>
+        <div class="row">
+            <div class="col-md-6">
+                <input type="text" class="form-control" id="inputField" placeholder="Введите город">
+            </div>
+            <div class="col-md-6">
+                <p>Последнее что вы ввели в форму: <span id="result"></span></p>
+            </div>
+        
+        </div>
+    </div>
+
+<script>
+    // 1. Функция записи данных формы в localStorage. Принимает в качестве аргумент строку с даннымими записывает их в localStorage
+    function writeToLocalStorage(data) {
+        localStorage.setItem('city', data);
+    }
+
+
+    // 2. Функция чтения данных из localStorage. Возвращает строку с данными
+    function readFromLocalStorage() {
+        return localStorage.getItem('city');
+    }
+
+
+    // 3. Функция которая добывает данные из формы и возвращает строку
+    function getDataFromForm() {
+        value = document.querySelector('#inputField').value;
+        // console.log(value);
+        return value;
+    }
+
+    // 4. Функция которая записывает данные в span result
+    function printOnPage(data) {
+        document.querySelector('#result').textContent = data;
+    }
+    // 5. Функция которая записывает данные в форму (принимает строку с данными)
+    function printToForm(data) {
+        document.querySelector('#inputField').value = data;
+    }
+
+
+    // Listener на изменение поля ввода.
+    // Описываем функцию, которая использует наши функции
+    // 1. Получаем данные из формы
+    // 2. Записываем данные в localStorage
+    // 3. Выводим данные в span result
+    document.querySelector('#inputField').addEventListener('input', function () {
+        let data = getDataFromForm();
+        writeToLocalStorage(data);
+        printOnPage(data);
+    });
+
+    // Listener на загрузку документа
+    // Описываем функцию которая использует наши функции
+    // 1. Получаем данные из localStorage
+    // 2. Выводим данные в span result
+    // 3. Выводим данные в форму
+    document.addEventListener('DOMContentLoaded', function () {
+        let data = readFromLocalStorage();
+        printOnPage(data);
+        printToForm(data);
+    });
+
+
+
+</script>
+</body>
+
+</html>

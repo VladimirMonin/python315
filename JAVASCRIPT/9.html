@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bootstrap Grid Example</title>
+    <!-- Подключение Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+      crossorigin="anonymous"
+    />
+
+    <style></style>
+  </head>
+  <nav>
+    <ul>
+      <li>Формы</li>
+    </ul>
+  </nav>
+
+  <table class="table table-hover">
+    <tr>
+      <th>Событие</th>
+      <th>Описание</th>
+    </tr>
+    <tr>
+      <td><code>submit</code></td>
+      <td>
+        Срабатывает при попытке отправить форму, например, при нажатии на кнопку
+        <code>&lt;input type="submit"&gt;</code> или
+        <code>&lt;button type="submit"&gt;</code>.
+      </td>
+    </tr>
+    <tr>
+      <td><code>change</code></td>
+      <td>
+        Происходит для элементов формы <code>&lt;input&gt;</code>,
+        <code>&lt;select&gt;</code>, и <code>&lt;textarea&gt;</code> при
+        изменении их значения.
+      </td>
+    </tr>
+    <tr>
+      <td><code>input</code></td>
+      <td>
+        Срабатывает каждый раз, когда значение элемента формы изменяется
+        пользователем.
+      </td>
+    </tr>
+    <tr>
+      <td><code>focus</code></td>
+      <td>Происходит, когда элемент формы получает фокус.</td>
+    </tr>
+    <tr>
+      <td><code>blur</code></td>
+      <td>Срабатывает, когда элемент формы теряет фокус.</td>
+    </tr>
+    <tr>
+      <td><code>keydown</code></td>
+      <td>Происходит, когда клавиша нажата на элементе формы.</td>
+    </tr>
+    <tr>
+      <td><code>keyup</code></td>
+      <td>Срабатывает, когда клавиша отпущена на элементе формы.</td>
+    </tr>
+    <tr>
+      <td><code>keypress</code></td>
+      <td>
+        Вызывается, когда клавиша, которая генерирует символ, нажата и отпущена
+        на элементе формы.
+      </td>
+    </tr>
+  </table>
+  <br /><br /><br />
+  <hr />
+
+  <body>
+    <form id="form1">
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label"
+          >Адрес электронной почты</label
+        >
+        <input
+          type="email"
+          class="form-control"
+          id="email1"
+          aria-describedby="emailHelp"
+        />
+        <span id="emailHelp" class="form-text"></span>
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Пароль</label>
+        <input type="password" class="form-control" id="password1" />
+      </div>
+      <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" id="checkBox1" />
+        <label class="form-check-label" for="exampleCheck1"
+          >Проверить меня</label
+        >
+      </div>
+      <button type="submit" id="submit" class="btn btn-primary" disabled>
+        Отправить
+      </button>
+
+      <div class="row" id="form2">
+        <div class="col">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Имя"
+            aria-label="Имя"
+          />
+        </div>
+        <div class="col">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Фамилия"
+            aria-label="Фамилия"
+          />
+        </div>
+        <div class="col">
+          <input
+            type="submit"
+            class="btn  btn-primary"/>
+        </div>
+      </div>
+    </form>
+    <h2>Практика!</h2>
+    <p>
+        Напишите 2 функции.
+    </p>
+    <p> 1. Функция reedForm() - которая будет собирать данные из формы и выводить их в консоль + отдавать их в виде объекта.</p>
+    <p> 2. Функция displayForm() - которая будет принимать объект с данными и выводить их <code>p#result</code>.</p>
+
+    <p>Можно раскладывать данные по 2м разным параграфам, или складывать в один через шаблонную строку или сложение строк</p>
+
+    <p id="result"></p>
+    <script>
+      // Событие ввода данных в поле ввода - input
+      // Событие отправки формы - submit
+      // Данные формы document.forms[0]
+
+      // Функция которая проверяет что были поля ввода не пустые и чекбокс отмечен
+      // Запускать её будет событие ввода данных в поле ввода данных
+      // Если данные введены, функция убирает атрибут disabled у кнопки отправки формы
+
+      function checkForm() {
+        // Получаем данные формы
+        const form = document.getElementById("form1");
+        // Получаем поле ввода email
+        const email = form.elements.email1;
+        // Получаем поле ввода пароля
+        const password = form.elements.password1;
+        // Получаем чекбокс
+        const checkBox = form.elements.checkBox1;
+        // Получаем кнопку отправки формы
+        const submit = form.elements.submit;
+
+        // Проверяем что поля ввода не пустые и чекбокс отмечен
+        if (email.value !== "" && password.value !== "" && checkBox.checked) {
+          // Убираем атрибут disabled у кнопки отправки формы
+          submit.removeAttribute("disabled");
+
+          // Очищаем поле для подсказок
+          let divHelp = document.querySelector("#emailHelp");
+
+          //   Опусташаем поле для подсказок
+          divHelp.innerHTML = "";
+        } else {
+          // Если поля ввода пустые или чекбокс не отмечен, добавляем атрибут disabled кнопке отправки формы
+          submit.setAttribute("disabled", "disabled");
+
+          // Отправляем пользователю сообщение в поле для подсказок
+          let divHelp = document.querySelector("#emailHelp");
+
+          // Опусташаем поле для подсказок
+          divHelp.innerHTML = "";
+
+          // Пишем сообщение в поле для подсказок
+          divHelp.innerHTML = "Заполните все поля и отметьте чекбокс";
+
+          // Добавляем класс для divHelp BS5 warning
+          divHelp.classList.add("text-danger");
+          //  Добавляем класс warning bg для divHelp BS5 warning
+          divHelp.classList.add("bg-warning");
+        }
+      }
+
+      // Собираем все input-ы в массив из формы с id="form1" используя querySelectorAll
+      let arrElements = document.querySelectorAll("#form1 input");
+
+      // Перебираем массив с элементами формы
+      for (let i = 0; i < arrElements.length; i++) {
+        // Для каждого элемента массива назначаем событие ввода данных
+        // При любом изменении данных в форме будет запускаться функция checkForm
+        arrElements[i].addEventListener("input", checkForm);
+      }
+
+    //   ПРАКТИКА, РЕШЕНИЕ
+    // Функция reedForm() - которая будет собирать данные из формы и выводить их в консоль + отдавать их в виде объекта.
+
+    function reedForm() {
+        // Получаем input-ы из формы по селектору form2
+        let inputs = document.querySelectorAll('#form2 input');
+        // Переменная под результат
+        resultData = '';
+
+        // Перебираем input-ы
+        for (let i = 0; i < inputs.length; i++) {
+            // Добавляем в переменную resultData значения input-ов
+            resultData += inputs[i].value + ' ';
+        }
+
+        console.log(resultData);
+        return resultData;
+
+    }
+
+    // Функция displayForm() - которая будет принимать объект с данными и выводить их p#result.
+    function displayForm(arr) {
+        // Получаем элемент p#result
+        let result = document.querySelector('#result');
+        // Выводим в p#result данные из объекта textContent
+        result.textContent = arr;
+    }
+
+    // Получаем массив input-ов из формы form2
+    let inputs = document.querySelectorAll('#form2 input');
+
+    // Добавляем событие input для каждого input-а
+    for (let i = 0; i < inputs.length; i++) {
+        inputs[i].addEventListener('input', function() {
+            // При изменении данных в input-е запускаем функцию reedForm()
+            // Получаем результат функции reedForm() и передаем его в функцию displayForm()
+            displayForm(reedForm());
+        });
+    }
+
+    </script>
+  </body>
+</html>

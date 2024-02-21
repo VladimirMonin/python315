@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Практика на паре. 27 ноября 2023 Python 315">
+    <title>Lesson_15</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Заголовок H1 -->
+        <!-- Выравнивание текста по центру -->
+        <div class="row">
+            <!-- Выравнивание текста по центру -->
+            <div class="col-md-12 text-center">
+                <h1>Lesson_15</h1>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <input type="text" class="form-control" id="inputField" placeholder="Введите город">
+                </div>
+                <div class="col-md-6">
+                    <p>Последний ваш запрос: <span id="result"></span></p>
+                </div>
+
+            </div>
+        </div>
+
+        <script>
+            const apiKey = '23496c2a58b99648af590ee8a29c5348'
+            const units = 'metric'
+            const lang = 'ru'
+
+
+            // 1. Функция записи данных формы в localStorage. Принимает в качестве аргумент строку с даннымими записывает их в localStorage
+            function writeToLocalStorage(data) {
+                localStorage.setItem('city', data);
+            }
+
+
+            // 2. Функция чтения данных из localStorage. Возвращает строку с данными
+            function readFromLocalStorage() {
+                return localStorage.getItem('city');
+            }
+
+
+            // 3. Функция которая добывает данные из формы и возвращает строку
+            function getDataFromForm() {
+                value = document.querySelector('#inputField').value;
+                // console.log(value);
+                return value;
+            }
+
+            // 4. Функция которая записывает данные в span result
+            function printOnPage(data) {
+                document.querySelector('#result').textContent = data;
+            }
+            // 5. Функция которая записывает данные в форму (принимает строку с данными)
+            function printToForm(data) {
+                document.querySelector('#inputField').value = data;
+            }
+
+
+            // Функция запроса данных по API - возвращает объект с данными
+            async function fetchRequestAsync(url) {
+                // await - указание на то что нужно дождаться результата выполнения функции fetch
+                // Получаем данные с сервера
+                let data = await fetch(url)
+                // await - указание на то что нужно дождаться результата выполнения функции data.json()
+                // Получаем только тело ответа
+                // data.json() - преобразование данных в json формат, тип данных - object
+
+                data = await data.json()
+                return data
+            }
+
+            // Функция которая принимает название города и возвращает объект с координатами
+            // url api = http://api.openweathermap.org/geo/1.0/direct?q=ГОРОД&appid={API key}
+            function getCityCoordinates(city) {
+                let url = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${apiKey}`
+                return fetchRequestAsync(url)
+            }
+
+            // Функция которая ответ АПИ с координатами и возвращает объект lat lon
+
+            function getCityCoordinatesClearObj(rawCoordObj) {
+                let coordObj = {
+                    lat: rawCoordObj[0].lat,
+                    lon: rawCoordObj[0].lon
+                }
+                return coordObj
+            }
+
+            // Функция которая принимает объект с координатами и возвращает объект с url запросов по разным маршрутам
+            // Примеры запросов.
+            // URL текущей погоды https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}&units={units}&lang={lang}
+            // URL прогноза https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}&units={units}&lang={lang}
+            // URL данных по воздуху http://api.openweathermap.org/data/2.5/air_pollution?lat={lat}&lon={lon}&appid={API key}
+            function getUrlsObj(coordObj) {
+                let urlsObj = {
+                    currentWeather: `https://api.openweathermap.org/data/2.5/weather?lat=${coordObj.lat}&lon=${coordObj.lon}&appid=${apiKey}&units=${units}&lang=${lang}`,
+                    forecastWeather: `https://api.openweathermap.org/data/2.5/forecast?lat=${coordObj.lat}&lon=${coordObj.lon}&appid=${apiKey}&units=${units}&lang=${lang}`,
+                    airPollution: `http://api.openweathermap.org/data/2.5/air_pollution?lat=${coordObj.lat}&lon=${coordObj.lon}&appid=${apiKey}`
+                }
+                return urlsObj
+            }
+
+            // Функция которая принимает объект с url и возвращает объект с данными
+            // async function getWeatherData(urlsObj) {
+            //     let weatherData = {
+            //         currentWeather: await fetchRequestAsync(urlsObj.currentWeather),
+            //         forecastWeather: await fetchRequestAsync(urlsObj.forecastWeather),
+            //         airPollution: await fetchRequestAsync(urlsObj.airPollution)
+            //     }
+            //     return weatherData
+            // }
+
+
+            // огда вы используете await перед каждым вызовом fetchRequestAsync, запросы выполняются последовательно. 
+            // Это означает, что код ждет завершения первого запроса, прежде чем начать второй, и так далее. Ваш код выполняет следующие шаги:
+
+            // Ожидает завершения fetchRequestAsync(urlsObj.currentWeather).
+            // Затем ожидает завершения fetchRequestAsync(urlsObj.forecastWeather).
+            // И, наконец, ожидает завершения fetchRequestAsync(urlsObj.airPollution).
+
+            // Это последовательное выполнение может быть неэффективным, если вам нужно быстро получить все данные, поскольку 
+            // общее время выполнения будет равно сумме времени выполнения каждого отдельного запроса.
+
+            // Для параллельного выполнения запросов можно использовать Promise.all(). 
+            // Этот метод принимает массив промисов (в вашем случае асинхронных запросов) 
+            // и возвращает промис, который успешно разрешается, когда все промисы в массиве успешно завершены. 
+            // Вот как можно изменить вашу функцию для параллельного выполнения запросов:
+
+            async function getWeatherData(urlsObj) {
+                let responses = await Promise.all(
+                    [
+                    fetchRequestAsync(urlsObj.currentWeather),
+                    fetchRequestAsync(urlsObj.forecastWeather),
+                    fetchRequestAsync(urlsObj.airPollution)
+                ]
+                );
+
+                return {
+                    currentWeather: responses[0],
+                    forecastWeather: responses[1],
+                    airPollution: responses[2]
+                };
+            }
+
+            // Listener на Focus + нажатие кнопки Enter в форме. (т.е. когда у нас Enter
+            // получаем его географические координаты, получаем объект с url 
+            // для запросов, получаем объект с данными по запросам, выводим в консоль
+            document.querySelector('#inputField').addEventListener('input', async function () {
+                let city = getDataFromForm()
+                console.log(city)
+                let coordObj = await getCityCoordinates(city)
+                console.log(coordObj)
+                coordObj = getCityCoordinatesClearObj(coordObj)
+                console.log(`Очищенный объект с координатами ${coordObj}`)
+                let urlsObj = getUrlsObj(coordObj)
+                console.log(urlsObj)
+                let weatherData = await getWeatherData(urlsObj)
+                console.log(weatherData)
+            })
+
+
+
+        </script>
+</body>
+
+</html>

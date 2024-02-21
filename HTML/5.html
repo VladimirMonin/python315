@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Lesson 5, Псевдоклассы, Вставка медиа, Таблицы">
+    <title>Lesson 5</title>
+    <style>
+        body {
+            /* Текстура background image */
+            /* background-image: url("./img/pattern-triangles-and-corners.png"); */
+            background-repeat: repeat;
+            background-color: azure;
+
+            font-size: x-large;
+
+            /* Ширина 80 отступ авто */
+            width: 80%;
+            margin: 0 auto;
+
+        }
+
+        /* Селектор ссылки внутри тега nav */
+        nav a {
+            color: rgb(0, 0, 0);
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 700;
+            font-family: 'Roboto Slab', serif;
+        }
+
+        code {
+            color: rgb(0, 0, 0);
+            background-color: rgb(255, 255, 255);
+            font-size: 1.5rem;
+            font-weight: 700;
+            font-family: 'Roboto Slab', serif;
+            /* Pre */
+            white-space: pre;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: rgb(0, 0, 0);
+            background-color: rgb(255, 255, 255);
+            font-size: 1.5rem;
+            font-weight: 700;
+            font-family: 'Roboto Slab', serif;
+            /* Курсор help */
+            cursor: help;
+            /* Курсор из картинки */
+            /* cursor: url("./img/cursor.png"), auto; */
+
+        }
+
+        table {
+            /* Рамка вокруг всей таблицы */
+            border: 1px solid black;
+            /* Убираем "швы-зазоры" между ячейками (видно
+            только когда у них есть border) */
+            border-collapse: collapse;
+            /* рекомендуется использовать вместо cellspacing */
+            box-shadow: 0 0 10px 0 rgb(107, 80, 80);
+
+        }
+
+        td {
+            padding: 20px;
+            /* Делаем рамки ячеек */
+            border: 1px solid black;
+        }
+
+        th {
+            padding: 20px;
+            /* Делаем рамки ячеек */
+            border: 1px solid black;
+            /* Цвет фона */
+            background-color: rgb(217, 230, 174);
+            /* Цвет текста */
+            color: rgb(0, 0, 0);
+            /* Размер шрифта */
+            font-size: 2rem;
+        }
+
+        /* Красим строки таблицы через один с помощью псевдокласса  */
+        tr:nth-child(2n) {
+            background-color: rgb(237, 217, 217);
+        }
+
+        tr:hover {
+            background-color: rgb(226, 255, 209);
+        }
+
+        h1,
+        h2,
+        h3:hover {
+            color: rgb(107, 80, 80);
+            /* box-shadow: 0 0 10px 0 rgb(107, 80, 80); */
+        }
+
+        /* Псевдокласс first-child - действует на первый элемент в списке
+        Красим текст ссылки внутри тега nav внутри ul li */
+        nav ul li:first-child a {
+            color: rgb(200, 18, 18);
+            background-color: rgb(0, 0, 0);
+        }
+
+        /* Псевдокласс last-child - действует на последний элемент в списке
+        Красим текст ссылки внутри тега nav внутри ul li */
+        nav ul li:last-child a {
+            color: rgb(200, 18, 18);
+            background-color: rgb(0, 0, 0);
+        }
+
+        /* Псевдокласс nth-child - действует на элемент в списке с указанным номером
+        Красим текст ссылки внутри тега nav внутри ul li */
+        nav ul li:nth-child(2) a {
+            color: rgb(79, 233, 7);
+            background-color: rgb(49, 2, 2);
+        }
+
+        /* Псевдокласс для воздействия "через один" элемент
+        Каждый энный элемент (в примере каждый второй) */
+        nav ul li:nth-child(2n) a {
+            color: rgb(79, 233, 7);
+            background-color: rgb(49, 2, 2);
+        }
+
+
+        /* Псевдокласс Hover - действует при наведении указателя мыши на элемент */
+        nav ul li a:hover {
+            color: rgb(255, 255, 255);
+            background-color: rgb(0, 0, 0);
+        }
+
+        /* Псевдокласс visited - дейсвтует если по ссылке уже был переход */
+        /* nav ul li a:visited {
+            color: rgb(199, 199, 199);
+            background-color: rgb(207, 201, 201);
+        } */
+
+        /* Псевдокласс active - действует при нажатии на ссылку */
+        nav ul li a:active {
+            color: rgb(247, 177, 0);
+            background-color: rgb(0, 0, 0);
+        }
+
+        /* Псевдокласс focus - действует при фокусировке на элементе */
+        nav ul li a:focus {
+            color: rgb(87, 44, 214);
+            background-color: rgb(45, 15, 15);
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Псевдоклассы и работа с медиа. Таблицы</h1>
+    <nav>
+        <ul>
+            <li><a href="#h2-1">Псевдоклассы</a></li>
+            <li><a href="#h2-2">Вставка медиа в HTML</a></li>
+            <li><a href="#h2-3">Таблицы в HTML</a></li>
+        </ul>
+    </nav>
+    <section>
+        <h2 #h2-1>Псевдоклассы</h2>
+        <p>Псевдоклассы — это ключевые слова CSS, добавляемые к селекторам для определения особых состояний, в которых
+            находятся элементы. Они не являются частями документа и не являются реальными классами для элементов, но
+            позволяют изменять стиль элемента без изменения его атрибутов или использования скриптов.</p>
+        <h3>Псевдокласс Hover</h3>
+        <p>Псевдокласс Hover - действует при наведении указателя мыши на элемент</p>
+        <h3>Псевдокласс visited</h3>
+        <p>Псевдокласс visited - дейсвтует если по ссылке уже был переход</p>
+        <h3>Псевдокласс active</h3>
+        <p>Псевдокласс active - действует при нажатии на ссылку</p>
+        <h3>Псевдокласс focus</h3>
+        <p>Псевдокласс focus - действует при фокусировке на элементе</p>
+        <h3>Курсор</h3>
+        <p>Мы можем изменять курсор через стили. Например сделать его в виде указательного пальца (ссылки) или
+            вопросительного знака</p>
+        <code>
+                cursor: help;
+            </code>
+    </section>
+    <section>
+        <h2 #h2-2>Вставка медиа в HTML</h2>
+        <p>Теги audio, video и picture появились в HTML5 - в них мы можем передать одну картинку или файл в разных
+            расширениях
+            браузер сам решит, что он будет использовать
+        </p>
+        <h3>Tag Picture
+            <picture>
+                <!-- Добавляем одну и ту же картинку paddings.webp / jpg с указанием типа файла -->
+                <source srcset="./img/paddings.webp" type="image/webp">
+                <source srcset="./img/paddings.jpg" type="image/jpeg">
+                <img src="./img/paddings.jpg" alt="Отступы">
+            </picture>
+        </h3>
+        <h3>Tag video</h3>
+        <!-- height="240" -->
+        <video width="50%" controls>
+            <source src="media/video.mp4" type="video/mp4">
+            <source src="media/video.webm" type="video/ogg">
+            Ваш браузер не поддерживает тег video.
+        </video>
+    </section>
+    <section>
+        <h2 #h2-3>Таблицы в HTML</h2>
+        <h3>Простые таблицы</h3>
+        <table>
+            <tr>
+                <th>Заголовок №1</th>
+                <th>Заголовок №2</th>
+                <th>Заголовок №3</th>
+                <th>Заголовок №4</th>
+                <th>Заголовок №5</th>
+            </tr>
+            <tr>
+                <td>Lorem ipsum dolor sit amet.</td>
+                <td>Eaque nam in eius quis?</td>
+                <td>Expedita neque praesentium illum voluptate.</td>
+                <td>Quisquam asperiores perspiciatis laborum quas?</td>
+                <td>Nisi laudantium labore non obcaecati!</td>
+            </tr>
+            <tr>
+                <td>Lorem ipsum dolor sit amet.</td>
+                <td>Eaque nam in eius quis?</td>
+                <td>Expedita neque praesentium illum voluptate.</td>
+                <td>Quisquam asperiores perspiciatis laborum quas?</td>
+                <td>Nisi laudantium labore non obcaecati!</td>
+            </tr>
+            <tr>
+                <td>Lorem ipsum dolor sit amet.</td>
+                <td>Eaque nam in eius quis?</td>
+                <td>Expedita neque praesentium illum voluptate.</td>
+                <td>Quisquam asperiores perspiciatis laborum quas?</td>
+                <td>Nisi laudantium labore non obcaecati!</td>
+            </tr>
+            <tr>
+                <td>Lorem ipsum dolor sit amet.</td>
+                <td>Eaque nam in eius quis?</td>
+                <td>Expedita neque praesentium illum voluptate.</td>
+                <td>Quisquam asperiores perspiciatis laborum quas?</td>
+                <td>Nisi laudantium labore non obcaecati!</td>
+            </tr>
+        </table>
+        <h3>Объединение ячеек Таблицы</h3>
+        <!-- Таблица где мы объединяем нескоько ячеек -->
+        <table>
+            <tr>
+                <td>1</td>
+                <td colspan="2">2</td>
+                <!-- <td>3</td> -->
+                <td>4</td>
+            </tr>
+            <tr>
+                <td rowspan="3">5</td>
+                <td>6</td>
+                <td>7</td>
+                <td>8</td>
+            </tr>
+            <tr>
+                <!-- <td>9</td> -->
+                <td>10</td>
+                <td>11</td>
+                <td>12</td>
+            </tr>
+            <tr>
+                <!-- <td>13</td> -->
+                <td>14</td>
+                <td>15</td>
+                <td>16</td>
+            </tr>
+        </table>
+    </section>
+
+</body>
+
+</html>

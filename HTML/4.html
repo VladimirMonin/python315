@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Html код lesson 4">
+    <title>Lesson 4</title>
+    <!-- Гугл шрифты -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&family=Roboto+Slab:wght@800&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* Локальные шрифты */
+        @font-face {
+            font-family: "NotCourierSans";
+            src: url("./fonts/NotCourierSans.otf") format("opentype");
+            src: url("./fonts/NotCourierSans-webfont.woff") format("woff");
+        }
+
+        html {
+            font-size: 2.5vh;
+            background-color: rgb(229, 216, 201);
+            /* Градиент */
+            /* background-image: linear-gradient(45deg, rgb(244, 226, 206), rgb(209, 223, 179)); */
+            /* background-image: url("img/i.webp"); */
+            /* background-repeat: no-repeat; */
+            /* background-position: center center; */
+            
+            /* Шрифты NotCourierSans */
+            font-family: "NotCourierSans";
+
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Roboto Slab', serif;
+        }
+
+        img {
+            width: 300px;
+            max-width: 25%;
+            border: solid 2px rgb(198, 113, 10);
+        }
+
+        address {
+            color: rgb(77, 49, 49);
+            /* Начертание обычное */
+            font-style: normal;
+        }
+
+        kbd {
+            color: rgb(77, 49, 49);
+            /* Заливка */
+            background-color: rgb(187, 205, 148);
+            border: solid 1px rgb(77, 49, 49);
+            /* Тень */
+            box-shadow: 0 0 5px rgb(77, 49, 49);
+        }
+
+        .code {
+            background-color: rgb(187, 205, 148);
+            border: solid 1px rgb(77, 49, 49);
+            /* Тень */
+            box-shadow: 0 0 5px rgb(77, 49, 49);
+            max-width: 50vw;
+            /* По центру */
+            /* 0 auto - выравнивание */
+            margin: 0 auto;
+            /* pre начертание */
+            /* font-family: monospace; */
+            /* Перенос строк */
+            white-space: pre;
+            /* Размер блока относительно ширины экрана */
+            width: 50%;
+        }
+
+        .black-cards {
+            font-size: 5rem;
+            color: #000;
+
+        }
+
+        .red-cards {
+            font-size: 5rem;
+            color: #f00;
+
+
+
+
+
+        }
+
+        .code code {
+            /* Подключаем FiraMono-Regular */
+            font-family: "NotCourierSans";
+            /* Меняем семейство шрифтов */
+        }
+
+        abbr {
+            color: rgb(77, 49, 49);
+            /* Начертание обычное */
+            font-style: normal;
+            /* Тень для текста */
+            text-shadow: 0 0 2px rgb(77, 49, 49);
+
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Форматирование текста в HTML</h1>
+    </header>
+    <h2 id="h2-1">Спецсимволы HTML</h2#>
+
+    <div class="black-cards">
+        <span>&spades;</span>
+        <span>&clubs;</span>
+    </div>
+    <div class="red-cards">
+        <span> &hearts;</span>
+        <span>&diams;</span>
+    </div>
+    <h2 id="h2-2">Семантический тег abbr</h2>
+
+
+    <p><abbr title="Abbriveature">abbr</abbr> - этот тег позволит указать и расшифровать сокращение как человеку
+        так и роботу, который заглянет на вашу страничку</p>
+
+    <h2 id="h2-3">Семантический тег адрес</h2>
+    <address>г. Москва, ул. Пушкина, д. 1</address>
+    <p>Позволяет указать, что этот текст является адресом</p>
+
+    <h2 id="h2-4">Тег для клавиатурных сокращений</h2>
+    <p>Тег kbd
+        <kbd>Ctrl+Alt+Del</kbd>
+    </p>
+
+    <h2 id="h2-5">Тег для выделения текста</h2>
+    <p>Тег mark
+        <mark>Выделенный текст</mark>
+    </p>
+
+    <h2 id="h2-6">Тег для вставки кода</h2>
+    <p>Тег code</p>
+    <div class="code">
+        <code>
+def hello():
+    print("Hello, world!")
+        </code>
+    </div>
+    <h2 id="h2-7">Форматирование текста через стили CSS</h2>
+    <p>white-space</p>
+    <p><abbr title="white-space">white-space: nowrap;</abbr> - запрет переноса строк</p>
+    <p><abbr title="white-space">white-space: pre;</abbr> - сохраняет пробелы и переносы строк</p>
+    <p><abbr title="white-space">white-space: pre-wrap;</abbr> - сохраняет пробелы и переносы строк</p>
+    <p><abbr title="white-space">white-space: pre-line;</abbr> - сохраняет переносы строк</p>
+    <p><abbr title="white-space">white-space: normal;</abbr> - по умолчанию</p>
+
+    <h2 id="h2-8">Отступы в HTML. Margin и Padding</h2>
+    <img src="img/css-box-model.webp" alt="Описание внутренних и внешних отступов в CSS">
+    <p>Margin - отступы вокруг элемента</p>
+    <p>Padding - отступы внутри элемента</p>
+    <p>Margin и Padding могут принимать значения в px, em, rem, %, auto</p>
+    <h3>Параметры 0.0.0.0 в отступах, что это?</h3>
+    <p>0 - верхний отступ</p>
+    <p>0 - правый отступ</p>
+    <p>0 - нижний отступ</p>
+    <p>0 - левый отступ</p>
+    <p>Если указать одно значение, то это будет отступ со всех сторон</p>
+    <p>Если указать два значения, то это будет отступ сверху и снизу, а правый и левый будут равны</p>
+    <p>Если указать три значения, то это будет отступ сверху, справа и снизу, а левый будет равен правому</p>
+    <p>Если указать четыре значения, то это будет отступ сверху, справа, снизу и слева</p>
+    <p>Параметра auto - </p>
+    <h3>Примеры margin</h3>
+    <p style="margin: 0 0 0 0;">margin: 0 0 0 0;</p>
+    <p style="margin: 100px;">margin: 100px;</p>
+    <p style="margin: 100px 50px;">margin: 100px 50px;</p>
+    <p style="margin: 100px 50px 25px;">margin: 100px 50px 25px;</p>
+    <p style="margin: 100px 50px 25px 10px;">margin: 100px 50px 25px 10px;</p>
+
+    <h3>Примеры padding</h3>
+    <p style="padding: 0 0 0 0;">padding: 0 0 0 0;</p>
+    <p style="padding: 100px;">padding: 100px;</p>
+    <p style="padding: 100px 50px;">padding: 100px 50px;</p>
+    <p style="padding: 100px 50px 25px;">padding: 100px 50px 25px;</p>
+    <p style="padding: 100px 50px 25px 10px;">padding: 100px 50px 25px 10px;</p>
+
+    <h2 id="h2-9">Ссылки</h2>
+    <p><a href="3.html">Ссылка на 3.html</a></p>
+    <h3>Параметры аттрибута target</h3>
+    <p><a href="3.html" target="_self"><code>_self</code></a> - открывает ссылку в текущей вкладке</p>
+    <p><a href="3.html" target="_blank"> <code>_blank</code></a> - открывает ссылку в новой вкладке</p>
+
+    <h3>Ссылки: Email, Phone, File, Img</h3>
+    <h4>Email</h4>
+    <a href="mailto:example@email.com">Отправить письмо на example@email.com</a>
+    <h4>Phone</h4>
+    <a href="tel:+79999999999">+7 (999) 999-99-99</a>
+    <h4>File</h4>
+    <p><a href="img/i.webp" download="i">Скачать фото лучшего сотрудника</a></p>
+    <h4>Img</h4>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/padding"><img src="img/paddings.webp" alt="Отступы"></a>
+    <h4>Переход по странице</h4>
+    <ul>
+        <li><a href="#h2-1">Спецсимволы HTML</a></li>
+        <li><a href="#h2-2">Семантический тег abbr</a></li>
+        <li><a href="#h2-3">Семантический тег адрес</a></li>
+        <li><a href="#h2-4">Тег для клавиатурных сокращений</a></li>
+        <li><a href="#h2-5">Тег для выделения текста</a></li>
+        <li><a href="#h2-6">Тег для вставки кода</a></li>
+        <li><a href="#h2-7">Форматирование текста через стили CSS</a></li>
+        <li><a href="#h2-8">Отступы в HTML. Margin и Padding</a></li>
+        <li><a href="#h2-9">Ссылки</a></li>
+    </ul>
+
+</body>
+
+</html>

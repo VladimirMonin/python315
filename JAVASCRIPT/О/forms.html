@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form action="/register/" method="get">
+        <label for="userName">Имя пользователя</label>
+        <input type="text" name="userName" placeholder="наберите имя">
+        <label for="userPas">пароль</label>
+        <input type="password" placeholder="пароль" name="userPas">
+        <label for="rememberMe">запомнить на сайте</label>
+        <input type="checkbox" name="rememberMe">
+        <input type="submit" value="регистрация">
+        <input type="reset">
+    </form>
+
+    <form action="">
+        <input type="text" id="form1">
+    </form>
+    <script>
+        // 
+        // Добываем само поле ввода из формы
+        let form1 = document.getElementById('form1');
+
+        // Добываем значение из поля ввода
+        let form1Vall = form1.value;
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 14</title>
+</head>
+
+<body>
+    <script>
+        let apiKey = '23496c2a58b99648af590ee8a29c5348'
+        let city = prompt('Введите город')
+        let units = 'metric'
+        let lang = 'ru'
+        let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${units}&lang=${lang}`
+
+        // Делаем fetch запрос на сервер
+        // результат выводим в консоль
+
+        // fetch - это функция которая делает асинхронный запрос на сервер
+        // fetch(url)
+        //     // Формируется promise (ожидание)
+        //     .then(data => data.json()) // Преобразование данных в json
+        //     .then(data => console.log(data)) // Вывод данных в консоль
+        //     //  catch - отлавливает ошибки
+        //     .catch(err => console.log(err)) // Вывод ошибки в консоль
+
+        // Упакуем это в функцию ES6 2015 года fetch.then.catch
+
+        function fetchRequest(url) {
+            fetch(url)
+                .then(data => data.json())
+                .then(data => console.log(data))
+                .catch(err => console.log(err))
+        }
+
+        // fetchRequest(url)
+
+        // Упакуем это в функцию ES7 2017 года async await
+        // async - указание на то что функция асинхронная
+        async function fetchRequestAsync(url) {
+            // await - указание на то что нужно дождаться результата выполнения функции fetch
+            // Получаем данные с сервера
+            let data = await fetch(url)
+            // await - указание на то что нужно дождаться результата выполнения функции data.json()
+            // Получаем только тело ответа
+            // data.json() - преобразование данных в json формат, тип данных - object
+            
+            if (data.status === 404) {
+                console.log('Город не найден')
+                return
+            }
+
+            if (data.status === 200) {
+                console.log('Все хорошо')}
+            
+            data = await data.json()
+            console.log(data)
+            console.log(typeof data)
+        }
+    
+        // Тестируем последнюю функцию
+        fetchRequestAsync(url)
+        
+// В JavaScript `await` используется в асинхронных функциях (`async function`) для ожидания выполнения промиса (Promise). В приведенном вами примере `await` используется дважды, каждый раз по разным причинам:
+
+// 1. **Первый `await`:** `const response = await fetch('https://api.example.com/data');`
+//    - Здесь `await` используется для ожидания результата асинхронной операции `fetch`. 
+//    - `fetch` возвращает промис, который разрешается (resolves) с объектом `Response`
+//  после завершения HTTP-запроса.
+//    - Первый `await` гарантирует, что код после него будет выполняться только после 
+// получения HTTP-ответа, то есть объект `response` будет содержать полный ответ сервера.
+
+// 2. **Второй `await`:** `const data = await response.json();`
+//    - После получения ответа сервера, `response.json()` используется для чтения тела ответа 
+// и преобразования его из формата JSON в JavaScript-объект.
+//    - Однако метод `json()` сам по себе возвращает промис, так как чтение тела ответа и 
+// его преобразование в объект могут занять некоторое время.
+//    - Второй `await` ожидает разрешения этого промиса, гарантируя, что переменная `data` 
+// будет содержать уже преобразованный в объект данные, а не промис.
+
+// Использование `await` позволяет писать асинхронный код, который выглядит и ведет себя 
+// как синхронный, делая его более читаемым и понятным.
+
+
+    </script>
+</body>
+
+</html>

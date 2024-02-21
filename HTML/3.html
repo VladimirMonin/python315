@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ru">
+<!-- Подключение шрифтов в head по ссылке локально -->
+<!-- Тег изолирующий угловые скобки -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Подключение шрифта локально из папки в head fonts/NotCourierSans-webfont.woff -->
+    <link rel="stylesheet" href="fonts\NotCourierSans-webfont.woff">
+    <!-- Использование шрифта в документе  -->
+    <!-- font-family: "NotCourierSans"; -->
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&family=Roboto+Slab:wght@800&display=swap"
+        rel="stylesheet">
+
+    <!-- font-family: 'Comfortaa', cursive;
+        font-family: 'Roboto Slab', serif; -->
+
+    <style>
+        /* Подключаем шрифт через стили @font-face локально и назначаем семейство font-family: 'Noto Mono'*/
+        @font-face {
+            font-family: "NotCourierSans";
+            src: url("./fonts/NotCourierSans.otf") format("opentype");
+            src: url("./fonts/NotCourierSans-webfont.woff") format("woff");
+        }
+
+        
+
+
+        html {
+            font-size: 2.5vh;
+            background-color: bisque;
+            /* Используем подключенный NotoMono-Regular-webfont.woff */
+
+        }
+
+   
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Roboto Slab', serif;
+        }
+
+        body {
+            font-family: "NotCourierSans";
+        }
+
+        .black-cards {
+            font-size: 5rem;
+            color: #000;
+
+        }
+
+        .red-cards {
+            font-size: 5rem;
+            color: #f00;
+
+        }
+
+        address {
+            color: rgb(77, 49, 49);
+            /* Начертание обычное */
+            font-style: normal;
+        }
+
+        kbd {
+            color: rgb(77, 49, 49);
+            /* Заливка */
+            background-color: rgb(187, 205, 148);
+            border: solid 1px rgb(77, 49, 49);
+            /* Тень */
+            box-shadow: 0 0 5px rgb(77, 49, 49);
+        }
+
+        .code {
+            background-color: rgb(187, 205, 148);
+            border: solid 1px rgb(77, 49, 49);
+            /* Тень */
+            box-shadow: 0 0 5px rgb(77, 49, 49);
+            max-width: 50vw;
+            /* По центру */
+            /* 0 auto - выравнивание */
+            margin: 0 auto;
+            /* pre начертание */
+            /* font-family: monospace; */
+            /* Перенос строк */
+            white-space: pre;
+            /* Размер блока относительно ширины экрана */
+            width: 50%;
+
+        }
+
+        .code code {
+            /* Подключаем FiraMono-Regular */
+            font-family: "NotCourierSans";
+            /* Меняем семейство шрифтов */
+        }
+
+        abbr {
+            color: rgb(77, 49, 49);
+            /* Начертание обычное */
+            font-style: normal;
+            /* Тень для текста */
+            text-shadow: 0 0 2px rgb(77, 49, 49);
+
+        }
+
+        p {
+            /* Уменьшаем margin */
+            margin: 0 0 0.2rem 0;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Форматирование текста в HTML</h1>
+    <h2>Спецсимволы HTML</h2>
+    <div class="black-cards">
+        <span>&spades;</span>
+        <span>&clubs;</span>
+    </div>
+    <div class="red-cards">
+        <span> &hearts;</span>
+        <span>&diams;</span>
+    </div>
+    <h2>Семантический тег abbr</h2>
+    
+
+    <p><abbr title="Abbriveature">abbr</abbr> - этот тег позволит указать и расшифровать сокращение как человеку
+        так и роботу, который заглянет на вашу страничку</p>
+
+    <h2>Семантический тег адрес</h2>
+    <address>г. Москва, ул. Пушкина, д. 1</address>
+    <p>Позволяет указать, что этот текст является адресом</p>
+
+    <h2>Тег для клавиатурных сокращений</h2>
+    <p>Тег kbd
+        <kbd>Ctrl+Alt+Del</kbd>
+    </p>
+
+    <h2>Тег для выделения текста</h2>
+    <p>Тег mark
+        <mark>Выделенный текст</mark>
+    </p>
+
+    <h2>Тег для вставки кода</h2>
+    <p>Тег code</p>
+    <div class="code">
+        <code>
+def hello():
+    print("Hello, world!")
+        </code>
+    </div>
+    <h2>Форматирование текста через стили CSS</h2>
+    <p>white-space</p>
+    <p><abbr title="white-space">white-space: nowrap;</abbr> - запрет переноса строк</p>
+    <p><abbr title="white-space">white-space: pre;</abbr> - сохраняет пробелы и переносы строк</p>
+    <p><abbr title="white-space">white-space: pre-wrap;</abbr> - сохраняет пробелы и переносы строк</p>
+    <p><abbr title="white-space">white-space: pre-line;</abbr> - сохраняет переносы строк</p>
+    <p><abbr title="white-space">white-space: normal;</abbr> - по умолчанию</p>
+
+    <h2>Отступы в HTML. Margin и Padding</h2>
+    <p>Margin - отступы вокруг элемента</p>
+    <p>Padding - отступы внутри элемента</p>
+    <p>Margin и Padding могут принимать значения в px, em, rem, %, auto</p>
+    <h3>Параметры 0.0.0.0 в отступах, что это?</h3>
+    <p>0 - верхний отступ</p>
+    <p>0 - правый отступ</p>
+    <p>0 - нижний отступ</p>
+    <p>0 - левый отступ</p>
+    <p>Если указать одно значение, то это будет отступ со всех сторон</p>
+    <p>Если указать два значения, то это будет отступ сверху и снизу, а правый и левый будут равны</p>
+    <p>Если указать три значения, то это будет отступ сверху, справа и снизу, а левый будет равен правому</p>
+    <p>Если указать четыре значения, то это будет отступ сверху, справа, снизу и слева</p>
+    <p>Параметра auto - </p>
+    <h3>Примеры margin</h3>
+    <p style="margin: 0 0 0 0;">margin: 0 0 0 0;</p>
+    <p style="margin: 100px;">margin: 100px;</p>
+    <p style="margin: 100px 50px;">margin: 100px 50px;</p>
+    <p style="margin: 100px 50px 25px;">margin: 100px 50px 25px;</p>
+    <p style="margin: 100px 50px 25px 10px;">margin: 100px 50px 25px 10px;</p>
+
+    <h3>Примеры padding</h3>
+    <p style="padding: 0 0 0 0;">padding: 0 0 0 0;</p>
+    <p style="padding: 100px;">padding: 100px;</p>
+    <p style="padding: 100px 50px;">padding: 100px 50px;</p>
+    <p style="padding: 100px 50px 25px;">padding: 100px 50px 25px;</p>
+    <p style="padding: 100px 50px 25px 10px;">padding: 100px 50px 25px 10px;</p>
+
+
+
+
+</body>
+
+</html>

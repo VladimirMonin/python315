@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="События в JS и их обработка">
+    <title>LESSON 7</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <style>
+        body {
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        #citeFrame {
+            width: 80%;
+            height: 300px;
+        }
+    </style>
+</head>
+
+<body class="bg-light"></body>
+<header>
+    <nav id="nav">
+        <ul>
+
+        </ul>
+    </nav>
+</header>
+<main>
+    <h2 id="h2-1">Тег <code>iframe</code></h2>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/UbUQqcy7e9s?si=H7wCzbf5WK0ZSyTE"
+        title="YouTube video player" frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen></iframe>
+    <hr>
+    <iframe src='https://itstep.org' id="citeFrame"></iframe>
+</main>
+<h2 id="h2-2">Добываем элемент по ID <code>GetElementById</code></h2>
+<h2 id="h2-3">Добываем один элемент через <code>QuerySelector</code></h2>
+<p data-test-text="test">Тестовый текст
+</p>
+
+<h2 id="h2-4">Добываем массив элементов через <code>QuerySelectorAll</code></h2>
+
+<ul>
+    <li>Lorem ipsum dolor sit amet.</li>
+    <li>Lorem ipsum dolor sit amet.</li>
+    <li>Lorem ipsum dolor sit amet.</li>
+    <li>Lorem ipsum dolor sit amet.</li>
+    <li>Lorem ipsum dolor sit amet.</li>
+</ul>
+
+<h2 id="h2-5"><code>innerHTML</code> - получаем и меняем HTML содержимое элемента</h2>
+
+<ul id="test">
+    <li>Lorem ipsum dolor sit amet.</li>
+    <li>Lorem ipsum dolor sit amet.</li>
+    <li>Lorem ipsum dolor sit amet.</li>
+    <li>Lorem ipsum dolor sit amet.</li>
+    <li>Lorem ipsum dolor sit amet.</li>
+</ul>
+
+<!-- Кнопка BS5 стиль черный -->
+<button class="btn btn-dark" id="btnClearList" onclick="clearText()">Очистить текст</button>
+
+
+<h2 id="h2-6"><code>outerHTML</code> - получаем и меняем HTML содержимое элемента вместе с самим элементом</h2>
+<ul id="products">
+    <li>Что-то вредное</li>
+    <li>Хлеб</li>
+    <li>Масло</li>
+    <li>Молоко</li>
+    <li>Яйца</li>
+</ul>
+
+<button class="btn btn-dark" id="btnChangeFirstChild" onclick="ChangeFirstChild()">Купить полезное</button>
+
+<h2><code>hidden</code> - атрибут, который скрывает элемент. Аналог CSS <code>display: none</code></h2>
+
+<button class="btn btn-dark" id="btnHiddenProductsList" onclick="hiddenProductsList()">Скрыть/показать</button>
+
+<h2 id="h2-7">Таблицы... циклы и JS</h2>
+<!-- Bootstrap5 полосатая таблица с ховером -->
+<table class="table table-striped table-hover">
+<thead></thead>
+<tbody></tbody>
+</table>
+
+<script>
+    // Методы поиска элементов DOM
+    // 1. По ID. GetElementById - возвращает один элемент с указанным ID
+    // 2. По CSS селектору. QuerySelector - возвращает один элемент с указанным CSS селектором
+    // 3. По CSS селектору. QuerySelectorAll - возвращает массив элементов с указанным CSS селектором
+
+    // 1. По ID. GetElementById - возвращает один элемент с указанным ID (ищем nav)
+    let nav = document.getElementById('nav');
+    console.log(nav);
+
+    // 2. Добываем тестовый элемент по атрибуту data-test-text через QuerySelector
+    let testText = document.querySelector('[data-test-text="test"]');
+    console.log(testText);
+
+    // 3. Добываем массив элементов через QuerySelectorAll
+    let liItems = document.querySelectorAll('ul li');
+    console.log(liItems);
+
+    // 4. Добываем first-child элемент через QuerySelector
+    let firstChild = document.querySelector('ul li:first-child');
+    console.log(firstChild);
+
+    // 5. Добываем [0] из массива элементов через QuerySelectorAll
+    let firstChild2 = document.querySelectorAll('ul li')[0];
+
+    // Inner HTML - свойство, которое позволяет получить или изменить HTML содержимое элемента
+    // Удаление через innerHTML
+
+    // Пишем функцию, которая будет работать по клику на кнопку и искать параграф с ID test и стирать его содержимое
+    function clearText() {
+        let test = document.getElementById('test');
+        test.innerHTML = '';
+    }
+
+    // Добавление данных через innerHTML
+    // Пишем функцию, которая будет работать по загрузке документа
+    // Ищем nav ul
+    // Ищем все заголовки h2 на странице. Берем их текст и наполняем в цикле навигацию в виде внутренних ссылок
+
+    // 1. Ищем nav ul
+    let navUl = document.querySelector('nav ul');
+
+    // 2. Ищем все заголовки h2 на странице
+    let h2 = document.querySelectorAll('h2');
+
+    // 3. Берем их текст и наполняем в цикле навигацию в виде внутренних ссылок
+    for (let i = 0; i < h2.length; i++) {
+        navUl.innerHTML += `<li><a href="#${h2[i].id}">${h2[i].textContent}</a></li>`;
+    }
+
+    // outerHTML - свойство, которое позволяет получить или изменить HTML содержимое элемента вместе с самим элементом
+    // Функция ChangeFirstChild - ищем первый элемент в списке делаем промпт и меняем на пользовательский ввод
+
+    function ChangeFirstChild() {
+        // Ищем первый элемент в списке (функция висит onclick на кнопке)
+        let firstLi = document.querySelector('#products li:first-child')
+        // outerHTML - заменяет весь элемент на новый
+        // firstLi.outerHTML = `<li>${prompt('Введите название продукта')}</li>`;
+        // Это же через textContent - заменяет только текст внутри элемента
+        firstLi.textContent = prompt('Введите название продукта');
+
+    }
+
+    // hidden пользовательские атрибуты createElement className innerHTML 
+    // append prepend before after removeChild remove
+
+    // hidden - атрибут, который скрывает элемент. Аналог CSS display: none
+    // getAttribute - получает значение атрибута
+    // setAttribute - устанавливает значение атрибута
+    // hasAttribute - проверяет наличие атрибута
+    // removeAttribute - удаляет атрибут
+    // .attributes - возвращает все атрибуты элемента
+
+    // Функция для кнопки hiddenProductsList
+    function hiddenProductsList() {
+        // Ищем список продуктов
+        let products = document.getElementById('products');
+        // Выводим в консоль все атрибуты элемента
+        console.log(products.attributes);
+        // Заглядываем в значение атрибута hidden
+        console.log(products.getAttribute('hidden'));
+        // Проверяем, есть ли у него атрибут hidden
+        if (products.hasAttribute('hidden')) {
+            // Если есть, то удаляем его
+            products.removeAttribute('hidden');
+        } else {
+            // Если нет, то добавляем
+            products.setAttribute('hidden', '');
+        }
+    }
+
+    // CreateElement - создает элемент
+    // Отличается от innerHTML тем что не заменяет элемент, а добавляет его в конец родителя
+
+
+    // Варианты CreateElement
+    // - append - добавляет элемент в конец родителя
+    // - prepend - добавляет элемент в начало родителя
+    // - before - добавляет элемент перед родителем
+    // - after - добавляет элемент после родителя
+    // - replaceWith - заменяет элемент на другой заданными узлами или строками
+
+    // Находим <ul id="products">
+    let products = document.getElementById('products');
+
+    // Создаем новый элемент
+    let newLi = document.createElement('li');
+    // Добавляем в него текст
+    newLi.textContent = 'Картошка';
+    // Добавляем в конец списка
+    products.append(newLi);
+
+    // Создаем новый элемент
+    let newLi2 = document.createElement('li');
+    // Добавляем в него текст
+    newLi2.textContent = 'Соль';
+    // Добавляем в начало списка
+    products.prepend(newLi2);
+
+    // Добавим до списка h3 с текстом список покупок созданный через JS
+
+    // Создаем элемент
+    let h3 = document.createElement('h3');
+
+    // Добавляем текст
+    h3.textContent = '100% JS код, никакого HTML';
+
+    // Добавляем перед списком
+    products.before(h3);
+
+    // Работа с классами
+    // classList - свойство, которое позволяет работать с классами элемента
+    // add - добавляет класс
+    // remove - удаляет класс
+    // toggle - добавляет класс, если его нет и удаляет, если есть
+    // contains - проверяет наличие класса
+    // list - возвращает список классов в виде массива
+
+
+
+
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+
+    <style>
+        .container div {
+            border: 1px solid rgb(218, 198, 198);
+        }
+
+        /* Скрыть таблицу */
+        .table-responsive {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- Заголовок -->
+        <div class="row">
+            <div class="col text-center mb-1">
+                <h1>Погодное приложение <code>v0.3</code></h1>
+            </div>
+        </div>
+        <!-- Поле ввода -->
+        <div class="row">
+            <div class="col mb-1">
+                <input type="text" class="form-control" id="inputField" placeholder="Введите город">
+            </div>
+        </div>
+        <!-- Отображение данных -->
+        <div class="row text-center">
+            <!-- Текущая погода -->
+            <div class="col-xxl-6 col-12" id="currentWeatherMain"></div>
+            <!-- Остальные данные -->
+            <div class="col-xxl-6 col-12">
+                <div class="accordion accordion-flush" id="accordionExample">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <!-- collapsed - означает что кнопка будет в состоянии "закрыто"
+                            Это нужно убрать, если выхотите добавить show - и открыть её по умолчанию при загрузке страницы -->
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                Текущая погода
+                            </button>
+                        </h2>
+                        <!-- show - свойство этого дива, чтобы эта вкладка была раскрыта при загрузке страницы -->
+                        <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                            <div class="accordion-body" id="accordionContentOne">
+                                Тут будет текущая погода
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                Состояние воздуха
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                            <div class="accordion-body" id="accordionContentTwo">
+                                Тут будет состояние воздуха
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Таблица перехала сюда -->
+        <div class="row">
+            <div class="col">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Дата</th>
+                                <th>Иконка</th>
+                                <th>Описание</th>
+                                <th>Температура</th>
+                                <th>Ощущается как</th>
+                                <th>Вероятность осадков</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+
+
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
+
+    <script>
+
+        const apiKey = '23496c2a58b99648af590ee8a29c5348'
+        const units = 'metric'
+        const lang = 'ru'
+
+
+        // 1. Функция записи данных формы в localStorage. Принимает в качестве аргумент строку с даннымими записывает их в localStorage
+        function writeToLocalStorage(data) {
+            localStorage.setItem('city', data);
+        }
+
+
+        // 2. Функция чтения данных из localStorage. Возвращает строку с данными
+        function readFromLocalStorage() {
+            return localStorage.getItem('city');
+        }
+
+
+        // 3. Функция которая добывает данные из формы и возвращает строку
+        function getDataFromForm() {
+            value = document.querySelector('#inputField').value;
+            // console.log(value);
+            return value;
+        }
+
+        // 4. Функция которая записывает данные в span result
+        function printOnPage(data) {
+            document.querySelector('#result').textContent = data;
+        }
+        // 5. Функция которая записывает данные в форму (принимает строку с данными)
+        function printToForm(data) {
+            document.querySelector('#inputField').value = data;
+        }
+
+
+        // 6. Функция запроса данных по API - возвращает объект с данными
+        async function fetchRequestAsync(url) {
+            // await - указание на то что нужно дождаться результата выполнения функции fetch
+            // Получаем данные с сервера
+            let data = await fetch(url)
+            // await - указание на то что нужно дождаться результата выполнения функции data.json()
+            // Получаем только тело ответа
+            // data.json() - преобразование данных в json формат, тип данных - object
+
+            data = await data.json()
+            return data
+        }
+
+        // 7. Функция которая принимает название города и возвращает объект с координатами
+        // url api = http://api.openweathermap.org/geo/1.0/direct?q=ГОРОД&appid={API key}
+        function getCityCoordinates(city) {
+            let url = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${apiKey}`
+            return fetchRequestAsync(url)
+        }
+
+        // 8. Функция которая ответ АПИ с координатами и возвращает объект lat lon
+        function getCityCoordinatesClearObj(rawCoordObj) {
+            let coordObj = {
+                lat: rawCoordObj[0].lat,
+                lon: rawCoordObj[0].lon
+            }
+            return coordObj
+        }
+
+        // 9. Функция которая принимает объект с координатами и возвращает объект с url запросов по разным маршрутам
+        // Примеры запросов.
+        // URL текущей погоды https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}&units={units}&lang={lang}
+        // URL прогноза https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}&units={units}&lang={lang}
+        // URL данных по воздуху http://api.openweathermap.org/data/2.5/air_pollution?lat={lat}&lon={lon}&appid={API key}
+        function getUrlsObj(coordObj) {
+            let urlsObj = {
+                currentWeather: `https://api.openweathermap.org/data/2.5/weather?lat=${coordObj.lat}&lon=${coordObj.lon}&appid=${apiKey}&units=${units}&lang=${lang}`,
+                forecastWeather: `https://api.openweathermap.org/data/2.5/forecast?lat=${coordObj.lat}&lon=${coordObj.lon}&appid=${apiKey}&units=${units}&lang=${lang}`,
+                airPollution: `http://api.openweathermap.org/data/2.5/air_pollution?lat=${coordObj.lat}&lon=${coordObj.lon}&appid=${apiKey}`
+            }
+            return urlsObj
+        }
+
+        // 10. Функция которая принимает объект с url и возвращает объект с данными по запросам
+        // Promise.all - принимает массив промисов и возвращает массив результатов
+        async function getWeatherData(urlsObj) {
+            let responses = await Promise.all(
+                [
+                    fetchRequestAsync(urlsObj.currentWeather),
+                    fetchRequestAsync(urlsObj.forecastWeather),
+                    fetchRequestAsync(urlsObj.airPollution)
+                ]
+            );
+
+            return {
+                currentWeather: responses[0],
+                forecastWeather: responses[1],
+                airPollution: responses[2]
+            };
+        }
+
+        // 11. Listener нажатие кнопки Enter в форме.
+        // При нажатии на кнопку Enter в форме происходит вывод в консоль 
+        // всех трех урлов для запросов и всё.
+
+        // Стартовый листнер занятия, который выдавал URLы в консоль, мы их брали
+        // для анализа и понимания что и как нам нужно вытаскивать из ответа API
+
+        // document.querySelector('#inputField').addEventListener('keydown', async function (event) {
+        //     console.log(event);
+        //     if (event.key === 'Enter') {
+        //         let city = getDataFromForm();
+        //         let coordObj = getCityCoordinatesClearObj(await getCityCoordinates(city));
+        //         let urlsObj = getUrlsObj(coordObj);
+        //         console.log(urlsObj);
+        //     }
+        // });
+
+        // LESSON 16
+
+        // Разобрали ручку загрязнения воздуха
+        // http://api.openweathermap.org/data/2.5/air_pollution?
+        // http://api.openweathermap.org/data/2.5/air_pollution?lat=55.7504461&lon=37.6174943&appid=23496c2a58b99648af590ee8a29c5348
+        // Что из нее можно взять?
+        // По максимуму:
+        // Посчитать оценку по каждому из загрязнений и выдать баллы в виде таблицы,
+        // Хим.формула / название / степень загрязнения / оценка /
+        // По наведению мыши на строку показывать справку чем это опасно (аттрибут title)
+
+        // По минимуму:
+        // obj.list[0].main.aqi - общая оценка качества воздуха
+        // В зависимости от цифры покрасить в один из цветов BS5
+
+        // Ручка текущей погоды
+        // https://api.openweathermap.org/data/2.5/weather?
+        // https://api.openweathermap.org/data/2.5/weather?lat=55.7504461&lon=37.6174943&appid=23496c2a58b99648af590ee8a29c5348&units=metric&lang=ru
+
+        // Что можно взять?
+        // Иконка. obj.weather[0].icon
+        // Вероятность осадков obj.pop
+        // Расшифровка obj.weather[0].description
+        // Текущая погода obj.main.temp
+        // Ощущается как obj.main.feels_like
+        // Сила ветра obj.wind.speed
+        // Давление  obj.main.pressure
+        // Влажность obj.main.humidity
+        // Видимость obj.visibility
+        // Восход опционально obj.sys.sunrise
+        // Закат опционально obj.sys.sunset
+
+        // ИКОНКИ! почитать можно тут
+        // https://openweathermap.org/weather-conditions
+        // Размеры 50х50, 100х100, 200х200
+        // Просто поменяй ID в url
+        // https://openweathermap.org/img/wn/10d.png
+        // https://openweathermap.org/img/wn/10d@2x.png
+        // https://openweathermap.org/img/wn/10d@4x.png
+
+
+        // Ручка прогноз погоды 
+        // https://openweathermap.org/forecast5
+        // https://api.openweathermap.org/data/2.5/forecast?
+        // https://api.openweathermap.org/data/2.5/forecast?lat=55.7504461&lon=37.6174943&appid=23496c2a58b99648af590ee8a29c5348&units=metric&lang=ru
+
+        // Что можно взять?
+        // Дата - время в строковом представлении
+        // obj.list[0].dt_txt
+
+        // Иконка. obj.list[0].weather[0].icon
+        // Расшифровка obj.list[0].weather[0].description
+        // Текущая погода obj.list[0].main.temp
+        // Ощущается как obj.list[0].main.feels_like
+        // Сила ветра obj.list[0].wind.speed
+        // Давление  obj.list[0].main.pressure
+        // Влажность obj.list[0].main.humidity
+        // Видимость obj.list[0].visibility
+        // Вероятность осадков obj.list[0].pop
+        // Восход опционально obj.list[0].sys.sunrise
+        // Закат опционально obj.list[0].sys.sunset
+
+        let accordionContentOne = document.querySelector('#accordionContentOne');
+        let accordionContentTwo = document.querySelector('#accordionContentTwo');
+      
+
+        // 12. Функция которая принимает id иконки, а так же кратность 0, 2, 4 и возвращает url иконки
+        // если 0 - то @ убираем
+        function getIconUrl(iconId, size) {
+            if (size === 0) {
+                return `https://openweathermap.org/img/wn/${iconId}.png`
+            } else {
+                return `https://openweathermap.org/img/wn/${iconId}@${size}x.png`
+            }
+        }
+
+        // 13. Функция, которая принимает вероятность дожда в числе и возвращает вероятность дожда в процентах (строка)
+        // 0.1 = 10%
+
+        function getPopString(pop) {
+            // Преобразуем строку в число
+            pop = new Number(pop);
+            return `${pop * 100}%`
+        }
+
+        // 14. Функция которая принимает объект со всеми данными из getWeatherData и вытаскивает данные из currentWeather
+        // А именно, текущую погоду, ощущается как, и вероятность дождя, иконку. Возвращает результат в виде объекта
+
+        function getClearCurrentWeatherObj(weatherData) {
+            let currentWeatherObj = {
+                currentWeather: weatherData.currentWeather.weather[0].description,
+                feelsLike: weatherData.currentWeather.main.feels_like,
+                // Вероятно POP не отрисовывается из за того, что данные лежат по другому ключу
+                icon: getIconUrl(weatherData.currentWeather.weather[0].icon, 4)
+            }
+            return currentWeatherObj
+        }
+
+        // 15. Функция, которая принимает элемент аккордеона и объект с данными и выводит данные в аккордеон
+        // Отрисовка происходит в цикле, под каждый ключ объекта создается p с данными
+        // Если ключ называется icon, то создается img с src равным значению ключа и alt - с подписью "Иконка погоды"
+
+        function printCurrentWeather(accordionContent, WeatherObj) {
+            accordionContent.innerHTML = '';
+            for (let key in WeatherObj) {
+                if (key === 'icon') {
+                    let img = document.createElement('img');
+                    img.src = WeatherObj[key];
+                    img.alt = 'Иконка погоды';
+                    accordionContent.append(img);
+                } else {
+                    let p = document.createElement('p');
+                    p.textContent = `${key}: ${WeatherObj[key]}`;
+                    accordionContent.append(p);
+                }
+            }
+        }
+
+
+        // 16. Листнер на нажатие кнопки Enter в форме.
+        // Мы запускаем цепочку действий - 
+        // получаем данные из формы -> получаем координаты города -> получаем объект с url для запросов -> 
+        // получаем объект с ответами -> обрабатываем ответы -> выводим в аккордеон
+
+        // document.querySelector('#inputField').addEventListener('keydown', async function (event) {
+
+        //     if (event.key === 'Enter') {
+        //         let city = getDataFromForm();
+        //         let coordObj = getCityCoordinatesClearObj(await getCityCoordinates(city));
+        //         let urlsObj = getUrlsObj(coordObj);
+        //         let weatherData = await getWeatherData(urlsObj);
+        //         let currentWeatherObj = getClearCurrentWeatherObj(weatherData);
+        //         printCurrentWeather(accordionContentOne, currentWeatherObj);
+        //     }
+        // });
+
+
+        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        // Контент 17 урока - BS5 
+        // Продолжим писать JS часть тут
+
+        let currentWeatherMain = document.querySelector('#currentWeatherMain');
+        let tableBody = document.querySelector('tbody');
+
+        // Доделать функцию 14 - чтобы получить корректные данные
+        // Сделать аналоги для состояния воздуха и погоды на 5 дней по 3 часа
+
+        // Сделать функции отрисовки 
+        // (1. Текущая погода общая информация, 
+        // 2. Состояние воздуха, 
+        // 3. Погода на 5 дней по 3 часа)
+
+
+
+
+        document.querySelector('#inputField').addEventListener('keydown', async function (event) {
+
+            if (event.key === 'Enter') {
+                let city = getDataFromForm();
+                let coordObj = getCityCoordinatesClearObj(await getCityCoordinates(city));
+                let urlsObj = getUrlsObj(coordObj);
+                let weatherData = await getWeatherData(urlsObj);
+                // console.log(weatherData);
+                let currentWeatherObj = getClearCurrentWeatherObj(weatherData);
+                printCurrentWeather(currentWeatherMain, currentWeatherObj);
+                let forecastWeatherObj = getClearForecastWeatherObj(weatherData);
+                printForecastWeather(tableBody, forecastWeatherObj);
+
+                // Получаем объект очищенных подробных данных о текущей погоде
+                let clearDetailCurrentWeatherObj = getClearDetailCurrentWeatherObj(weatherData);
+                console.log(clearDetailCurrentWeatherObj);
+                // Отрисовываем данные в аккордеон
+                printCurrentWeather(accordionContentOne, clearDetailCurrentWeatherObj);
+
+                // Получаем оценку качества воздуха
+                let airPollutionRating = getAirPollutionRating(weatherData);
+                console.log(airPollutionRating);
+                printCurrentWeather(accordionContentTwo, airPollutionRating);
+            }
+        });
+
+        // 17. Функция, которая принимает объект со всеми данными из getWeatherData и вытаскивает данные из 
+        // forecastWeather
+        // Из ключа dt_txt - дата и время
+        // Из ключа weather - элемент массива 0 - icon - Иконка (обработать функций - чтобы поместить ссылку)
+        // Из ключа weather - элемент массива 0 - description - Расшифровка
+        // Из ключа main - temp - Текущая температура
+        // Из ключа main - feels_like - Ощущается как
+        // Из ключа list - pop - Вероятность осадков. 
+
+
+        function getClearForecastWeatherObj(weatherData) {
+            // В цикле проходим по массиву list и добываем данные
+
+            resultForecastArray = [];
+
+            for (let i = 0; i < weatherData.forecastWeather.list.length; i++) {
+                let forecastWeatherObj = {
+                    date: weatherData.forecastWeather.list[i].dt_txt,
+                    icon: getIconUrl(weatherData.forecastWeather.list[i].weather[0].icon, 0),
+                    description: weatherData.forecastWeather.list[i].weather[0].description,
+                    temp: weatherData.forecastWeather.list[i].main.temp,
+                    feels_like: weatherData.forecastWeather.list[i].main.feels_like,
+                    pop: getPopString(weatherData.forecastWeather.list[i].pop)
+                }
+                resultForecastArray.push(forecastWeatherObj);
+            }
+
+            return resultForecastArray;
+        }
+
+        // 18. Функция которая принимает большой объект погоды и возвращает массив содержащий ДЕТАЛЬНУЮ информацю о текущей погоде
+
+        function getClearDetailCurrentWeatherObj(weatherData) {
+            let ClearDetailCurrentWeatherObj = {
+                currentWeather: weatherData.currentWeather.weather[0].description,
+                feelsLike: weatherData.currentWeather.main.feels_like,
+                windSpeed: weatherData.currentWeather.wind.speed,
+                visibility: weatherData.currentWeather.visibility,
+                pressure: weatherData.currentWeather.main.pressure,
+                humidity: weatherData.currentWeather.main.humidity,
+    
+            }
+            return ClearDetailCurrentWeatherObj
+        }
+        
+
+
+
+        // 19. Функция, которая принимает tableBody и объект с данными и создает строки таблицы с данными
+        // В цикле создаем строки таблицы и в каждую строку добавляем ячейки с данными
+
+        function printForecastWeather(tableBody, forecastWeatherObj) {
+            tableBody.innerHTML = '';
+            // Включение видимости таблицы
+            document.querySelector('.table-responsive').style.display = 'block';
+
+            // Цикл по массиву объектов
+            for (let i = 0; i < forecastWeatherObj.length; i++) {
+                let tr = document.createElement('tr');
+
+                // Цикл по объекту
+                for (let key in forecastWeatherObj[i]) {
+                    let td = document.createElement('td');
+                    if (key === 'icon') {
+                        let img = document.createElement('img');
+                        img.src = forecastWeatherObj[i][key];
+                        img.alt = 'Иконка погоды';
+                        td.append(img);
+                    } else {
+                        td.textContent = forecastWeatherObj[i][key];
+                    }
+                    tr.append(td);
+                }
+                tableBody.append(tr);
+            }
+        }
+
+        // 20. Функция, которая принимает объект с данными о погоде и возвращает общую оценку воздуха 
+        // тип данных объект с одним ключом качество воздуха
+        // Данные лежат в obj.list[0].main.aqi
+
+
+        function getAirPollutionRating(weatherData) {
+            return {
+                airPollutionRating: weatherData.airPollution.list[0].main.aqi
+            }
+        }
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>

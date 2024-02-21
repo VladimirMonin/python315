@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            width: 90%;
+            margin: 0 auto;
+        }
+        /* Стили для родительского контейнера */
+
+        .flex-container {
+            display: flex;
+            border: 2px solid black;
+            padding: 10px;
+
+            /* Основные оси (можно менять для демонстрации) */
+            flex-direction: row;
+            /* пробуйте менять на column */
+
+            /* Выравнивание элементов вдоль главной оси */
+            justify-content: flex-end;
+            /* пробуйте менять на flex-start, flex-end, center, space-around */
+
+            /* Выравнивание элементов вдоль поперечной оси */
+            align-items: center;
+            /* пробуйте менять на flex-start, flex-end, stretch, baseline */
+
+            /* Управление переносом элементов */
+            flex-wrap: wrap;
+            /* пробуйте менять на wrap */
+        }
+
+        /* Стили для дочерних элементов */
+
+        .flex-item {
+            width: 50px;
+            /* Ширина элемента. При режиме display flex не обязательно указывать ширину, можно использовать свойство flex-basis */
+            height: 50px;
+            /* Высота элемента. При режиме display flex не обязательно указывать высоту, можно использовать свойство flex-basis */
+            background-color: lightblue;
+            margin: 5px;
+            display: flex;
+            /* display flex для дочерних элементов. Это нужно, чтобы элементы внутри flexbox тоже стали flexbox'ами
+            Что позволит нам управлять их расположением и расположением их содержимого */  
+            align-items: center;
+            /* Выравнивание элементов вдоль поперечной оси */
+            justify-content: center;
+            /* Выравнивание элементов вдоль главной оси */
+            font-size: 20px;
+            font-weight: bold;
+
+            /* Рост и сжатие */
+            flex: flex-basis;
+            /* сокращенное свойство для flex-grow, flex-shrink и flex-basis; пробуйте менять значения */
+
+            /* Изменение порядка */
+            order: 0;
+            /* значения по умолчанию для всех; можно менять для демонстрации, например, для item2: 1, чтобы переместить его в конец */
+        }
+
+        .item2 {
+            /* order: 1; */
+            /* Этот элемент будет последним, несмотря на его позицию в HTML-коде */
+
+        
+        }
+
+        .table {
+            margin-top: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="flex-container">
+        <div class="flex-item item1"><p>1</p></div>
+        <div class="flex-item item2">2</div>
+        <div class="flex-item item3">3</div>
+        <div class="flex-item item4">4</div>
+        <div class="flex-item item4">4</div>
+        <div class="flex-item item4">4</div>
+        <div class="flex-item item4">4</div>
+        <div class="flex-item item4">4</div>
+        <div class="flex-item item4">4</div>
+        <div class="flex-item item4">4</div>
+        <div class="flex-item item4">4</div>
+    </div>
+
+    <div class="table">
+        <h2>Свойства flexbox</h2>
+        <table border="1" cellspacing="0" cellpadding="5">
+            <thead>
+                <tr>
+                    <th>Свойство</th>
+                    <th>Описание и параметры</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>display</strong></td>
+                    <td>Устанавливает тип отображения элемента. Для flexbox используются значения: <br>•
+                        <code>flex</code>:
+                        блочный контейнер flex. <br>• <code>inline-flex</code>: строчный контейнер flex.</td>
+                </tr>
+                <tr>
+                    <td><strong>flex-direction</strong></td>
+                    <td>Определяет главную ось контейнера. <br>• <code>row</code>: горизонтально (по умолчанию) <br>•
+                        <code>row-reverse</code>: горизонтально в обратном порядке <br>• <code>column</code>:
+                        вертикально
+                        <br>• <code>column-reverse</code>: вертикально в обратном порядке
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>justify-content</strong></td>
+                    <td>Выравнивает элементы вдоль главной оси. <br>• <code>flex-start</code>: в начале оси <br>•
+                        <code>flex-end</code>: в конце оси <br>• <code>center</code>: по центру <br>•
+                        <code>space-between</code>: равные промежутки между элементами <br>• <code>space-around</code>:
+                        равные промежутки вокруг элементов <br>• <code>space-evenly</code>: равное распределение
+                        пространства между и вокруг элементов
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>align-items</strong></td>
+                    <td>Выравнивает элементы вдоль поперечной оси. <br>• <code>stretch</code>: растягивает элементы на
+                        всю
+                        высоту контейнера <br>• <code>flex-start</code>: выравнивает элементы к верху контейнера <br>•
+                        <code>flex-end</code>: выравнивает элементы к низу контейнера <br>• <code>center</code>:
+                        выравнивает
+                        элементы по центру <br>• <code>baseline</code>: выравнивает элементы по базовой линии текста
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>flex-wrap</strong></td>
+                    <td>Управляет переносом элементов на новую строку. <br>• <code>nowrap</code>: все элементы на одной
+                        строке (по умолчанию) <br>• <code>wrap</code>: элементы могут переноситься на новую строку <br>•
+                        <code>wrap-reverse</code>: элементы могут переноситься на новую строку в обратном порядке
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>flex</strong></td>
+                    <td>Сокращенное свойство для <code>flex-grow</code>, <code>flex-shrink</code> и
+                        <code>flex-basis</code>.
+                        <br>• Первое значение: <code>flex-grow</code> <br>• Второе значение: <code>flex-shrink</code>
+                        <br>•
+                        Третье значение: <code>flex-basis</code>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>flex-grow</strong></td>
+                    <td>Определяет фактор роста элемента. Значение по умолчанию — <code>0</code>. Если у всех элементов
+                        это
+                        значение равно <code>1</code>, все элементы будут расти равномерно.</td>
+                </tr>
+                <tr>
+                    <td><strong>flex-shrink</strong></td>
+                    <td>Определяет фактор сжатия элемента. Значение по умолчанию — <code>1</code>. Если у всех элементов
+                        это
+                        значение равно <code>1</code>, все элементы будут сжиматься равномерно.</td>
+                </tr>
+                <tr>
+                    <td><strong>flex-basis</strong></td>
+                    <td>Определяет базовый размер элемента перед тем, как применяются <code>flex-grow</code> или
+                        <code>flex-shrink</code>. Значение по умолчанию — <code>auto</code>.
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>order</strong></td>
+                    <td>Устанавливает порядок элемента внутри контейнера. Элементы с меньшим значением порядка
+                        располагаются
+                        перед элементами с большим значением. Значение по умолчанию — <code>0</code>.</td>
+                </tr>
+                <tr>
+                    <td><strong>Тренеровка на практике</strong></td>
+                    <td><a href=https://flexboxfroggy.com/#ru>Посади лягушку!</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

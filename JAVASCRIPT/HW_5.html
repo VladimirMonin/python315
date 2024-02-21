@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+
+
+    <title>Домашнее задание</title>
+    <!-- РЕШЕНИЕ -->
+    <style>
+        .red-sqear {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .yellow-sqear {
+            width: 100px;
+            height: 100px;
+            background-color: yellow;
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .green-sqear {
+            width: 100px;
+            height: 100px;
+            background-color: green;
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .gray-sqear {
+            width: 100px;
+            height: 100px;
+            background-color: gray;
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Домашнее задание 📌</h1>
+
+        <div class="bg-light p-3 rounded">
+            <h2>Описание: 🖼️</h2>
+            <p>
+                Вам предстоит создать интерактивную веб-страницу с четырьмя блоками. Три из них располагаются
+                горизонтально в верхней части страницы, каждый блок имеет свой уникальный цвет: зеленый, желтый и
+                красный. Четвертый блок, расположенный ниже, должен менять свой цвет в зависимости от того, над каким из
+                верхних блоков находится курсор мыши. Если курсор не находится над ни одним из верхних блоков, четвертый
+                блок должен стать серого цвета.
+            </p>
+            <h2>Подсказки: 💡</h2>
+            <ul>
+                <li><span class="fw-bold">🎨 Для создания блоков</span> можно использовать HTML-тег
+                    <code>&lt;div&gt;</code> с соответствующими стилями CSS.
+                </li>
+                <li><span class="fw-bold">🖱️ Вам понадобятся события JavaScript</span> <code>mouseover</code> и
+                    <code>mouseout</code> для отслеживания движения курсора мыши.
+                </li>
+                <li><span class="fw-bold">🔍 У каждого верхнего блока</span> должен быть свой уникальный идентификатор
+                    или класс для идентификации в JavaScript.</li>
+            </ul>
+            <h2>Критерии проверки: 📋</h2>
+            <ul>
+                <li><span class="fw-bold">Компоновка блоков:</span> Верхние блоки расположены горизонтально друг рядом с
+                    другом, а четвертый блок находится непосредственно под ними.</li>
+                <li><span class="fw-bold">Интерактивность:</span> Цвет нижнего блока корректно изменяется в зависимости
+                    от положения курсора мыши над верхними блоками. При отсутствии курсора над верхними блоками, цвет
+                    четвертого блока становится серым.</li>
+                <li><span class="fw-bold">Оформление:</span> Все блоки имеют четкие границы, и их цвета соответствуют
+                    указанным в описании.</li>
+                <li><span class="fw-bold">Формат сдачи:</span> Работа должна быть представлена в виде одного HTML-файла.
+                </li>
+            </ul>
+            <div id="hw">
+                <div class="red-sqear block"></div>
+                <div class="yellow-sqear block"></div>
+                <div class="green-sqear block"></div>
+                <div class="gray-sqear"></div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+    <script>
+        // РЕШЕНИЕ
+        // Переменные для каждого блока
+        // let Green = document.querySelector(".green-sqear");
+        // let Yellow = document.querySelector(".yellow-sqear");
+        // let Red = document.querySelector(".red-sqear");
+        // let Gray = document.querySelector(".gray-sqear");
+
+        // // Изменение цвета при наведении на определенный блок
+        // Green.addEventListener("mouseover", function () {
+        //     Gray.classList.add("green-sqear");
+        //     Gray.classList.remove("gray-sqear");
+        // });
+        // Green.addEventListener("mouseout", function () {
+        //     Gray.classList.add("gray-sqear");
+        //     Gray.classList.remove("green-sqear");
+        // })
+
+        // Yellow.addEventListener("mouseover", function () {
+        //     Gray.classList.add("yellow-sqear");
+        //     Gray.classList.remove("gray-sqear");
+        // });
+
+        // Yellow.addEventListener("mouseout", function () {
+        //     Gray.classList.add("gray-sqear");
+        //     Gray.classList.remove("yellow-sqear");
+        // })
+
+        // Red.addEventListener("mouseover", function () {
+        //     Gray.classList.add("red-sqear");
+        //     Gray.classList.remove("gray-sqear");
+        // })
+
+        // Red.addEventListener("mouseout", function () {
+        //     Gray.classList.add("gray-sqear");
+        //     Gray.classList.remove("red-sqear");
+        // })
+
+        // Как сделать это в цикле?
+        // red-sqear
+
+        let colors = ["red-sqear", "yellow-sqear", "green-sqear"];
+        let blocks = document.querySelectorAll(".block");
+        console.log(blocks);
+        let gray = document.querySelector(".gray-sqear");
+        console.log(gray);
+
+        for (let i = 0; i < blocks.length; i++) {
+            blocks[i].addEventListener("mouseover", function () {
+                gray.classList.add(colors[i]);
+                gray.classList.remove("gray-sqear");
+                console.log(`mouseover ${colors[i]}`);
+            });
+            blocks[i].addEventListener("mouseout", function () {
+                gray.classList.add("gray-sqear");
+                gray.classList.remove(colors[i]);
+                console.log(`mouseout ${colors[i]}`);
+            })
+        }
+
+
+
+    </script>
+</body>
+
+</html>

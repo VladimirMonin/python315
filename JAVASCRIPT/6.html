@@ -1,0 +1,303 @@
+<!-- 'bg-dark', 'text-white'
+bg-light', 'text-dark'
+'btn-light
+'btn-dark'
+Темная тема -->
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="События в JS и их обработка">
+    <title>LESSON 6</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <style>
+        .redSquare {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            margin: 50px;
+        }
+
+        .blueSquare {
+            width: 100px;
+            height: 100px;
+            background-color: blue;
+            margin: 50px;
+            border-radius: 50%;
+        }
+        body {
+            width: 90%;
+            margin: 0 auto;
+        }
+        .borderRadius {
+            border-radius: 50%;
+            border: 5px solid rgb(46, 31, 31);
+            box-shadow: 0 0 10px 5px rgb(46, 31, 31);
+        }
+
+        #photoFrame {
+            width: 300px;
+            height: 300px;
+            /* Добавляем фоновое изображение  ../img/bender.webp*/
+            background-image: url('../img/bender.webp');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<header>
+    <ul>
+        <li>Разбор домашнего задания с кнопкой смены темы оформления</li>
+        <li>Посмотрели на BS5 классы для цвета фона и шрифтов. Кнопки</li>
+        <li>Формы. Ожидание изменения поля ввода</li>
+        <li>Разбор ДЗ с пословицами + форма с выпадающим списком для количества пословиц</li>
+        <li>Очистка ul от всех наследников через inner HTML</li>
+        <li>Отключение обновления страницы после отправки формы</li>
+
+
+    </ul>
+</header>
+
+<body class="bg-light">
+
+
+
+
+    <div class="redSquare"></div>
+    <!-- Кнопка BS5 dark style -->
+    <button id="toggleTheme" class="btn btn-dark">Переключить тему</button>
+
+    <!-- Форма в стиле BS5 без кнопки отправить -->
+    <div class="mb-3">
+        <label for="noButtonForm" class="form-label">Форма реагирующая на ввод данных</label>
+        <input type="text" class="form-control" id="noButtonForm" placeholder="Введите что-нибудь">
+    </div>
+    <!-- Div в котором будет отображаться тот текст, который мы вводим в id="noButtonForm" -->
+    <div id="noButtonFormText"></div>
+
+    <!-- Форма BS5 с выпадающим списком опций -->
+    <div class="mb-3">
+        <label for="selectForm" class="form-label">Выберете количество пословиц</label>
+        <select class="form-select" id="selectFormNoButton">
+            <option selected>Выберете количество пословиц</option>
+            <option value="5">Хочу 5 пословиц!</option>
+            <option value="10">Хочу 10 пословиц!</option>
+            <option value="15">Хочу 15 пословиц!</option>
+            <option value="20">Хочу 20 пословиц!</option>
+            <option value="25">Хочу 25 пословиц!</option>
+            <option value="30">Хочу 30 пословиц!</option>
+        </select>
+
+        <!-- Форма с submit в BS5 стиле и обязательным полем ввода -->
+        <form id="formWithSubmit" class="mb-3">
+            <div class="mb-3">
+                <label for="formWithSubmitInput" class="form-label">Форма с submit</label>
+                <input type="text" class="form-control" id="formWithSubmitInput" placeholder="Введите что-нибудь"
+                    required>
+            </div>
+            <button type="submit" class="btn btn-primary">Отправить</button>
+
+            <h2>Практика! Событие наведение указателя мыши</h2>
+            <div id="photoFrame" class="borderRadius"></div>
+
+    <script>
+
+
+        // Вариант с использованием атрибута classList и добавлением / удалением классов
+        // Работаем с элементом div с классом redSquare переключаем его на blueSquare и обратно
+
+        // Получаем элемент div с классом redSquare
+        const redSquare = document.querySelector('.redSquare');
+        // Получаем кнопку
+        const buttonToggleThtme = document.getElementById('toggleTheme');
+
+        // // Вешаем обработчик события на кнопку
+        // buttonToggleThtme.addEventListener('click', function() {
+        //     // Проверяем наличие класса redSquare у элемента div
+        //     if (redSquare.classList.contains('redSquare')) {
+        //         // Если класс есть, то удаляем его и добавляем класс blueSquare
+        //         redSquare.classList.remove('redSquare');
+        //         redSquare.classList.add('blueSquare');
+        //     } else {
+        //         // Если класса нет, то удаляем класс blueSquare и добавляем класс redSquare
+        //         redSquare.classList.remove('blueSquare');
+        //         redSquare.classList.add('redSquare');
+        //     }
+        // });
+
+    
+
+
+        // Теперь делаем это же но через toggle
+        // Вешаем обработчик события на кнопку
+
+        buttonToggleThtme.addEventListener('click', function () {
+            // Проверяем наличие класса redSquare у элемента div
+            if (redSquare.classList.contains('redSquare')) {
+                // Если класс есть, то удаляем его и добавляем класс blueSquare
+                // redSquare.classList.toggle('redSquare');
+                redSquare.classList.toggle('blueSquare');
+            } else {
+                // Если класса нет, то удаляем класс blueSquare и добавляем класс redSquare
+                // redSquare.classList.toggle('blueSquare'); // Первый toggle добавляет класс blueSquare и удаляет класс redSquare
+                redSquare.classList.toggle('redSquare'); // Второй toggle удаляет класс blueSquare и добавляет класс redSquare
+            }
+
+            toggleTheme();
+        });
+
+   
+
+        // Функция которая делает toggle bg и bnt-light
+
+        function toggleTheme() {
+            // Получаем элемент body
+            const body = document.body;
+            // Проверяем наличие класса bg-light у элемента body
+            if (body.classList.contains('bg-light')) {
+                // Если класс есть, то удаляем его и добавляем класс bg-dark
+                body.classList.remove('bg-light');
+                body.classList.add('bg-dark');
+                // Кнопка
+                buttonToggleThtme.classList.remove('btn-dark');
+                buttonToggleThtme.classList.add('btn-light');
+
+            } else {
+                // Если класса нет, то удаляем класс bg-dark и добавляем класс bg-light
+                body.classList.remove('bg-dark');
+                body.classList.add('bg-light');
+                // Кнопка
+                buttonToggleThtme.classList.remove('btn-light');
+                buttonToggleThtme.classList.add('btn-dark');
+
+            }
+        }
+
+        // let someNum = prompt('Введите число 1');
+        // let someNum2 = prompt('Введите число 2');
+        // console.log(`Мы получили пользоваетльский ввод: ${someNum}\nТип данных: ${typeof someNum}`);
+        // console.log(`Мы получили пользоваетльский ввод: ${someNum2}\nТип данных: ${typeof someNum2}`);
+
+        // // Мы можем делать нестрогую проверку на равенство, без учета типа данных
+
+        // console.log(someNum == someNum2); // true
+        // console.log(someNum === someNum2); // false
+        // console.log(someNum < someNum2); // false
+        // console.log(someNum + someNum2);
+
+        // // Делаем третий промпт и сразу переводим его в число
+        // let someNum3 = Number(prompt('Введите число 3'));
+        // console.log(`Мы получили пользоваетльский ввод: ${someNum3}\nТип данных: ${typeof someNum3}`);
+    
+    // Функция которая будет изменять текст в div с id="noButtonFormText"
+    function changeText(newText) {
+        // Получаем элемент div с id="noButtonFormText"
+        const noButtonFormText = document.getElementById('noButtonFormText');
+        // Изменяем текст в элементе div
+        noButtonFormText.textContent = newText;
+    }
+    
+    // Функция которая будет вызываться при изменении поля ввода
+    function inputChange() {
+        // Получаем элемент input с id="noButtonForm"
+        const noButtonForm = document.getElementById('noButtonForm');
+        // Получаем значение из элемента input
+        const inputValue = noButtonForm.value;
+        // Вызываем функцию changeText и передаем ей значение из элемента input
+        changeText(inputValue);
+    }
+
+    // Получаем элемент input с id="noButtonForm"
+    const noButtonForm = document.getElementById('noButtonForm');
+
+    // Вешаем обработчик события на элемент input с id="noButtonForm"
+    noButtonForm.addEventListener('input', inputChange);
+
+    // Получаем элемент select с id="selectFormNoButton"
+    const selectFormNoButton = document.getElementById('selectFormNoButton');
+
+    // Добавляем Listener input и Выводим в консоль значение элемента select с id="selectFormNoButton"
+    selectFormNoButton.addEventListener('input', function () {
+        console.log(this.value);
+    });
+
+    // Получаем элемент form с id="formWithSubmit"
+    const formWithSubmit = document.getElementById('formWithSubmit');
+
+    // Вешаем обработчик события на элемент form с id="formWithSubmit"
+    formWithSubmit.addEventListener('submit', function (event) {
+        // Отменяем обновление страницы
+        event.preventDefault();
+        // Получаем элемент input с id="formWithSubmitInput"
+        const formWithSubmitInput = document.getElementById('formWithSubmitInput');
+        // Получаем значение из элемента input
+        const formWithSubmitInputValue = formWithSubmitInput.value;
+        // Вызываем функцию changeText и передаем ей значение из элемента input
+        changeText(formWithSubmitInputValue);
+    });
+    
+    // Собыите по наведению мыши на элемент: mouseover
+    // Событие по уходу мыши с элемента: mouseout
+
+    // Мы уже ранее получили div.redSquare.  const redSquare = document.querySelector('.redSquare');
+    // Вешаем на него обработчик события mouseover и mouseout
+
+    redSquare.addEventListener('mouseover', function () {
+        // При наведении мыши на элемент div.redSquare, мы будем добавлять ему класс blueSquare
+        redSquare.classList.add('blueSquare');
+    });
+
+    redSquare.addEventListener('mouseout', function () {
+        // При уходе мыши с элемента div.redSquare, мы будем удалять у него класс blueSquare
+        redSquare.classList.remove('blueSquare');
+    });
+
+
+
+
+     // Отдельно функция которая переключает redSquare blueSquare у <div class="redSquare">
+        function toggleRedSquare() {
+            // Проверяем наличие класса redSquare у элемента div
+            if (redSquare.classList.contains('redSquare')) {
+                // Если класс есть, то удаляем его и добавляем класс blueSquare
+                // redSquare.classList.toggle('redSquare');
+                redSquare.classList.toggle('blueSquare');
+            } else {
+                // Если класса нет, то удаляем класс blueSquare и добавляем класс redSquare
+                // redSquare.classList.toggle('blueSquare'); // Первый toggle добавляет класс blueSquare и удаляет класс redSquare
+                redSquare.classList.toggle('redSquare'); // Второй toggle удаляет класс blueSquare и добавляет класс redSquare
+            }
+        }
+
+        // Практика!
+        // Сделать Div c ID photoFrame, у которого будет в стилях задано квадратное изображение
+        // Описать класс borderRadius, который будет добавлять border-radius: 50% к элементу
+        // При наведении мыши на элемент photoFrame, добавлять ему класс borderRadius через JS!
+
+        // Добываем div с id="photoFrame"
+        const photoFrame = document.getElementById('photoFrame');
+
+        // Вешаем обработчик события на элемент photoFrame
+        photoFrame.addEventListener('mouseover', function () {
+            // При наведении мыши на элемент photoFrame, добавляем ему класс borderRadius
+            photoFrame.classList.add('borderRadius');
+        });
+
+        // Вешаем обработчик события на элемент photoFrame
+        photoFrame.addEventListener('mouseout', function () {
+            // При уходе мыши с элемента photoFrame, удаляем у него класс borderRadius
+            photoFrame.classList.remove('borderRadius');
+        });
+        
+    
+    </script>
+</body>
+
+</html>

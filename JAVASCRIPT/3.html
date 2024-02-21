@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Python 315. Типы данных в JS. Работа со строками, массивами и объектами">
+    <title>Lesson 2. Типы данных в JS. Python 315</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        body {
+            /* font-family: sans-serif; */
+            width: 95%;
+            margin: 0 auto;
+            background-color: #f4f7f2;
+        }
+
+        pre code {
+            font-size: 1.2em;
+            /* background-color: #dfecd7; */
+        }
+
+        /* Делаем h2 крупнее */
+        h2 {
+            font-size: 1.5em;
+        }
+
+        /* Убираем промежутки между элементами списка */
+        ul {
+            padding-inline-start: 0;
+            /* Убираем отступы сверху и снизу между элементами списка */
+            margin-block-start: 0;
+        }
+    </style>
+</head>
+<!-- fs - класс bootstrap для размера шрифта -->
+
+<body class="fs-2">
+    <ul>
+        <li>Кавычки в ключах, или без них?</li>
+        <li>Обращение к данным объекта по ключу</li>
+        <li>Изменение данных объекта по ключу</li>
+        <li>Удаление ключа</li>
+        <li>Циклы. Работа в циклах со строками, массивами, объектами</li>
+        <li>Знакомство с функциями</li>
+        <li>Области видимости переменных</li>
+    </ul>
+
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>JavaScript Objects</title>
+        <style>
+            code {
+                display: block;
+                padding: 10px;
+                background-color: #f5f5f5;
+                border: 1px solid #e1e1e1;
+                border-radius: 5px;
+                white-space: pre-wrap;
+            }
+        </style>
+    </head>
+
+    <body>
+        <h2>Keys in JavaScript Objects</h2>
+        <p>Объекты в JavaScript могут содержать ключи как с кавычками, так и без них. Важно понимать, когда кавычки
+            обязательны и когда их можно опустить:</p>
+        <h3>1. Без кавычек:</h3>
+        <p>
+            - Если ключ является допустимым идентификатором JavaScript (т.е. имя переменной, которое соответствует
+            правилам именования в JavaScript), кавычки могут быть опущены.<br>
+            - Например, ключи, которые состоят из букв, чисел, символов <code>$</code> и <code>_</code>, и которые не
+            начинаются с числа, могут быть без кавычек.
+        </p>
+
+        <h3>2. С кавычками:</h3>
+        <p>
+            - Кавычки обязательны, если ключ содержит пробелы, специальные символы или начинается с числа.<br>
+            - Кавычки также нужны, если вы хотите использовать зарезервированные слова в качестве ключей.<br>
+            - Когда вы работаете с JSON-форматом, ключи всегда должны быть заключены в двойные кавычки. Это может
+            объяснить, почему в объекте <code>weather</code> ключи в кавычках - он мог быть получен или представлен в
+            формате JSON.
+        </p>
+
+        <p>В вашем примере <code>person</code> имеет ключи без кавычек, потому что все ключи являются допустимыми
+            идентификаторами JavaScript. Объект <code>weather</code> может иметь ключи в кавычках, потому что он был
+            получен в формате JSON или для обеспечения совместимости с JSON.</p>
+
+        <p>Тем не менее, оба способа представления объекта являются корректными в JavaScript.</p>
+
+
+
+
+
+        <script>
+            // let person = {
+            //     name: 'John',
+            //     age: 30,
+            //     hobbies: ['music', 'movies', 'sports'],
+            //     "home address": {
+            //         street: '50 Main st',
+            //         city: 'Boston',
+            //         state: 'MA'
+            //     } };
+
+            // Обращаемся к данным объекта по ключу (без кавычек через точку, с кавычками через квадратные скобки)
+            // console.log(person.name, person.age, person.hobbies, person["home address"].street);
+
+            // Получаем все ключи объекта
+            // console.log(Object.keys(person));
+            // Получаем все значечния объекта
+            // console.log(Object.values(person));
+            // Получаем все ключи и значения объекта
+            // console.log(Object.entries(person));
+
+            // Цикл for in и перебор строки побуквенно
+            // let hello = 'Hello World!';
+            // В переменную char записываются индексы строки
+            // В данном случае цикл перебирает индексы строки
+            // in - перебирает индексы
+            // for (let char in hello) {
+            //     console.log(char, hello[char]);
+            // }
+
+            // Перебор букв
+            // of - перебирает буквы
+            // for (let char of hello) {
+            //     console.log(char);
+            // }
+
+            // Цикл перебора букв с выводом в консоль только маленьких букв
+            // for (let char of hello) {
+            //     if (char === char.toLowerCase()) {
+            //         console.log(char);
+            //     }
+            // }
+
+            // let names = ['John', 'Bob', 'Amanda','Mary', 'Mike', 'Alex', 'Anna'];
+            // // Цикл перебора массива
+            // for (let name of names) {
+            //     console.log(name);
+            // }
+
+            // Цикл перебора букв каждого элемента массива
+            // for (let name of names) {
+            //     console.log(name.toLocaleUpperCase());
+            //     for (let char of name) {
+            //         console.log(char.toLowerCase());
+            //     }
+            // }
+            // Переберем массив имен и отложим в новый массив
+            // Имена которые начинаются на букву А
+            // let promtFindLetter = prompt('Введите букву').toLowerCase();
+            // let aNames = [];
+            // for (let name of names) {
+            //     if (name[0].toLowerCase() === promtFindLetter) {
+            //         aNames.push(name);
+            //     }
+            // }
+            // console.log(aNames);
+
+            // 
+            // РАБОТА С ОБЪЕКТАМИ В JS
+            let person = {
+                name: 'John',
+                age: 30,
+                hobbies: ['music', 'movies', 'sports'],
+                "home address": {
+                    street: '50 Main st',
+                    city: 'Boston',
+                    state: 'MA'
+                }
+            };
+            // Перепишем ключ age
+            // person.age = 35;
+            // Добавляем ключ is_married
+            // person.is_married = false;
+            // Добавляем ключ с пробелом
+            // person['is student'] = true;
+            // Удаляем ключ
+            // delete person.is_married;
+            // Удаляем используя метод pop
+            // person.hobbies.pop();
+
+            // Итерируемся по ключам объекта
+            // in - перебор ключей
+            for (let key in person) {
+                console.log(key, person[key]);
+            }
+
+            for (let key of Object.keys(person)) {
+                console.log(key, person[key]);
+            }
+
+            // Итерируемся по значениям объекта
+
+            for (let value of Object.values(person)) {
+                console.log(value);
+            }
+
+            // Итерируемся по ключам и значениям объекта
+            // entries - возвращает массив массивов
+            // [key, value] - деструктуризация массива (аналог unpacking в Python)
+            for (let [key, value] of Object.entries(person)) {
+                console.log(key, value);
+            }
+
+            // Функции в JS
+            // Функция принимает 2 аргумента a и b и возвращает сумму чисел
+            function sum(a, b) {
+                let c = a + b;
+                return c;
+            }
+
+            // Вызываем функцию и передаем ей аргументы
+            let sumResult = sum(5, 10);
+            console.log(sumResult);
+
+            let names = ['John', 'Bob', 'Amanda', 'Mary', 'Mike', 'Alex', 'Anna'];
+
+            // Функция которая принимает массив имен и букву
+            // И возвращает массив имен которые начинаются на эту букву
+
+            function findNamesByLetter(names, letter) {
+                let aNames = [];
+                for (let name of names) {
+                    if (name[0].toLowerCase() === letter.toLowerCase()) {
+                        aNames.push(name);
+                    }
+                }
+                return aNames;
+            }
+            
+            // Стрелочные функции в JS это аналог лямбда функций в Python
+            // Синтаксис стрелочной функции в JS
+            // let имя_функции = (аргументы) => {тело функции}
+            // Вызов стрелочной функции осуществляется так же как и обычной функции
+            // Стрелочные функции используются в основном для создания callback функций
+            // callback функции - это функции которые передаются в качестве аргументов другим функциям
+            let findNamesByLetter2 = (names, letter) => {
+                let aNames = [];
+                for (let name of names) {
+                    if (name[0].toLowerCase() === letter.toLowerCase()) {
+                        aNames.push(name);
+                    }
+                }
+                return aNames;
+            }
+
+            // Зоны видимости переменных
+            // В JS есть 2 зоны видимости переменных
+            // 1. Глобальная зона видимости
+            // Это переменные объявленные вне функций через ключевое слово let
+            // 2. Локальная зона видимости
+            // Это переменные объявленные внутри функций через ключевое слово let
+
+            // Пример
+
+            let a = 10; // Глобальная переменная
+
+            function test() {
+                let b = 20; // Локальная переменная
+                console.log(b);
+            }
+            console.log(a);
+            test();
+            // console.log(b);
+
+            // Практика
+            // Напишите функцию которая делает 2 промпта и возвращает сумму чисел
+            // Функция при вызове делает 2 промпта, помещает значения в переменные
+            // Возвращает сумму чисел
+            // Вне функции делаем консоль лог и передаем туда результат работы функции
+
+            let g = prompt('Введите первое число');
+
+            // Шаг 1. Создаем функцию
+            function sum2() {
+                // Шаг 2. Делаем 2 промпта и помещаем значения в переменные приводим к number
+                // метод приводящий строку к числу - Number()
+                let a = Number(prompt('Введите первое число'));
+
+                let b = Number(prompt('Введите второе число'));
+                // Шаг 3. Возвращаем сумму чисел
+                return a + b;
+            }
+
+            // Шаг 4. Вызываем функцию и передаем результат в консоль лог
+            console.log(sum2());
+
+
+
+
+
+
+
+
+
+        </script>
+    </body>
+
+    </html>

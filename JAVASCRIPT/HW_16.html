@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HW16</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Заголовок H1 -->
+        <!-- Выравнивание текста по центру -->
+        <div class="row">
+            <!-- Выравнивание текста по центру -->
+            <div class="col-md-12 text-center">
+                <h1>HW_16 - Погода</h1>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <input type="text" class="form-control" id="inputField" placeholder="Введите город">
+                </div>
+                <div class="col-md-6">
+                    <p>Последний ваш запрос: <span id="result"></span></p>
+                </div>
+
+            </div>
+        </div>
+
+        <script>
+            // 1. Функция записи данных формы в localStorage. Принимает в качестве аргумент строку с даннымими записывает их в localStorage
+            function writeToLocalStorage(data) {
+                localStorage.setItem('city', data);
+            }
+
+
+            // 2. Функция чтения данных из localStorage. Возвращает строку с данными
+            function readFromLocalStorage() {
+                return localStorage.getItem('city');
+            }
+
+
+            // 3. Функция которая добывает данные из формы и возвращает строку
+            function getDataFromForm() {
+                value = document.querySelector('#inputField').value;
+                // console.log(value);
+                return value;
+            }
+
+            // 4. Функция которая записывает данные в span result
+            function printOnPage(data) {
+                document.querySelector('#result').textContent = data;
+            }
+            // 5. Функция которая записывает данные в форму (принимает строку с данными)
+            function printToForm(data) {
+                document.querySelector('#inputField').value = data;
+            }
+
+            // ПИШЕМ ЗАДАНИЕ 16
+
+
+            async function fetchRequestAsync(url) {
+                // await - указание на то что нужно дождаться результата выполнения функции fetch
+                // Получаем данные с сервера
+                let data = await fetch(url)
+                // await - указание на то что нужно дождаться результата выполнения функции data.json()
+                // Получаем только тело ответа
+                // data.json() - преобразование данных в json формат, тип данных - object
+
+                data = await data.json()
+                return data
+            }
+
+            const apiKey = '23496c2a58b99648af590ee8a29c5348'
+            // let city = prompt('Введите город') // Формируется из формы
+            const units = 'metric'
+            const lang = 'ru'
+            // url = формируется в функции
+            // let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${units}&lang=${lang}`
+
+
+            // Функция которая принимает название города и возвращает url для запроса
+
+            function getUrl(city) {
+                return `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${units}&lang=${lang}`
+            }
+
+            // Функция которая принимает объект от сервера и возвращает шаблонную строку с данные о погоде, ощущаемой температуре и скорости ветра.
+
+            function getWeatherString(data) {
+                return `Погода в городе ${data.name} ${data.weather[0].description}. Температура воздуха ${data.main.temp}°C. Ощущается как ${data.main.feels_like}°C. Скорость ветра ${data.wind.speed} м/с.`
+            }
+
+            // Listener на загрузку документа
+            // Описываем функцию которая использует наши функции
+            // 1. Получаем данные из localStorage
+            // 2. Помещаем данные в форму ввода
+            // 3. Формируем url для запроса
+            // 4. Делаем запрос на сервер
+            // 5. Получаем ответ от сервера и расшифровываем его
+            // 6. Выводим данные в span result
+            
+            document.addEventListener('DOMContentLoaded', function () {
+                let data = readFromLocalStorage();
+                printToForm(data);
+                let url = getUrl(data);
+                fetchRequestAsync(url)
+                    .then(data => {
+                        console.log(data)
+                        let weatherString = getWeatherString(data)
+                        printOnPage(weatherString)
+                    })
+                    .catch(err => console.log(err))
+            });
+
+            // Listener на изменение поля ввода.
+            // Описываем функцию, которая использует наши функции
+            // 1. Получаем данные из формы
+            // 2. Записываем данные в localStorage
+            // 3. Формируем url для запроса
+            // 4. Делаем запрос на сервер
+            // 5. Получаем ответ от сервера и расшифровываем его
+            // 6. Выводим данные в span result
+            document.querySelector('#inputField').addEventListener('input', function () {
+                let data = getDataFromForm();
+                writeToLocalStorage(data);
+                let url = getUrl(data);
+                fetchRequestAsync(url)
+                    .then(data => {
+                        console.log(data)
+                        let weatherString = getWeatherString(data)
+                        printOnPage(weatherString)
+                    })
+                    .catch(err => console.log(err))
+            });
+
+
+
+        </script>
+</body>
+
+</html>

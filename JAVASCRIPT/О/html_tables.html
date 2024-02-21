@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+
+
+
+    <style>
+        h1 {
+            color: red;
+        }
+
+        h2 {
+            /* Курсив */
+            font-style: italic;
+        }
+
+
+        /* Селектор по классу */
+        .greenH2 {
+            color: green;
+        }
+
+
+
+
+        /* Селектор по id */
+        #contacts {
+            color: blue;
+        }
+
+        /* Семейство шрифтов моноширное */
+        .monospace {
+            font-family: monospace;
+        }
+
+        .greenH2 {
+            color: yellow;
+        }
+
+        /* Добавляем внешние границы таблицы и обводку ячеек */
+        table {
+            border: 1px solid rgb(198, 49, 49);
+            border-collapse: collapse;
+
+        }
+
+        td {
+            border: 1px solid rgb(191, 27, 27);
+        }
+
+        #table2 th {
+            background-color: rgb(191, 27, 27);
+        }
+
+        #table3 td {
+            padding: 10px;
+        }
+
+        /* Воздействуем на первого ребенка table3 */
+        #table3 tr:first-child {
+            background-color: rgb(106, 191, 27);
+            color: white;
+        }
+
+        /* Последний ребенок */
+        #table3 tr:last-child {
+            background-color: rgb(27, 191, 147);
+        
+        }
+
+        /* Через один */
+        #table3 tr:nth-child(2n) {
+            background-color: rgb(27, 191, 147);
+        
+        }
+
+        #table3 tr td:first-child {
+            background-color: rgb(191, 27, 166);
+        }
+
+        /* Ховер еффект для полос */
+        #table3 tr:hover {
+            background-color: rgb(27, 30, 191);
+            /* меняет размер   */
+            transform: scale(1.1);
+            /* Плавно */
+            transition: all 0.5s ease-in-out;
+        }
+
+
+    </style>
+</head>
+
+<body>
+    <!-- <h1 style="color: blue;">Синий заголовок</h1> -->
+    <h1>Резюме</h1>
+    <h2>Опыт работы</h2>
+    <h2 class="greenH2 monospace">Навыки</h2>
+    <h2>Желаемая зарплата</h2>
+    <h2>Образование</h2>
+    <h2>Курсы</h2>
+    <h2 class="greenH2">Дополнительная информация</h2>
+    <h2 id="contacts">Контакты</h2>
+
+    <h2>Табличные теги</h2>
+    <p><code>table</code> - главный тег таблицы. Он определяет таблицу и содержит в себе все ее теги.</p>
+    <p><code>tr</code> - тег строки таблицы. Он определяет строку таблицы и содержит в себе все ее теги.</p>
+    <p><code>td</code> - тег ячейки таблицы. Он определяет ячейку таблицы и содержит в себе все ее теги.</p>
+
+    <p>Эммет сокращение для быстрого создания таблицы с lorem в ячейках <code> table>tr*2>td*2>lorem</code></p>
+
+
+    <p>Надо создать таблицу с 5 столбцами и 20 строками. Наполнить ее контентом</p>
+
+    <h2>Простая таблица</h2>
+    <table>
+        <tr>
+            <th>Заголовок 1</th>
+            <th>Заголовок 2</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>2</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>4</td>
+        </tr>
+    </table>
+
+    <h2>Таблица с th</h2>
+    <p><code>th</code> - Table head - тег заголовка таблицы. Он определяет заголовок таблицы и содержит в себе все ее
+        теги.</p>
+
+    <table id="table2">
+        <tr>
+            <th>Заголовок 1</th>
+            <th>Заголовок 2</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>2</td>
+        </tr>
+
+    </table>
+
+    <h2>Группа селекторов <code>child</code></h2>
+    <p>Селекторы <code>child</code> позволяют выбрать элементы, которые являются прямыми потомками других элементов.</p>
+
+    <p>Селектор <code>child</code> записывается через <code>&gt;</code></p>
+
+    <p>Селектор <code>child</code> выбирает только прямых потомков, а не всех потомков.</p>
+
+    <p>Селектор <code>child</code> выбирает только элементы, которые являются непосредственными потомками указанного
+        элемента.</p>
+
+    <p>Селектор <code>child</code> выбирает только элементы, которые находятся на один уровень вложенности с указанным
+
+
+    <h2>Таблица для опытов</h2>
+
+    <table id="table3">
+        <tr>
+            <td>Lorem, ipsum dolor.</td>
+            <td>Nemo, molestiae dolores.</td>
+            <td>Expedita, obcaecati ipsa?</td>
+            <td>Sunt, veritatis non.</td>
+            <td>Natus, qui unde.</td>
+        </tr>
+        <tr>
+            <td>Lorem, ipsum dolor.</td>
+            <td>Veritatis, est tempore?</td>
+            <td>Fugiat, quas voluptates!</td>
+            <td>Atque, eveniet eaque.</td>
+            <td>Omnis, officia cupiditate!</td>
+        </tr>
+        <tr>
+            <td>Lorem, ipsum dolor.</td>
+            <td>Quidem, illo excepturi?</td>
+            <td>Pariatur, adipisci explicabo!</td>
+            <td>Sequi, alias rerum.</td>
+            <td>Aut, vel saepe.</td>
+        </tr>
+        <tr>
+            <td>Lorem, ipsum dolor.</td>
+            <td>Consectetur, aut voluptatum?</td>
+            <td>Exercitationem, veniam nostrum?</td>
+            <td>Optio, et dolores.</td>
+            <td>Incidunt, laboriosam fugiat?</td>
+        </tr>
+        <tr>
+            <td>Lorem, ipsum dolor.</td>
+            <td>Velit, nostrum est!</td>
+            <td>Sunt, quae labore.</td>
+            <td>Quis, ipsa quod.</td>
+            <td>Id, cupiditate aut?</td>
+        </tr>
+        <tr>
+            <td>Lorem, ipsum dolor.</td>
+            <td>Odio, tempora perferendis.</td>
+            <td>Est, accusamus esse.</td>
+            <td>Pariatur, nulla accusantium!</td>
+            <td>Asperiores, dolore quasi.</td>
+        </tr>
+        <tr>
+            <td>Lorem, ipsum dolor.</td>
+            <td>Eius, ullam iste.</td>
+            <td>Ex, autem ducimus?</td>
+            <td>Nesciunt, autem expedita.</td>
+            <td>Vel, provident excepturi.</td>
+        </tr>
+        <tr>
+            <td>Lorem, ipsum dolor.</td>
+            <td>Accusamus, sunt aut.</td>
+            <td>Quisquam, facilis fugit.</td>
+            <td>Temporibus, laborum nemo.</td>
+            <td>Ullam, nulla tempora.</td>
+        </tr>
+        <tr>
+            <td>Lorem, ipsum dolor.</td>
+            <td>Asperiores, porro sint?</td>
+            <td>Quibusdam, vel rerum?</td>
+            <td>Pariatur, voluptatem dignissimos?</td>
+            <td>Necessitatibus, earum reiciendis?</td>
+        </tr>
+        <tr>
+            <td>Lorem, ipsum dolor.</td>
+            <td>Dicta, architecto temporibus!</td>
+            <td>Quia, asperiores enim.</td>
+            <td>Quae, quas voluptates.</td>
+            <td>Repellendus, alias natus!</td>
+        </tr>
+        <tr>
+            <td>Lorem, ipsum dolor.</td>
+            <td>Odit, hic enim!</td>
+            <td>Maxime, illo rerum.</td>
+            <td>Dolore, id reiciendis?</td>
+            <td>Eius, quaerat blanditiis?</td>
+        </tr>
+        <tr>
+            <td>Lorem, ipsum dolor.</td>
+            <td>Dignissimos, quasi vero.</td>
+            <td>Alias, provident vitae.</td>
+            <td>Natus, ex nesciunt.</td>
+            <td>Quae, inventore autem.</td>
+        </tr>
+        <tr>
+            <td>Lorem, ipsum dolor.</td>
+            <td>Quisquam, aspernatur aliquam!</td>
+            <td>Et, perferendis ea?</td>
+            <td>Animi, vero officia!</td>
+            <td>Quia, placeat eius?</td>
+        </tr>
+        <tr>
+            <td>Lorem, ipsum dolor.</td>
+            <td>Eaque, sed repudiandae.</td>
+            <td>Alias, nisi sequi?</td>
+            <td>Molestiae, perspiciatis repudiandae.</td>
+            <td>Illum, distinctio corrupti?</td>
+        </tr>
+        <tr>
+            <td>Lorem, ipsum dolor.</td>
+            <td>Harum, pariatur voluptas?</td>
+            <td>Similique, ipsa inventore.</td>
+            <td>Quasi, officiis iusto!</td>
+            <td>Tempore, explicabo reprehenderit.</td>
+        </tr>
+        <tr>
+            <td>Lorem, ipsum dolor.</td>
+            <td>Sit, voluptate harum!</td>
+            <td>Deserunt, est eligendi.</td>
+            <td>Culpa, velit ad?</td>
+            <td>Aliquid, perferendis numquam.</td>
+        </tr>
+        <tr>
+            <td>Lorem, ipsum dolor.</td>
+            <td>Placeat, distinctio atque.</td>
+            <td>Provident, molestiae saepe!</td>
+            <td>Deserunt, in sapiente.</td>
+            <td>Consectetur, voluptas molestiae!</td>
+        </tr>
+        <tr>
+            <td>Lorem, ipsum dolor.</td>
+            <td>Quisquam, obcaecati dignissimos.</td>
+            <td>Eum, ducimus nihil.</td>
+            <td>Amet, iste beatae?</td>
+            <td>Officiis, atque consequatur!</td>
+        </tr>
+        <tr>
+            <td>Lorem, ipsum dolor.</td>
+            <td>A, consequuntur facilis!</td>
+            <td>Vel, commodi repellat?</td>
+            <td>Dolorum, laudantium iusto.</td>
+            <td>Corrupti, veritatis delectus.</td>
+        </tr>
+        <tr>
+            <td>Lorem, ipsum dolor.</td>
+            <td>Enim, cum odit.</td>
+            <td>Neque, enim placeat?</td>
+            <td>Fugit, libero quas.</td>
+            <td>Dolorem, nulla suscipit?</td>
+        </tr>
+    </table>
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>

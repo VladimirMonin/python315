@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Заказ Суши</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        form {
+            width: 300px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: ;
+        }
+
+        input[type=text],
+        input[type=number],
+        textarea,
+        select {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type=submit] {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+
+        fieldset {
+            border: none;
+            margin-bottom: 10px;
+        }
+
+        legend {
+            font-weight: bold;
+            /* Выравни */
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <form action="/submit" method="get">
+        <label for="name">Имя:</label>
+        <input type="text" id="name" name="name" placeholder="Ваше имя"><br>
+
+        <label for="address">Адрес:</label>
+        <textarea id="address" name="address" placeholder="Ваш адрес"></textarea><br>
+
+        <label for="sticks_number">Количество палочек:</label>
+        <input type="number" id="sticks_number" name="sticks_number" value="1"><br>
+
+        <fieldset>
+            <legend>Виды палочек</legend>
+            <input type="radio" id="regular_sticks" name="sticks_type" value="regular">
+            <label for="regular_sticks">Обычные</label><br>
+            <input type="radio" id="training_sticks" name="sticks_type" value="training">
+            <label for="training_sticks">Учебные</label>
+        </fieldset><br>
+
+        <label for="sushi_type">Выбор суши:</label>
+        <select id="sushi_type" name="sushi_type">
+            <option value="california">Калифорния</option>
+            <option value="philadelphia">Филадельфия</option>
+            <option value="nigiri">Нигири</option>
+            <option value="maki">Маки</option>
+        </select><br>
+
+        <input type="checkbox" id="napkins" name="napkins" value="yes">
+        <label for="napkins">Нужны ли салфетки</label><br>
+
+        <label for="comments">Дополнительные комментарии:</label>
+        <textarea id="comments" name="comments"></textarea><br>
+
+        <input type="submit" value="Отправить заказ">
+    </form>
+</body>
+
+</html>
