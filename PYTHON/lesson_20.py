@@ -7,6 +7,11 @@ Git и GitHub
 
 
 def say_hello(name: str) -> None:
+    """
+    Приветствие
+    :param name:
+    :return:
+    """
     print(f"Hello, {name}!")
 
 
