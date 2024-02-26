@@ -8,7 +8,19 @@
 
 # Синтаксис - class <Имя класса>:
 class LadaCar:
-    pass
+    price = 100500
+
 
 # Нейминг классов - UpperCamelCase - каждое слово с большой буквы
 # Максимально описательное имя класса
+
+# Как объявить пустой сет?
+some_set = set()
+
+# Создание экземпляра класса
+lada = LadaCar()
+lada2 = LadaCar()
+lada3 = LadaCar()
+
+# Доступ к атрибутам класса
+print(lada.price)
