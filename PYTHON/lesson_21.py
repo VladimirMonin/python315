@@ -4,6 +4,11 @@
 - Какие преимущества?
 - Синтаксис
 - Нейминг классов
+- Атрибуты класса
+- Атрибуты экземпляра класса
+- Инициализация экземпляра класса
+- self
+- Конструктор класса
 """
 
 
@@ -48,17 +53,26 @@ class ToyotaCar:
         self.color = color
         print(f'Создан новый объект класса ToyotaCar '
               f'с ценой {self.price} и цветом {self.color}'
-              f' от производителя {self.manufacturer}')
+              f' от производителя {self.manufacturer}'
+              f' с ID {id(self)}')
 
-        # Распечатаем данные о производителе через обращение к классу
-        print(f'Производитель: {ToyotaCar.manufacturer}')
-        print(f'Производитель: {__class__.manufacturer}')
+
+    def __new__(cls, *args, **kwargs):
+        print(f'Вызван метод __new__ класса {cls.__name__}')
+        print(f'Аргументы: {args}, {kwargs}')
+        print(f'ID класса: {id(cls)}')
+        return super().__new__(cls)
+
+        # # Распечатаем данные о производителе через обращение к классу
+        # print(f'Производитель: {ToyotaCar.manufacturer}')
+        # print(f'Производитель: {__class__.manufacturer}')
 
         # Распечатаем имя класса
         print(f'Имя класса: {__class__.__name__}')
 
 
 toyota = ToyotaCar(200000, 'black')
+print(toyota)
 print(toyota.price)
 
 toyota2 = ToyotaCar(250000, 'yellow')
@@ -66,3 +80,6 @@ print(toyota2.price)
 
 print(ToyotaCar.manufacturer)
 # print(__class__.manufacturer)
+
+
+print(id(toyota))
