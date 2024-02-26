@@ -6,6 +6,7 @@
 - Нейминг классов
 """
 
+
 # Синтаксис - class <Имя класса>:
 class LadaCar:
     price = 100500
@@ -34,3 +35,24 @@ print(lada.price)
 
 print(lada2.color)
 print(lada2.price)
+
+
+# Атрибуты экземпляра класса и инициализация
+
+class ToyotaCar:
+    # Производитель - классовый атрибут
+    manufacturer = 'Кировский завод №1'
+
+    def __init__(self, price, color):
+        self.price = price
+        self.color = color
+        print(f'Создан новый объект класса ToyotaCar '
+              f'с ценой {self.price} и цветом {self.color}'
+              f' от производителя {self.manufacturer}')
+
+
+toyota = ToyotaCar(200000, 'black')
+print(toyota.price)
+
+toyota2 = ToyotaCar(250000, 'yellow')
+print(toyota2.price)
