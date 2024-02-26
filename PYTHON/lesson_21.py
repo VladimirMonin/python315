@@ -9,77 +9,31 @@
 - Инициализация экземпляра класса
 - self
 - Конструктор класса
+- Методы экземпляра класса
+- self в методах
 """
 
 
 # Синтаксис - class <Имя класса>:
 class LadaCar:
-    price = 100500
-    color = 'black'
+    price = 1000  # Атрибут класса
+
+    def __init__(self, model: str, color: str, year: int):  # Инициализация экземпляра класса
+        self.model = model
+        self.color = color
+        self.year = year
+
+    def get_price(self):
+        return f'Цена автомобиля {self.price}'
+
+    def get_color(self):
+        return f'Цвет автомобиля {self.color}'
 
 
-# Нейминг классов - UpperCamelCase - каждое слово с большой буквы
-# Максимально описательное имя класса
-
-# Как объявить пустой сет?
-some_set = set()
 
 # Создание экземпляра класса
-lada = LadaCar()
-lada2 = LadaCar()
-lada3 = LadaCar()
+lada_kalina = LadaCar('Kalina', 'white', 2020)
+lada_priora = LadaCar('Priora', 'black', 2015)
 
-# Доступ к атрибутам класса
-print(lada.price)
-
-# Изменение атрибутов класса
-lada.color = 'red'
-lada.price = 1
-print(lada.color)
-print(lada.price)
-
-print(lada2.color)
-print(lada2.price)
-
-
-# Атрибуты экземпляра класса и инициализация
-
-class ToyotaCar:
-    # Производитель - классовый атрибут
-    manufacturer = 'Кировский завод №1'
-
-    def __init__(self, price, color):
-        self.price = price
-        self.color = color
-        print(f'Создан новый объект класса ToyotaCar '
-              f'с ценой {self.price} и цветом {self.color}'
-              f' от производителя {self.manufacturer}'
-              f' с ID {id(self)}')
-
-
-    def __new__(cls, *args, **kwargs):
-        print(f'Вызван метод __new__ класса {cls.__name__}')
-        print(f'Аргументы: {args}, {kwargs}')
-        print(f'ID класса: {id(cls)}')
-        return super().__new__(cls)
-
-        # # Распечатаем данные о производителе через обращение к классу
-        # print(f'Производитель: {ToyotaCar.manufacturer}')
-        # print(f'Производитель: {__class__.manufacturer}')
-
-        # Распечатаем имя класса
-        print(f'Имя класса: {__class__.__name__}')
-
-
-toyota = ToyotaCar(200000, 'black')
-print(toyota)
-print(toyota.price)
-
-toyota2 = ToyotaCar(250000, 'yellow')
-print(toyota2.price)
-
-print(ToyotaCar.manufacturer)
-# print(__class__.manufacturer)
-
-
-print(id(toyota))
+print(lada_kalina.get_color())
+print(lada_priora.get_color())
