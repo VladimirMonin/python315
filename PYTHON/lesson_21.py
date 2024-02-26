@@ -50,9 +50,19 @@ class ToyotaCar:
               f'с ценой {self.price} и цветом {self.color}'
               f' от производителя {self.manufacturer}')
 
+        # Распечатаем данные о производителе через обращение к классу
+        print(f'Производитель: {ToyotaCar.manufacturer}')
+        print(f'Производитель: {__class__.manufacturer}')
+
+        # Распечатаем имя класса
+        print(f'Имя класса: {__class__.__name__}')
+
 
 toyota = ToyotaCar(200000, 'black')
 print(toyota.price)
 
 toyota2 = ToyotaCar(250000, 'yellow')
 print(toyota2.price)
+
+print(ToyotaCar.manufacturer)
+# print(__class__.manufacturer)
