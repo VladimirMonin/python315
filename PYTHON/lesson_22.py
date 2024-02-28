@@ -21,11 +21,18 @@ Lesson 22
 
 class Pipe:
     # Допустимые марки в атрибуте класса
+    marks = ['М-1', 'М-2', 'М-3', 'М-4', 'М-5']
+
     def __init__(self, mark: str, material: str, diameter: int, length: int):
-        self.mark = mark
+        self.mark = self.mark_validate(mark)
         self.material = material
         self.diameter = diameter
         self.length = length
+
+    def mark_validate(self, mark: str):
+        if mark not in self.marks:
+            raise ValueError(f'Марка {mark} не доступна для трубы. Выберите из {self.marks}')
+        return mark
 
     def __len__(self) -> int:
         return self.length
@@ -34,10 +41,8 @@ class Pipe:
         return f'Труба {self.mark} из {self.material} диаметром {self.diameter} мм длиной {self.length} м'
 
 
-pipe = Pipe('Труба', 'Сталь', 100, 500)
-pipe2 = Pipe('Труба', 'Сталь', 100, 1000)
+pipe = Pipe('М-1', 'Сталь', 100, 1000)
+# pipe2 = Pipe('Труба', 'Сталь', 100, 1000) # ValueError: Марка Труба не доступна для трубы. Выберите из ['М-1', 'М-2', 'М-3', 'М-4', 'М-5']
 
-print(len(pipe))  # 500
-print(len(pipe2))  # 1000
+pipe.mark = "Труба"
 
-print(len(pipe) > len(pipe2))  # False
