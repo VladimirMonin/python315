@@ -23,17 +23,17 @@ Lesson 22
 
 class Person:
     def __init__(self, name: str, surname: str, position: str, salary: int, service: int):
-        self._name = name
+        self.__name = name
         self._surname = surname
         self.position = position
         self.salary = salary
         self.service = service
 
     def __str__(self):
-        return f'{self._name} {self._surname}'
+        return f'{self.__name} {self._surname}'
 
     def __repr__(self):
-        return f'Person({self._name}, {self._surname}, {self.position}, {self.salary}, {self.service})'
+        return f'Person({self.__name}, {self._surname}, {self.position}, {self.salary}, {self.service})'
 
     def __len__(self):
         return self.service
@@ -43,9 +43,17 @@ class Person:
 person_1 = Person('Ivan', 'Ivanov', 'developer', 1000, 5)
 
 print(person_1)  # Ivan Ivanov
-print(person_1._name) # Ivan
+# print(person_1.__name) # Ivan
 
 new_name = 'Petr'
-person_1._name = new_name
+person_1.__name = new_name
 
 print(person_1)  # Petr Ivanov
+
+print(person_1.__dict__)  # {'_Person__name': 'Ivan', '_surname': 'Ivanov', 'position': 'developer', 'salary': 1000, 'service': 5, '__name': 'Petr'}
+
+
+# Переопределим в Петра
+person_1._Person__name = new_name
+
+print(person_1)
