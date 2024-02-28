@@ -14,6 +14,10 @@ Lesson 22
 - __len__ - метод для определения длины объекта !!!
 - protected атрибуты
 - private атрибуты
+@property - декоратор для создания геттера
+@setter_name.setter - декоратор для создания сеттера
+@setter_name.deleter - декоратор для создания делитера - ПОСМОТРЕТЬ в СЛ РАЗ
+
 """
 
 
@@ -45,7 +49,12 @@ class Person:
             return True
         return False
 
-    def set_age(self, age):
+    @property
+    def age(self):
+        return self.__age
+
+    @age.setter
+    def age(self, age):
         """
         Проверяем что возраст число, и в диапазоне от 16 до 100
         :param age:
@@ -56,13 +65,10 @@ class Person:
         else:
             raise ValueError('Возраст должен быть числом от 16 до 100')
 
-    def get_age(self):
-        return self.__age
-
 
 p1 = Person('Ivan', 30, 'Ivanov', 'developer', 1000, 5)
 print(p1)
-p1.set_age(90)
-print(p1.get_age())
+p1.age = 40
+print(p1.age)
 
-print(p1.__validate_age(30))
+p1.age = 101
