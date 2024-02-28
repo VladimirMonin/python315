@@ -11,7 +11,7 @@ Lesson 22
 - __str__ - пользовательское представление объекта
 - __repr__ - техническое представление объекта
 - eval() - встроенная функция для выполнения строки как код Python
-
+- __len__ - метод для определения длины объекта !!!
 """
 
 
@@ -78,3 +78,44 @@ __str__
 2. Если пользователь вводит ничего, цикл останавливается и выводит список продуктов.
 3. Если пользователь вводит более 4 продуктов - raise ValueError - Можно не более 4 продуктов
 """
+
+
+class Product:
+    """
+    Класс для создания товаров
+    """
+    def __init__(self, name: str, price: float):
+        """
+        Инициализатор класса
+        :param name: Название товара
+        :param price: Цена товара
+        """
+        self.name = name
+        self.price = price
+
+    def __str__(self) -> str:
+        return f"Товар: {self.name}, Цена: {self.price}"
+
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}('{self.name}', '{self.price}')"
+
+
+products = []
+PRODUCT_LIMIT = 4
+
+while True:
+    if len(products) > PRODUCT_LIMIT:  # Если пользователь ввел более 4 продуктов
+        raise ValueError(f"Можно не более {PRODUCT_LIMIT} продуктов")
+
+    name = input("Введите название товара: ")  # Вводим название товара
+
+    if not name:  # Если пользователь ввел пустую строку
+        break
+
+    price = float(input("Введите цену товара: "))  # Вводим цену товара
+
+    product = Product(name, price)  # Создаем экземпляр класса Product
+    products.append(product)
+
+print(products) # Это будет принт repr
+[print(product) for product in products]  # Это будет принт str
