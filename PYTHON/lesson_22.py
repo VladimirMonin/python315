@@ -12,37 +12,40 @@ Lesson 22
 - __repr__ - техническое представление объекта
 - eval() - встроенная функция для выполнения строки как код Python
 - __len__ - метод для определения длины объекта !!!
+- protected атрибуты
+- private атрибуты
 """
 
 
 # __len__ - метод для определения длины объекта
 
-# класс Труба. Макрка, материал, диаметр, длина
+# класс Персона. Имя, фамилия, должность, зарплата, срок службы
 
-class Pipe:
-    # Допустимые марки в атрибуте класса
-    marks = ['М-1', 'М-2', 'М-3', 'М-4', 'М-5']
+class Person:
+    def __init__(self, name: str, surname: str, position: str, salary: int, service: int):
+        self._name = name
+        self._surname = surname
+        self.position = position
+        self.salary = salary
+        self.service = service
 
-    def __init__(self, mark: str, material: str, diameter: int, length: int):
-        self.mark = self.mark_validate(mark)
-        self.material = material
-        self.diameter = diameter
-        self.length = length
+    def __str__(self):
+        return f'{self._name} {self._surname}'
 
-    def mark_validate(self, mark: str):
-        if mark not in self.marks:
-            raise ValueError(f'Марка {mark} не доступна для трубы. Выберите из {self.marks}')
-        return mark
+    def __repr__(self):
+        return f'Person({self._name}, {self._surname}, {self.position}, {self.salary}, {self.service})'
 
-    def __len__(self) -> int:
-        return self.length
-
-    def __str__(self) -> str:
-        return f'Труба {self.mark} из {self.material} диаметром {self.diameter} мм длиной {self.length} м'
+    def __len__(self):
+        return self.service
 
 
-pipe = Pipe('М-1', 'Сталь', 100, 1000)
-# pipe2 = Pipe('Труба', 'Сталь', 100, 1000) # ValueError: Марка Труба не доступна для трубы. Выберите из ['М-1', 'М-2', 'М-3', 'М-4', 'М-5']
+# создаем объекты класса Person
+person_1 = Person('Ivan', 'Ivanov', 'developer', 1000, 5)
 
-pipe.mark = "Труба"
+print(person_1)  # Ivan Ivanov
+print(person_1._name) # Ivan
 
+new_name = 'Petr'
+person_1._name = new_name
+
+print(person_1)  # Petr Ivanov
