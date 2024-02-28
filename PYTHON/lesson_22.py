@@ -22,8 +22,12 @@ Lesson 22
 # класс Персона. Имя, фамилия, должность, зарплата, срок службы
 
 class Person:
-    def __init__(self, name: str, surname: str, position: str, salary: int, service: int):
+    def __init__(self, name: str, age: int,
+                 surname: str, position: str,
+                 salary: int, service: int):
+
         self.__name = name
+        self.__age = age
         self._surname = surname
         self.position = position
         self.salary = salary
@@ -35,25 +39,30 @@ class Person:
     def __repr__(self):
         return f'Person({self.__name}, {self._surname}, {self.position}, {self.salary}, {self.service})'
 
-    def __len__(self):
-        return self.service
+    @staticmethod
+    def __validate_age(age):
+        if isinstance(age, int) and 16 <= age <= 100:
+            return True
+        return False
+
+    def set_age(self, age):
+        """
+        Проверяем что возраст число, и в диапазоне от 16 до 100
+        :param age:
+        :return:
+        """
+        if self.__validate_age(age):
+            self.__age = age
+        else:
+            raise ValueError('Возраст должен быть числом от 16 до 100')
+
+    def get_age(self):
+        return self.__age
 
 
-# создаем объекты класса Person
-person_1 = Person('Ivan', 'Ivanov', 'developer', 1000, 5)
+p1 = Person('Ivan', 30, 'Ivanov', 'developer', 1000, 5)
+print(p1)
+p1.set_age(90)
+print(p1.get_age())
 
-print(person_1)  # Ivan Ivanov
-# print(person_1.__name) # Ivan
-
-new_name = 'Petr'
-person_1.__name = new_name
-
-print(person_1)  # Petr Ivanov
-
-print(person_1.__dict__)  # {'_Person__name': 'Ivan', '_surname': 'Ivanov', 'position': 'developer', 'salary': 1000, 'service': 5, '__name': 'Petr'}
-
-
-# Переопределим в Петра
-person_1._Person__name = new_name
-
-print(person_1)
+print(p1.__validate_age(30))
