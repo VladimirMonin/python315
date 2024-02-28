@@ -8,22 +8,60 @@ Lesson 22
 - Атрибут `__dict__`
 - Функция `dir()` и метод `__dir__()`
 - классы без __init__
+- __str__ - пользовательское представление объекта
+- __repr__ - техническое представление объекта
+- eval() - встроенная функция для выполнения строки как код Python
 
 """
 
 
-# Напишем тестовый класс
+# Напишем класс Person, который будет содержать информацию о человеке
 
-class Test:
+class Person:
+    def __init__(self, name: str, age, address: str):
+        self.name = name
+        self.age = age
+        self.address = address
 
-    def get_sum(self):
-        return self.a + self.b
+    def __str__(self) -> str:
+        """
+        Метод для представления объекта в виде строки
+        Используется для вывода информации о объекте через print()
+        :return:
+        """
+        return f"Информация о человеке: {self.name}, {self.age}, {self.address}"
+
+    def __repr__(self) -> str:
+        """
+        Метод для представления объекта в виде строки
+        Используется для возможности воссоздать объект через eval()
+        Вторично: для вывода информации о объекте через print()
+        :return:
+        """
+        return f"{self.__class__.__name__}('{self.name}', '{self.age}', '{self.address}')"
 
 
-# Создадим экземпляр класса
-test = Test()
-test.a = 10
-test.b = 20
+# Создадим экземпляр класса Person
+person = Person('Николай', 25, 'USA')
+person2 = Person("Абрахам", 35, "Канада")
 
-print(test.get_sum())  # 30
-print(test.__dict__)  # {'a': 10, 'b': 20}
+persons = [person, person2]
+
+print(person)
+print(person2)
+
+[print(person) for person in persons]
+
+print(dir(person))
+
+# Получим значение __repr__ для person
+repr_str = repr(person)
+print(repr_str)
+# Воссоздадим объект person из строки
+# Person('Николай', 25, 'USA')
+# Person(Николай, 25, USA)
+
+new_person = eval(repr_str)
+print(new_person)
+# Практика
+""""""
