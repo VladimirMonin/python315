@@ -23,10 +23,12 @@
 - Инициализация и при наследовании
 """
 
+
 # Понятие родительского класса и дочернего класса
+
 """
-Родительский класс (суперкласс) - класс, от которого наследуются свойства и методы
-Дочерний класс (подкласс) - класс, который наследует свойства и методы родительского класса
+Мы можем переопределить методы родительского класса в дочернем классе
+Но при этом мы можем и расширить функционал родительского метода, в дочернем, добавив новую логику.
 """
 
 
@@ -36,8 +38,8 @@ class Animal:
         self.age = 0
         self.puws = 0
 
-    def speak(self):
-        print(f"Меня зовут {self.name}.")
+    def speak(self, type_of_animal='животное'):
+        print(f"В первую очередь я {__class__.__name__}, а потом {type_of_animal}")
 
     def __str__(self):
         return f'Animal: {self.name}, {self.age} лет'
@@ -53,10 +55,15 @@ class Cat(Animal):
     Расширим атрибуты у кота, добавим пушистость
     С вызовом инициализатора родительского класса
     """
+
     def __init__(self, name, fluffiness, age, puws):
         super().__init__(name, age, puws)
         self.fluffiness = fluffiness
+
     def speak(self):
+        # вызов метода родительского класса
+        class_name = self.__class__.__name__
+        super().speak(class_name)
         print(f"Меня зовут {self.name}, и я кот. Meow!")
 
 
@@ -65,16 +72,8 @@ class Bird(Animal):
         print(f"Меня зовут {self.name}, и я птица. Chirp!")
 
 
-# dog = Dog()
-cat = Cat('Мурзик', 5, 3, 4)
-print(cat.some_attr) # AttributeError: 'Cat' object has no attribute 'some_attr'
-print(cat)
-# bird = Bird('Чижик')
+# animal = Animal()
+# animal.speak()
 
-"""
-Наследование Cat работает и без вызова инициализатора родительского класса
-Мы получаем методы Animal, но не получаем атрибуты!
-
-А в них может быть логика, которая необходима для работы дочернего класса
-"""
-
+cat = Cat('Барсик', 5, 2, 3)
+cat.speak()
