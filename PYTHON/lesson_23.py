@@ -31,7 +31,7 @@
 
 
 class Animal:
-    def __init__(self, name):
+    def __init__(self, name='Бобик'):
         self.name = name
         self.age = 0
 
@@ -47,6 +47,11 @@ class Dog(Animal):
         print(f"Меня зовут {self.name}, и я собака. Woof!")
 
 
-dog1 = Dog('Rex')
+dog1 = Dog()
 dog1.speak()
 print(dog1)
+
+# Распечатать MRO - Method Resolution Order - порядок разрешения методов
+#
+print(Dog.mro())
+
