@@ -31,10 +31,10 @@
 
 
 class Animal:
-    def __init__(self, name='Бобик'):
+    def __init__(self, name='Бобик', age=0, puws=0):
         self.name = name
         self.age = 0
-        self.some_attr = None
+        self.puws = 0
 
     def speak(self):
         print(f"Меня зовут {self.name}.")
@@ -51,13 +51,11 @@ class Dog(Animal):
 class Cat(Animal):
     """
     Расширим атрибуты у кота, добавим пушистость
-    Без супер
+    С вызовом инициализатора родительского класса
     """
-    def __init__(self, name, fluffiness=0):
+    def __init__(self, name, fluffiness, age, puws):
+        super().__init__(name, age, puws)
         self.fluffiness = fluffiness
-        self.name = name
-        self.age = 0
-
     def speak(self):
         print(f"Меня зовут {self.name}, и я кот. Meow!")
 
@@ -68,7 +66,7 @@ class Bird(Animal):
 
 
 # dog = Dog()
-cat = Cat('Мурзик')
+cat = Cat('Мурзик', 5, 3, 4)
 print(cat.some_attr) # AttributeError: 'Cat' object has no attribute 'some_attr'
 print(cat)
 # bird = Bird('Чижик')
