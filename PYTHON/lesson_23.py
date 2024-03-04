@@ -34,6 +34,7 @@ class Animal:
     def __init__(self, name='Бобик'):
         self.name = name
         self.age = 0
+        self.some_attr = None
 
     def speak(self):
         print(f"Меня зовут {self.name}.")
@@ -48,8 +49,17 @@ class Dog(Animal):
 
 
 class Cat(Animal):
+    """
+    Расширим атрибуты у кота, добавим пушистость
+    Без супер
+    """
+    def __init__(self, name, fluffiness=0):
+        self.fluffiness = fluffiness
+        self.name = name
+        self.age = 0
+
     def speak(self):
-        print(f"Меня зовут {self.name}, и я кошка. Meow!")
+        print(f"Меня зовут {self.name}, и я кот. Meow!")
 
 
 class Bird(Animal):
@@ -57,24 +67,16 @@ class Bird(Animal):
         print(f"Меня зовут {self.name}, и я птица. Chirp!")
 
 
-dog = Dog()
+# dog = Dog()
 cat = Cat('Мурзик')
-bird = Bird('Чижик')
+print(cat.some_attr) # AttributeError: 'Cat' object has no attribute 'some_attr'
+print(cat)
+# bird = Bird('Чижик')
 
 """
-Полиморфизм - это способность объектов с одинаковым интерфейсом иметь различную реализацию
-Мы можем вызвать метод speak у всех объектов, но каждый из них будет вести себя по-разному
-Даже логика может быть разной, главное чтобы интерфейс был одинаковым, и ожидался одинаковый результат
+Наследование Cat работает и без вызова инициализатора родительского класса
+Мы получаем методы Animal, но не получаем атрибуты!
+
+А в них может быть логика, которая необходима для работы дочернего класса
 """
-
-dog.speak()
-cat.speak()
-bird.speak()
-
-animals = [dog, cat, bird]
-
-for animal in animals:
-    animal.speak()
-
-[animal.speak() for animal in animals]
 
