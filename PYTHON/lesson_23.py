@@ -39,7 +39,7 @@ class Animal:
         print(f"Меня зовут {self.name}.")
 
     def __str__(self):
-        return f'Animal: {self.name, self.age}'
+        return f'Animal: {self.name}, {self.age} лет'
 
 
 class Dog(Animal):
@@ -47,11 +47,34 @@ class Dog(Animal):
         print(f"Меня зовут {self.name}, и я собака. Woof!")
 
 
-dog1 = Dog()
-dog1.speak()
-print(dog1)
+class Cat(Animal):
+    def speak(self):
+        print(f"Меня зовут {self.name}, и я кошка. Meow!")
 
-# Распечатать MRO - Method Resolution Order - порядок разрешения методов
-#
-print(Dog.mro())
+
+class Bird(Animal):
+    def speak(self):
+        print(f"Меня зовут {self.name}, и я птица. Chirp!")
+
+
+dog = Dog()
+cat = Cat('Мурзик')
+bird = Bird('Чижик')
+
+"""
+Полиморфизм - это способность объектов с одинаковым интерфейсом иметь различную реализацию
+Мы можем вызвать метод speak у всех объектов, но каждый из них будет вести себя по-разному
+Даже логика может быть разной, главное чтобы интерфейс был одинаковым, и ожидался одинаковый результат
+"""
+
+dog.speak()
+cat.speak()
+bird.speak()
+
+animals = [dog, cat, bird]
+
+for animal in animals:
+    animal.speak()
+
+[animal.speak() for animal in animals]
 
