@@ -26,14 +26,22 @@ class BigMatryoshka:
     - open - открывает матрешку
     """
 
-    def __init__(self):
+    def __init__(self, color):
         self.size = 'Большая'
+        self.color = color
 
     def open(self):
         """
         Открывает матрешку
         """
-        print('Большая матрешка открывается')
+        print(f'{self.size} матрешка {self.color} цвета: открывается')
+
+    def __str__(self):
+        """
+        Печатает информацию о матрешке
+        :return:
+        """
+        print(f'Размер: {self.size}, цвет: {self.color}')
 
 
 class MediumMatryoshka(BigMatryoshka):
@@ -45,30 +53,18 @@ class MediumMatryoshka(BigMatryoshka):
     """
 
     def __init__(self, color):
-        super().__init__()
-        self.color = color
-
-    def open(self):
-        """
-        Открывает матрешку и вызывает метод open из BigMatryoshka
-
-        :return:
-        """
-        super().open()
-        print('Средняя матрешка открывается')
-
-    def display_info(self):
-        """
-        Печатает информацию о матрешке
-        :return:
-        """
-        print(f'Размер: {self.size}, цвет: {self.color}')
+        super().__init__(color)
+        self.size = 'Средняя'
 
 
-big_matryoshka = BigMatryoshka()
+
+
+
+
+
+big_matryoshka = BigMatryoshka("Зеленая")
 big_matryoshka.open()
 
 medium_matryoshka = MediumMatryoshka('Красная')
 medium_matryoshka.open()
 
-medium_matryoshka.display_info()
