@@ -25,23 +25,30 @@ class BigMatryoshka:
     Методы:
     - open - открывает матрешку
     """
+    big_count = 0
 
     def __init__(self, color):
         self.size = 'Большая'
         self.color = color
+        BigMatryoshka.big_count += 1
+        self.id = BigMatryoshka.big_count
 
     def open(self):
         """
         Открывает матрешку
         """
-        print(f'{self.size} матрешка {self.color} цвета: открывается')
+        print(f'{self.size} матрешка, цвет: {self.color} с ID {self.id} открывается')
+
+    @classmethod
+    def get_big_count(cls):
+        return cls.big_count
 
     def __str__(self):
         """
         Печатает информацию о матрешке
         :return:
         """
-        print(f'Размер: {self.size}, цвет: {self.color}')
+        return (f'Размер: {self.size}, цвет: {self.color}, id: {self.id}')
 
 
 class MediumMatryoshka(BigMatryoshka):
@@ -65,16 +72,14 @@ class MediumMatryoshka(BigMatryoshka):
         print(f'{self.size} матрешка {self.color} цвета: открывается')
 
 
-medium_matryoshka = MediumMatryoshka('Красный')
-medium_matryoshka2 = MediumMatryoshka('Синий')
-medium_matryoshka3 = MediumMatryoshka('Зеленый')
+big_matryoshka = BigMatryoshka('Красный')
+print(big_matryoshka)
+print(big_matryoshka.get_big_count())
 
-# Проверяем что объекты разные
-print(id(medium_matryoshka.big_matryoshka))
-print(id(medium_matryoshka2.big_matryoshka))
-print(id(medium_matryoshka3.big_matryoshka))
+big_matryoshka2 = BigMatryoshka('Синий')
+big_matryoshka3 = BigMatryoshka('Зеленый')
 
-
-medium_matryoshka.open()
-medium_matryoshka2.open()
-medium_matryoshka3.open()
+print(big_matryoshka.get_big_count())
+print(big_matryoshka)
+print(big_matryoshka2)
+print(big_matryoshka3)
