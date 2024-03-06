@@ -19,20 +19,21 @@ Lesson 24
 """
 
 
-class BigMatryoshka:
+# NotImplementedError - исключение, которое вызывается, когда метод не реализован
+# И
+
+class AbstractMatryoshka:
     """
-    Большая Матрешка.
-    Методы:
-    - open - открывает матрешку
+    Абстрактный класс Матрешка.
+    Тут может быть реализовано общее поведение для всех матрешек.
     """
     count = 0
 
-    def __init__(self, color):
-        self.size = 'Большая'
-        self.color = color
+    def __init__(self):
+        self.size = None
+        self.color = None
         __class__.count += 1
         self.id = __class__.count
-        self.marketing_name = f'Матрешка {self.size} размера, цвета {self.color}'
 
     def open(self):
         """
@@ -41,7 +42,7 @@ class BigMatryoshka:
         print(f'{self.size} матрешка, цвет: {self.color} с ID {self.id} открывается')
 
     @classmethod
-    def get_big_count(cls):
+    def get_count(cls):
         return cls.count
 
     def __str__(self):
@@ -52,60 +53,29 @@ class BigMatryoshka:
         return (f'Размер: {self.size}, цвет: {self.color}, id: {self.id}')
 
 
-class MediumMatryoshka(BigMatryoshka):
+class BigMatryoshka(AbstractMatryoshka):
     """
-    Средняя Матрешка.
+    Большая Матрешка.
     Методы:
     - open - открывает матрешку
-    - display_info - печатает информацию о матрешке
     """
-    count = 0
 
     def __init__(self, color):
-        self.big_matryoshka = BigMatryoshka(color)
-        super().__init__(color) # TODO - Проблема в том, что дважды отрабатывает инициализатор большой матрешки
-        self.size = 'Средняя'
-        __class__.count += 1
-        self.id = __class__.count
-
-    def open(self):
-        """
-        Открывает матрешку
-        """
-        self.big_matryoshka.open()
-        print(f'{self.size} матрешка, цвет: {self.color} с ID {self.id} открывается')
-
-
-class SmallMatryoshka(MediumMatryoshka):
-    """
-    Маленькая Матрешка.
-    Методы:
-    - open - открывает матрешку
-    - display_info - печатает информацию о матрешке
-    """
-    count = 0
-
-    def __init__(self, color):
-        self.medium_matryoshka = MediumMatryoshka(color)
-        self.big_matryoshka = self.medium_matryoshka.big_matryoshka
-        self.size = 'Маленькая'
+        super().__init__()
+        self.size = 'Большая'
         self.color = color
-        __class__.count += 1
 
     def open(self):
         """
         Открывает матрешку
         """
-        self.big_matryoshka.open()
-        self.medium_matryoshka.open()
         print(f'{self.size} матрешка, цвет: {self.color} с ID {self.id} открывается')
 
+big = BigMatryoshka('Красный')
+big.open()
+# big.display_info()
 
-small_matryoshka = SmallMatryoshka('Зеленая')
-print(small_matryoshka.get_big_count())
-medium_matryoshka = MediumMatryoshka('Красная')
-print(medium_matryoshka.get_big_count())
-big_matryoshka = BigMatryoshka('Синяя')
-big_matryoshka2 = BigMatryoshka('Синяя')
-print(big_matryoshka2.get_big_count())
-
+"""
+Попробуйте создать классы для средней и маленькой матрешки, которые наследуются от абстрактного класса Матрешка.
+Чтобы они использовали общий счетчик.
+"""
