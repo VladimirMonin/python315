@@ -14,6 +14,10 @@ Lesson 24
 - `isinstance()` и `issubclass()`
 - Разрешение конфликтов
 - Абстрактные классы
+- __base__ - ссылка на родительский класс
+- isubclass() - проверка наследования
+- isinstance() - проверка принадлежности к классу
+
 - Миксины
 - Инициализация и при наследовании
 """
@@ -83,3 +87,31 @@ class BigMatryoshka(AbstractMatryoshka):
 
 big = BigMatryoshka('Красный')
 print(big)
+
+
+class A:
+    pass
+
+class B(A):
+    pass
+
+class C:
+    pass
+
+class D(B, C):
+    pass
+
+print(D.mro())
+
+print(issubclass(D, A))
+print(issubclass(D, C))
+print(issubclass(D, D))
+print(issubclass(D, object))
+
+print(isinstance(big, BigMatryoshka))
+print(isinstance(big, AbstractMatryoshka))
+
+#
+# TypeError: Cannot create a consistent method resolution order (MRO) for bases
+# ПОЛУЧИМ ЕГО!
+
