@@ -31,6 +31,7 @@ ABC - это класс, который не может быть инстанц�
 
 from abc import ABC, abstractmethod
 
+
 # И
 
 class AbstractMatryoshka(ABC):
@@ -78,40 +79,38 @@ class BigMatryoshka(AbstractMatryoshka):
         self.color = color
 
     def open(self):
-        pass
+        """
+        Открывает матрешку
+        """
+        print('Большая матрешка открывается')
 
 
+class GlassMatryoshkaMixin:
+    """
+    Миксин для стеклянной матрешки
+    """
+
+    def __init__(self):
+        self.material = 'Стекло'
+
+    def open(self):
+        """
+        Открывает матрешку
+        """
+        print('Стеклянная матрешка открывается')
 
 
-# abstract = AbstractMatryoshka() # TypeError: Can't instantiate abstract class AbstractMatryoshka with abstract methods open
+class BigGlassMatryoshka(GlassMatryoshkaMixin, BigMatryoshka):
+    """
+    Большая стеклянная матрешка
+    """
 
-big = BigMatryoshka('Красный')
-print(big)
+    def __init__(self, color):
+        super().__init__(color)
 
 
-class A:
-    pass
+# big_glass_matryoshka = BigGlassMatryoshka('Красный')
+# big_glass_matryoshka.open()
 
-class B(A):
-    pass
-
-class C:
-    pass
-
-class D(B, C):
-    pass
-
-print(D.mro())
-
-print(issubclass(D, A))
-print(issubclass(D, C))
-print(issubclass(D, D))
-print(issubclass(D, object))
-
-print(isinstance(big, BigMatryoshka))
-print(isinstance(big, AbstractMatryoshka))
-
-#
-# TypeError: Cannot create a consistent method resolution order (MRO) for bases
-# ПОЛУЧИМ ЕГО!
-
+# Смотрим порядок разрешения методов
+print(BigGlassMatryoshka.mro())
