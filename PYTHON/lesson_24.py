@@ -17,12 +17,19 @@ Lesson 24
 - Миксины
 - Инициализация и при наследовании
 """
+"""
+Чтобы сделать это действительно абстрактным
+нам нужно использовать ABC - Abstract Base Class и декоратор @abstractmethod
 
+ABC - это класс, который не может быть инстанциирован
+@abstractmethod - это декоратор, который указывает, что метод должен быть реализован в дочерних классах
+"""
 
-# NotImplementedError - исключение, которое вызывается, когда метод не реализован
+from abc import ABC, abstractmethod
+
 # И
 
-class AbstractMatryoshka:
+class AbstractMatryoshka(ABC):
     """
     Абстрактный класс Матрешка.
     Тут может быть реализовано общее поведение для всех матрешек.
@@ -35,6 +42,7 @@ class AbstractMatryoshka:
         __class__.count += 1
         self.id = __class__.count
 
+    @abstractmethod
     def open(self):
         """
         Открывает матрешку
@@ -66,16 +74,12 @@ class BigMatryoshka(AbstractMatryoshka):
         self.color = color
 
     def open(self):
-        """
-        Открывает матрешку
-        """
-        print(f'{self.size} матрешка, цвет: {self.color} с ID {self.id} открывается')
+        pass
+
+
+
+
+# abstract = AbstractMatryoshka() # TypeError: Can't instantiate abstract class AbstractMatryoshka with abstract methods open
 
 big = BigMatryoshka('Красный')
-big.open()
-# big.display_info()
-
-"""
-Попробуйте создать классы для средней и маленькой матрешки, которые наследуются от абстрактного класса Матрешка.
-Чтобы они использовали общий счетчик.
-"""
+print(big)
