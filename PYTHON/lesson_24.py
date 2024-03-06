@@ -54,17 +54,27 @@ class MediumMatryoshka(BigMatryoshka):
 
     def __init__(self, color):
         super().__init__(color)
+        self.big_matryoshka = BigMatryoshka(color)
         self.size = 'Средняя'
 
+    def open(self):
+        """
+        Открывает матрешку
+        """
+        self.big_matryoshka.open()
+        print(f'{self.size} матрешка {self.color} цвета: открывается')
 
 
+medium_matryoshka = MediumMatryoshka('Красный')
+medium_matryoshka2 = MediumMatryoshka('Синий')
+medium_matryoshka3 = MediumMatryoshka('Зеленый')
+
+# Проверяем что объекты разные
+print(id(medium_matryoshka.big_matryoshka))
+print(id(medium_matryoshka2.big_matryoshka))
+print(id(medium_matryoshka3.big_matryoshka))
 
 
-
-
-big_matryoshka = BigMatryoshka("Зеленая")
-big_matryoshka.open()
-
-medium_matryoshka = MediumMatryoshka('Красная')
 medium_matryoshka.open()
-
+medium_matryoshka2.open()
+medium_matryoshka3.open()
