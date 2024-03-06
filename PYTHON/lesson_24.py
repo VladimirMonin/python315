@@ -25,13 +25,13 @@ class BigMatryoshka:
     Методы:
     - open - открывает матрешку
     """
-    big_count = 0
+    count = 0
 
     def __init__(self, color):
         self.size = 'Большая'
         self.color = color
-        BigMatryoshka.big_count += 1
-        self.id = BigMatryoshka.big_count
+        __class__.count += 1
+        self.id = __class__.count
 
     def open(self):
         """
@@ -41,7 +41,7 @@ class BigMatryoshka:
 
     @classmethod
     def get_big_count(cls):
-        return cls.big_count
+        return cls.count
 
     def __str__(self):
         """
@@ -60,8 +60,8 @@ class MediumMatryoshka(BigMatryoshka):
     """
 
     def __init__(self, color):
-        super().__init__(color)
         self.big_matryoshka = BigMatryoshka(color)
+        super().__init__(color)
         self.size = 'Средняя'
 
     def open(self):
@@ -69,17 +69,9 @@ class MediumMatryoshka(BigMatryoshka):
         Открывает матрешку
         """
         self.big_matryoshka.open()
-        print(f'{self.size} матрешка {self.color} цвета: открывается')
+        print(f'{self.size} матрешка, цвет: {self.color} с ID {self.id} открывается')
 
 
-big_matryoshka = BigMatryoshka('Красный')
-print(big_matryoshka)
-print(big_matryoshka.get_big_count())
-
-big_matryoshka2 = BigMatryoshka('Синий')
-big_matryoshka3 = BigMatryoshka('Зеленый')
-
-print(big_matryoshka.get_big_count())
-print(big_matryoshka)
-print(big_matryoshka2)
-print(big_matryoshka3)
+medium_matryoshka = MediumMatryoshka('Красный')
+medium_matryoshka.open()
+print(medium_matryoshka.get_big_count())
