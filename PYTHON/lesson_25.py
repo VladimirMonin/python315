@@ -29,9 +29,13 @@ __ge__ - больше или равно
 Как это работает с наследованием?
 
 @total_ordering - декоратор, который позволяет определить все методы сравнения
+Нам надо определить метод проверки на равенство
+И один из методов сравнения: меньше, меньше или равно, больше, больше или равно
 """
+from functools import total_ordering
 
 
+@total_ordering
 class Kettlebell:
     """
     Гиря.
@@ -61,29 +65,9 @@ class Kettlebell:
             return NotImplemented
         return self.weight == other.weight and self.length == other.length and self.width == other.width
 
-    def __ne__(self, other: 'Kettlebell') -> bool:
-        """
-        Неравенство
-        :param other:
-        :return:
-        """
-        if not isinstance(other, Kettlebell):
-            return NotImplemented
-        return self.weight != other.weight
-
-    def __lt__(self, other: 'Kettlebell') -> bool:
-        """
-        Меньше
-        :param other:
-        :return:
-        """
-        if not isinstance(other, Kettlebell):
-            return NotImplemented
-        return self.weight < other.weight
-
     def __le__(self, other: 'Kettlebell') -> bool:
         """
-        Меньше или равно
+        Меньше
         :param other:
         :return:
         """
@@ -108,20 +92,19 @@ print(len(ket1))
 ket2 = Kettlebell(16)
 ket3 = Kettlebell(24)
 
-print(ket1 == ket2)
-print(ket1 != ket2)
-print(ket1 < ket2)
-print(ket1 <= ket2)  # TODO - Как сравниваются объекты автоматически, если этот метод не описан?
-print(ket1 > ket2)
-print(ket1 >= ket2)
+print(f'Проверка на равенство: {ket1 == ket2}')
+print(f'Проверка на НЕравенство: {ket1 != ket2}')
+print(f'Проверка на меньше: {ket1 < ket2}')
+print(f'Проверка на меньше или равно: {ket1 <= ket2}')
+print(f'Проверка на больше: {ket1 > ket2}')
+print(f'Проверка на больше или равно: {ket1 >= ket2}')
 
-print(ket1 == ket3)
-print(ket1 != ket3)
-print(ket1 < ket3)
-print(ket1 <= ket3)
-print(ket1 > ket3)
-print(ket1 >= ket3)
+"""
+@total_ordering - декоратор, который позволяет определить все методы сравнения
+Однако стоит быть внимательными, т.к. он опирается на методы сравнения, которые мы определили
+И для проверок >= и <= он использует метод равенства в том числе. 
+Результат может быть неожиданным, если у нас разная логика в методах сравнения.
+"""
 
-dumb1 = Dumbbells()
 
 
