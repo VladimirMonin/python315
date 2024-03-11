@@ -34,86 +34,18 @@ __ge__ - больше или равно
 """
 from functools import total_ordering
 
-
-@total_ordering
-class Kettlebell:
-    """
-    Гиря.
-    """
-
-    def __init__(self, weight, length=40, width=10):
-        self.weight = weight
-        self.length = length
-        self.width = width
-
-    def __str__(self) -> str:
-        return f'Гиря весом {self.weight} кг'
-
-    def __bool__(self) -> bool:
-        return self.weight > 0
-
-    def __len__(self) -> int:
-        return self.weight
-
-    def __eq__(self, other: 'Kettlebell') -> bool:
-        """
-        Равенство
-        :param other:
-        :return:
-        """
-        if not isinstance(other, Kettlebell):
-            return NotImplemented
-        return self.weight == other.weight
-
-    def __le__(self, other: 'Kettlebell') -> bool:
-        """
-        Меньше
-        :param other:
-        :return:
-        """
-        if not isinstance(other, Kettlebell):
-            return NotImplemented
-        return self.weight <= other.weight
-
-
-class Dumbbells:
-    def __eq__(self, other):
-        return NotImplemented
-    pass
-
-
-ket1 = Kettlebell(16, 45, 11)
-print(ket1)
-if ket1:
-    print('Гиря настоящая')
-
-print(len(ket1))
-
-ket2 = Kettlebell(16)
-ket3 = Kettlebell(24)
-
-print(f'Проверка на равенство: {ket1 == ket2}')
-print(f'Проверка на НЕравенство: {ket1 != ket2}')
-print(f'Проверка на меньше: {ket1 < ket2}')
-print(f'Проверка на меньше или равно: {ket1 <= ket2}')
-print(f'Проверка на больше: {ket1 > ket2}')
-print(f'Проверка на больше или равно: {ket1 >= ket2}')
-
 """
-@total_ordering - декоратор, который позволяет определить все методы сравнения
-Однако стоит быть внимательными, т.к. он опирается на методы сравнения, которые мы определили
-И для проверок >= и <= он использует метод равенства в том числе. 
-Результат может быть неожиданным, если у нас разная логика в методах сравнения.
+Опишите класс Город, у которого есть следующие атрибуты:  
+- название (name)  
+- население (population)  
+  
+Импортируйте декоратор total_ordering из модуля functools  
+Используйте декоратор total_ordering для определения всех методов сравнения, описав  
+лишь необходимый минимум (сравнение только по населению).
+  
+Опишите метод __str__ для вывода информации о городе в виде:  
+"Город: <name>, Население: <population>"  
+  
+Создайте несколько экземпляров класса Город и сравните их между собой.
+Сделайте список городов и отсортируйте его.
 """
-
-
-ket4 = Kettlebell(36)
-ket5 = Kettlebell(42)
-
-ket_list = [ket5, ket1, ket3, ket2, ket4]
-ket_list.sort()
-[print(k) for k in ket_list]
-
-# В обратном порядке
-ket_list.sort(reverse=True)
-[print(k) for k in ket_list]
