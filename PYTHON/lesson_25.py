@@ -41,11 +41,44 @@ class Kettlebell:
         return self.weight
 
     def __eq__(self, other: 'Kettlebell') -> bool:
-        # Проверка на принадлежность к классу
+        """
+        Равенство
+        :param other:
+        :return:
+        """
         if not isinstance(other, Kettlebell):
             raise ValueError('Неверный тип')
         return self.weight == other.weight and self.length == other.length and self.width == other.width
 
+    def __ne__(self, other: 'Kettlebell') -> bool:
+        """
+        Неравенство
+        :param other:
+        :return:
+        """
+        if not isinstance(other, Kettlebell):
+            raise ValueError('Неверный тип')
+        return self.weight != other.weight
+
+    def __lt__(self, other: 'Kettlebell') -> bool:
+        """
+        Меньше
+        :param other:
+        :return:
+        """
+        if not isinstance(other, Kettlebell):
+            raise ValueError('Неверный тип')
+        return self.weight < other.weight
+
+    def __le__(self, other: 'Kettlebell') -> bool:
+        """
+        Меньше или равно
+        :param other:
+        :return:
+        """
+        if not isinstance(other, Kettlebell):
+            raise ValueError('Неверный тип')
+        return self.weight <= other.weight
 
 ket1 = Kettlebell(16, 45, 11)
 print(ket1)
@@ -58,3 +91,15 @@ ket2 = Kettlebell(16)
 ket3 = Kettlebell(24)
 
 print(ket1 == ket2) # TODO - Как сравниваются объекты автоматически?
+print(ket1 != ket2)
+print(ket1 < ket2)
+print(ket1 <= ket2) # TODO - Как сравниваются объекты автоматически?
+print(ket1 > ket2)
+print(ket1 >= ket2)
+
+print(ket1 == ket3)
+print(ket1 != ket3)
+print(ket1 < ket3)
+print(ket1 <= ket3)
+print(ket1 > ket3)
+print(ket1 >= ket3)
