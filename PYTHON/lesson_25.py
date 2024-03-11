@@ -19,3 +19,30 @@ __ge__ - больше или равно
 
 @total_ordering - декоратор, который позволяет определить все методы сравнения
 """
+
+
+class Kettlebell:
+    """
+    Гиря.
+    """
+    def __init__(self, weight, length=40, width=10):
+        self.weight = weight
+        self.length = length
+        self.width = width
+
+    def __str__(self) -> str:
+        return f'Гиря весом {self.weight} кг'
+
+    def __bool__(self) -> bool:
+        return self.weight > 0
+
+    # def __len__(self) -> int:
+    #     return self.length
+
+
+ket1 = Kettlebell(16)
+print(ket1)
+if ket1:
+    print('Гиря настоящая')
+
+print(len(ket1))
