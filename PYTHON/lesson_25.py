@@ -49,3 +49,44 @@ from functools import total_ordering
 Создайте несколько экземпляров класса Город и сравните их между собой.
 Сделайте список городов и отсортируйте его.
 """
+
+@total_ordering
+class City:
+    def __init__(self, name, population):
+        self.name = name
+        self.population = population
+
+    def __str__(self):
+        return f'Город: {self.name}, Население: {self.population}'
+
+    def __eq__(self, other):
+        return self.population == other.population
+
+    def __lt__(self, other):
+        return self.population < other.population
+
+
+city_list = [
+    {'name': 'Moscow', 'population': 12_000_000},
+    {'name': 'Saint-Petersburg', 'population': 5_000_000},
+    {'name': 'Novosibirsk', 'population': 1_600_000},
+    {'name': 'Yekaterinburg', 'population': 1_500_000},
+    {'name': 'Nizhny Novgorod', 'population': 1_200_000},
+]
+
+cities = [City(**city) for city in city_list]
+
+print(cities)
+[print(city) for city in cities]
+
+cities.sort()
+[print(city) for city in cities]
+
+"""
+Мы получим список типа <__main__.City object at 0x0000026A0A9EDDC0>
+Где
+__main__ - это модуль, в котором определен класс
+City - это имя класса
+object - это базовый класс для всех классов в Python
+0x0000026A0A9EDDC0 - это адрес объекта в памяти
+"""
