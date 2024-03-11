@@ -31,62 +31,36 @@ __ge__ - больше или равно
 @total_ordering - декоратор, который позволяет определить все методы сравнения
 Нам надо определить метод проверки на равенство
 И один из методов сравнения: меньше, меньше или равно, больше, больше или равно
+
+__call__ - вызов объекта как функции
+
 """
 from functools import total_ordering
 
-"""
-Опишите класс Город, у которого есть следующие атрибуты:  
-- название (name)  
-- население (population)  
-  
-Импортируйте декоратор total_ordering из модуля functools  
-Используйте декоратор total_ordering для определения всех методов сравнения, описав  
-лишь необходимый минимум (сравнение только по населению).
-  
-Опишите метод __str__ для вывода информации о городе в виде:  
-"Город: <name>, Население: <population>"  
-  
-Создайте несколько экземпляров класса Город и сравните их между собой.
-Сделайте список городов и отсортируйте его.
-"""
 
-@total_ordering
-class City:
-    def __init__(self, name, population):
-        self.name = name
-        self.population = population
-
-    def __str__(self):
-        return f'Город: {self.name}, Население: {self.population}'
-
-    def __eq__(self, other):
-        return self.population == other.population
-
-    def __lt__(self, other):
-        return self.population < other.population
+class Cities:
+    cities = ['Москва', 'Санкт-Петербург', 'Новосибирск', 'Екатеринбург', 'Нижний Новгород', 'Казань', 'Челябинск']
 
 
-city_list = [
-    {'name': 'Moscow', 'population': 12_000_000},
-    {'name': 'Saint-Petersburg', 'population': 5_000_000},
-    {'name': 'Novosibirsk', 'population': 1_600_000},
-    {'name': 'Yekaterinburg', 'population': 1_500_000},
-    {'name': 'Nizhny Novgorod', 'population': 1_200_000},
-]
+class Game:
+    def __init__(self, cities: Cities):
+        self.Cities = cities
 
-cities = [City(**city) for city in city_list]
+    def print_cities(self):
+        print(self.Cities.cities)
 
-print(cities)
-[print(city) for city in cities]
 
-cities.sort()
-[print(city) for city in cities]
+class GameManager:
+    def __init__(self):
+        self.Cities = Cities()
+        self.Game = Game(self.Cities)
 
-"""
-Мы получим список типа <__main__.City object at 0x0000026A0A9EDDC0>
-Где
-__main__ - это модуль, в котором определен класс
-City - это имя класса
-object - это базовый класс для всех классов в Python
-0x0000026A0A9EDDC0 - это адрес объекта в памяти
-"""
+    def __call__(self, name):
+        print(f'Привет, {name}!')
+        self.Game.print_cities()
+
+
+if __name__ == '__main__':
+    name = input('Введите ваше имя: ')
+    game_manager = GameManager()
+    game_manager(name)
