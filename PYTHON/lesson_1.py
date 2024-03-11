@@ -138,3 +138,6 @@ message_3 = f'Привет, меня зовут {name} {surname} мне {str(age
 print(message)
 print(message_2)
 print(message_3)
+
+
+print('hel

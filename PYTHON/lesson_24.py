@@ -99,8 +99,11 @@ class GlassMatryoshkaMixin:
         """
         print('Стеклянная матрешка открывается')
 
+    def get_it_broke(self):
+        print('Стеклянная матрешка разбилась')
 
-class BigGlassMatryoshka(GlassMatryoshkaMixin, BigMatryoshka):
+
+class BigGlassMatryoshka(BigMatryoshka, GlassMatryoshkaMixin):
     """
     Большая стеклянная матрешка
     """
