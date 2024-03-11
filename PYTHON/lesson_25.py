@@ -63,7 +63,7 @@ class Kettlebell:
         """
         if not isinstance(other, Kettlebell):
             return NotImplemented
-        return self.weight == other.weight and self.length == other.length and self.width == other.width
+        return self.weight == other.weight
 
     def __le__(self, other: 'Kettlebell') -> bool:
         """
@@ -107,4 +107,13 @@ print(f'Проверка на больше или равно: {ket1 >= ket2}')
 """
 
 
+ket4 = Kettlebell(36)
+ket5 = Kettlebell(42)
 
+ket_list = [ket5, ket1, ket3, ket2, ket4]
+ket_list.sort()
+[print(k) for k in ket_list]
+
+# В обратном порядке
+ket_list.sort(reverse=True)
+[print(k) for k in ket_list]
