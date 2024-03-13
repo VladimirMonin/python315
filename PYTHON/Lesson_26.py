@@ -30,24 +30,38 @@ __itruediv__ - деление
 
 """
 
-class Mana:
-    def __init__ (self, value):
+
+class Health:
+    def __init__(self, value):
         self.value = value
 
-    def __sub__ (self, other):
-        if isinstance(other, int):
-            self.value -= other
-        else:
-            raise ValueError('Можно вычитать только целые числа')
+    def __add__(self, other):
+        self.value += other
+        return self.value
+
+    def __sub__(self, other):
+        self.value -= other
         return self.value
 
 
-class Mage:
-    def __init__ (self):
-        self.mana = Mana(100)
+class Berserk:
+    def __init__(self, health: int = 120, damage: int = 50):
+        self.health = Health(health)
+        self.damage = 50
+
+    def turn_on_bersek(self):
+        self.damage *= 3
+
+    def turn_off_bersek(self):
+        self.damage //= 3
 
 
-# Как реализовать логику вычитания маны у мага?
-mage = Mage()
-mage.mana - 30
-print(mage.mana.value)
+# Проверка
+b = Berserk()
+print(b.health.value)
+b.health + 10
+print(b.health.value)
+b.health - 20
+print(b.health.value)
+
+# Как реализовать логику, что если здоровье меньше 20 - у нас включится режим берсерка
