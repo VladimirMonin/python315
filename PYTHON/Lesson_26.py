@@ -31,56 +31,53 @@ __itruediv__ - деление
 """
 
 
+class BerserkModeMixin:
+    def turn_on_bersek(self):
+        if not self.bersek_mode:
+            self.damage *= 3
+            self.bersek_mode = True
+            print('Berserk mode ON')
+
+    def turn_off_bersek(self):
+        if self.bersek_mode:
+            self.damage //= 3
+            self.bersek_mode = False
+            print('Berserk mode OFF')
+
 class Health:
     def __init__(self, value, owner):
         self.value = value
-        self.max_value = value  # Запоминаем максимальное значение для определения 20% порога
-        self.owner = owner  # Ссылка на объект Berserk
+        self.owner = owner
 
     def __add__(self, other):
         self.value += other
-        self.check_bersek_mode()
-        return self
+        self.owner.check_bersek_mode()
+        return self.value
 
     def __sub__(self, other):
         self.value -= other
-        self.check_bersek_mode()
-        return self
+        self.owner.check_bersek_mode()
+        return self.value
+
+class Berserk(BerserkModeMixin):
+    def __init__(self, health: int = 120, damage: int = 50):
+        self.bersek_mode = False
+        self.health = Health(health, self)
+        self.damage = damage
 
     def check_bersek_mode(self):
-        if self.value <= self.max_value * 0.2:  # Если здоровье меньше 20%
-            self.owner.turn_on_bersek()
+        if self.health.value < 20:
+            self.turn_on_bersek()
         else:
-            self.owner.turn_off_bersek()
+            self.turn_off_bersek()
 
 
-class Berserk:
-    def __init__(self, health: int = 120, damage: int = 50):
-        self.health = Health(health, self)  # Передаем self в Health, чтобы Health мог управлять режимом берсерка
-        self.base_damage = damage
-        self.damage = damage
-        self.is_bersek = False
+# Создать персонажа
+hero = Berserk(health=100, damage=30)
+print(hero.health.value)
 
-    def turn_on_bersek(self):
-        if not self.is_bersek:  # Активируем режим берсерка только если он уже не активирован
-            self.damage *= 3
-            self.is_bersek = True
-            print("Режим берсерка включен!")
+# Персонаж получает урон
+hero.health - 90
 
-    def turn_off_bersek(self):
-        if self.is_bersek:  # Деактивируем режим берсерка только если он был активирован
-            self.damage = self.base_damage
-            self.is_bersek = False
-            print("Режим берсерка выключен!")
-
-# Проверка
-b = Berserk()
-print(b.health.value)
-b.health + 10  # Добавляем здоровье
-print(b.health.value)
-b.health - 130  # Снижаем здоровье для активации режима берсерка
-print(b.health.value)
-print(b.damage)
-b.health + 100  # Восстанавливаем здоровье для деактивации режима берсерка
-print(b.health.value)
-print(b.damage)
+# Персонаж лечится
+hero.health + 50
