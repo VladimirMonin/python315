@@ -32,36 +32,55 @@ __itruediv__ - деление
 
 
 class Health:
-    def __init__(self, value):
+    def __init__(self, value, owner):
         self.value = value
+        self.max_value = value  # Запоминаем максимальное значение для определения 20% порога
+        self.owner = owner  # Ссылка на объект Berserk
 
     def __add__(self, other):
         self.value += other
-        return self.value
+        self.check_bersek_mode()
+        return self
 
     def __sub__(self, other):
         self.value -= other
-        return self.value
+        self.check_bersek_mode()
+        return self
+
+    def check_bersek_mode(self):
+        if self.value <= self.max_value * 0.2:  # Если здоровье меньше 20%
+            self.owner.turn_on_bersek()
+        else:
+            self.owner.turn_off_bersek()
 
 
 class Berserk:
     def __init__(self, health: int = 120, damage: int = 50):
-        self.health = Health(health)
-        self.damage = 50
+        self.health = Health(health, self)  # Передаем self в Health, чтобы Health мог управлять режимом берсерка
+        self.base_damage = damage
+        self.damage = damage
+        self.is_bersek = False
 
     def turn_on_bersek(self):
-        self.damage *= 3
+        if not self.is_bersek:  # Активируем режим берсерка только если он уже не активирован
+            self.damage *= 3
+            self.is_bersek = True
+            print("Режим берсерка включен!")
 
     def turn_off_bersek(self):
-        self.damage //= 3
-
+        if self.is_bersek:  # Деактивируем режим берсерка только если он был активирован
+            self.damage = self.base_damage
+            self.is_bersek = False
+            print("Режим берсерка выключен!")
 
 # Проверка
 b = Berserk()
 print(b.health.value)
-b.health + 10
+b.health + 10  # Добавляем здоровье
 print(b.health.value)
-b.health - 20
+b.health - 130  # Снижаем здоровье для активации режима берсерка
 print(b.health.value)
-
-# Как реализовать логику, что если здоровье меньше 20 - у нас включится режим берсерка
+print(b.damage)
+b.health + 100  # Восстанавливаем здоровье для деактивации режима берсерка
+print(b.health.value)
+print(b.damage)
