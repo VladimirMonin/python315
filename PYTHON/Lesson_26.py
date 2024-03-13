@@ -18,74 +18,36 @@ __isub__ - вычитание
 __imul__ - умножение
 __itruediv__ - деление
 
+Практика - игровые персонажи, здоровье и мана
 """
-from typing import Union
+"""
+Создать класс Health (опишите логику вычитания здоровья и добавления здоровья)
+1 аттрибут - значение (value)
 
+Создать класс Berserk
+В нем есть  здоровье Health class
 
-# Класс банковский счет с методом __add__ и __iadd__
-class BankAccount:
-    def __init__(self, balance: float, owner: str):
-        self.balance = balance
-        self.owner = owner
-
-    def __str__(self) -> str:
-        return f'Банковский счет: {self.balance}, принадлежит: {self.owner}'
-
-    def __add__(self, other: Union[float, int, "BankAccount"]) -> "BankAccount":
-        if isinstance(other, (int, float)):
-            self.balance += other
-            return self
-        elif isinstance(other, BankAccount):
-            new_balance = self.balance + other.balance
-            new_owners = self.owner + " и " + other.owner
-            self.balance = 0
-            other.balance = 0
-            return BankAccount(new_balance, new_owners)
-
-    def __sub__(self, other: float | int) -> "BankAccount":
-        if isinstance(other, (int, float)):
-            if self.balance - other < 0:
-                raise ValueError('Недостаточно средств')
-            self.balance -= other
-            return self
-
-    def __mul__(self, other: float | int) -> float | int:
-        if isinstance(other, (int, float)):
-            raise NotImplementedError
-
-    def __truediv__(self, other: float | int) -> float | int:
-        if isinstance(other, (int, float)):
-            raise NotImplementedError
-
-
-# Создаем объекты
-my_account = BankAccount(1000, 'Петров')
-print(my_account)
-
-# Сложение
-my_account + 500
-my_account + 500
-my_account + 500
-my_account -= 200
-print(my_account)
-print(type(my_account))
-
-a = 400
-a += 500
-
-print(a)
-
-# Сложение аккаунтов
-b1 = BankAccount(1000, 'Иванов')
-b2 = BankAccount(1000, 'Смирнова')
-
-b4 = BankAccount(1000, 'Петров')
-
-b3 = b2 + b1 + b4
 
 """
-Как происходит сложение двух, и более чисел?
-Создаются ли новые экземпляры класса Int?
-Как происходит сложение двух, и более экземпляров класса BankAccount?
-"""
-print(b3)
+
+class Mana:
+    def __init__ (self, value):
+        self.value = value
+
+    def __sub__ (self, other):
+        if isinstance(other, int):
+            self.value -= other
+        else:
+            raise ValueError('Можно вычитать только целые числа')
+        return self.value
+
+
+class Mage:
+    def __init__ (self):
+        self.mana = Mana(100)
+
+
+# Как реализовать логику вычитания маны у мага?
+mage = Mage()
+mage.mana - 30
+print(mage.mana.value)
