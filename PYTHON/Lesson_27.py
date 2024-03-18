@@ -42,7 +42,7 @@ class Person:
 
 
 p1 = Person("Вася", "Москва", ["программирование", "JS"], 25)
-p2 = Person("Маша", "Москва", ["программирование", "JS"], "Мало!")
+p2 = Person("Маша", "Москва", ["программирование", "JS"], 25)
 p1.hobbies.append("программирование")
 p2.hobbies.append("JS")
 
@@ -64,3 +64,24 @@ print(f'{p2=}')
 или переопределить метод __eq__
 
 """
+
+
+@dataclass
+class City:
+    name: str
+    population: int
+    lat: float = field(compare=False)
+    lon: float = field(compare=False)
+    region: str = field(compare=False)
+
+
+c1 = City("Москва", 12_000_000, 55.755773, 37.617761, "Центр")
+c2 = City("Санкт-Петербург", 5_351_935, 59.9342802, 30.3350986, "Север")
+c3 = City("Москва", 12_000_000, 55.773, 37.61, "Центр")
+
+print(f'{c1=}')
+print(f'{c2=}')
+print(f'{c3=}')
+
+print(f'{c1 == c2=}')
+print(f'{c1 == c3=}')
