@@ -12,14 +12,15 @@ from dataclasses import dataclass, field
 
 @dataclass
 class Person:
+    """
+    Уберем age, city из сравнения
+    """
     name: str
-    age: int
-    city: str
+    age: int = field(compare=False)
+    city: str = field(compare=False)
 
 
-
-
-p1 = Person("Вася", 20, "Москва")
+p1 = Person("Вася", 20, "Архангельск")
 p2 = Person("Маша", 18, "Санкт-Петербург")
 p3 = Person("Вася", 20, "Москва")
 p4 = Person("Вася", 21, "Москва")
