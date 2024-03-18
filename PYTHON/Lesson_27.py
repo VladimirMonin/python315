@@ -7,8 +7,13 @@ Dataclasses
 - как определяется eq
 - сериализация и десериализация
 - field(default_factory=list) - для изменяемых типов
+- field(compare=False) - для исключения из сравнения
+- __post_init__ - для валидации
+- fields(default = 0) - Значение по умолчанию
+
 """
 from dataclasses import dataclass, field
+from typing import List
 
 
 @dataclass
@@ -17,13 +22,27 @@ class Person:
     Уберем age, city из сравнения
     """
     name: str
-    age: int = field(compare=False)
     city: str = field(compare=False)
-    hobbies: list = field(default_factory=list)
+    hobbies: List[str]
+    age: int = field(compare=False, default=0)
+
+    def __post_init__(self):
+        self.age = self.validate_age(self.age)
+
+    @staticmethod
+    def validate_age(age):
+        if not isinstance(age, int):
+            raise TypeError("Возраст должен быть числом")
+        if age < 0:
+            raise ValueError("Возраст не может быть отрицательным")
+        elif age > 150:
+            raise ValueError("Возраст не может быть больше 150")
+
+        return age
 
 
-p1 = Person("Иван", 35, "Москва", ["плавание", "путешествия"])
-p2 = Person("Анна", 28, "Санкт-Петербург", ["рафтинг", "манга"])
+p1 = Person("Вася", "Москва", ["программирование", "JS"], 25)
+p2 = Person("Маша", "Москва", ["программирование", "JS"], "Мало!")
 p1.hobbies.append("программирование")
 p2.hobbies.append("JS")
 
