@@ -13,20 +13,24 @@ from dataclasses import dataclass, field, fields, asdict
 
 
 @dataclass(order=True)
-class Person:
-    # Исключим лишние поля
-    name: str = field(compare=False, metadata={"description": "Имя"})
-    age: int = field(metadata={"description": "Возраст"})
-    city: str = field(compare=False, metadata={"description": "Город"})
+class AbstractPerson:
+    first_name: str = field(metadata={"description": "Имя"})
 
     def __str__(self):
         """
-        Неоправданно завышенная сложность
-        Просто, чтобы показать возможности метаинформации
+        Оправданная сложность.
+        В наследниках все работает автоматически
         :return:
         """
         meta_str = ", ".join([f"{f.metadata['description']}: {getattr(self, f.name)}" for f in fields(self)])
         return meta_str
+
+
+@dataclass(order=True)
+class Person(AbstractPerson):
+    # Исключим лишние поля
+    age: int = field(metadata={"description": "Возраст"})
+    city: str = field(compare=False, metadata={"description": "Город"})
 
 
 @dataclass(order=True)
@@ -37,6 +41,5 @@ class Employee(Person):
 
 p1 = Employee("Вася", 25, "Москва", "Программист", 100_000)
 p2 = Employee("Маша", 30, "Москва", "Программист", 100_000)
+p3 = Employee("Аня", 25, "Москва", "Тимлид", 150_000)
 
-print(p1)
-print(p2)
