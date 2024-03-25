@@ -9,37 +9,33 @@ Lesosn 29
 Метаклассы - как концепция
 """
 
-# Класс - декоратор, который добавит к датаклассу методы
 
-from dataclasses import dataclass, field, fields, asdict, astuple, is_dataclass
+class MetaClass(type):  # Указываем тип метакласса (type)
+    def __new__(cls, name, bases, dct):  # Получаем атрибуты класса
+        # cls - сам объект метакласса
+        # name - имя класса
+        # bases - родительские классы
+        # dct - атрибуты класса
+        print("Создаем класс с именем", name)
+        print(type(name))
+        # Добавляем атрибут к классу
+        dct['new_attribute'] = 100
+
+        return super().__new__(cls, name, bases, dct)
+
+    # Определим метод который будем добавлять в класс
 
 
-from dataclasses import dataclass, field
-from types import MethodType
+class MyClass(metaclass=MetaClass):  # Определяем класс с использованием метакласса
+    pass
 
-class CityDecorator:
-    def __init__(self, cls):
-        self.cls = cls
+# Создаем экземпляр класса
+my_class = MyClass()
+# Выводим атрибут
+print(my_class.new_attribute)
 
-    def __call__(self, *args, **kwargs):
-        obj = self.cls(*args, **kwargs)
 
-        # Привязываем функцию get_info как метод к экземпляру obj
-        obj.get_info = MethodType(self.get_info, obj)
-        return obj
-
-    def get_info(instance):
-        # Здесь self теперь относится к экземпляру City
-        return f'Информация о городе: {instance.name}, {instance.population}, {instance.latitude}, {instance.longitude}, {instance.region}'
-
-@CityDecorator
-@dataclass
-class City:
-    name: str
-    population: int
-    latitude: float
-    longitude: float
-    region: str = field(default='Europe')
-
-city = City('Moscow', 10000000, 55.75, 37.61)
-print(city.get_info())  # Теперь должно работать корректно
+class User(metaclass=MetaClass):
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
