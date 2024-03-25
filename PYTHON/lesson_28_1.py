@@ -1,6 +1,7 @@
 """
 Парсер в ООП стиле, для парсинга интернет-магазинов книг
 Содерижт классы:
+
 1. Browser - для работы с браузером (Python Selenium WebDriver)
 2. AbstractParser - абстрактный класс для парсинга интернет-магазина
 3. BookToScrapeParser - класс для парсинга интернет-магазина books.toscrape.com
@@ -122,9 +123,9 @@ class BookToScrapeParser(AbstractParser):
         """
         Получение информации о книге
         """
-        title = book_element.find_element(By.CSS_SELECTOR, "h3 > a").get_attribute("title").
+        title = book_element.find_element(By.CSS_SELECTOR, "h3 > a").get_attribute("title")
         text_mark = \
-        book_element.find_element(By.CSS_SELECTOR, "p[class^='star-rating']").get_attribute("class").split()[1]
+            book_element.find_element(By.CSS_SELECTOR, "p[class^='star-rating']").get_attribute("class").split()[1]
         mark = self.book_marks.get(text_mark)
         price_str = book_element.find_element(By.CLASS_NAME, "price_color").text
         price = float(price_str.lstrip('£'))
@@ -172,7 +173,6 @@ class Controller:
         """
         Запуск парсера
         """
-        self.parser.browser.get_driver()
         self.parser.get_all_by_category()
         pprint(self.parser.books)
 
@@ -189,3 +189,33 @@ parser = BookToScrapeParser(browser)
 controller = Controller()
 # Запускаем парсер
 controller(parser)
+
+
+def run_parser(parser_class, browser_options):
+    browser = Browser(driver_options=browser_options)
+    parser = parser_class(browser)
+    parser.get_all_by_category()
+    # Здесь может быть код для сохранения результатов парсинга
+    print(parser.books)
+
+
+from multiprocessing import Process
+
+if __name__ == '__main__':
+
+    # Создаем процессы
+    processes = []
+    for parser_class, browser_options in [
+        (BookToScrapeParser, None),
+        (BookToScrapeParser, None)
+    ]:
+        p = Process(target=run_parser, args=(parser_class, browser_options))
+        processes.append(p)
+
+    # Запускаем процессы
+    for p in processes:
+        p.start()
+
+    # Ждем завершения всех процессов
+    for p in processes:
+        p.join()
