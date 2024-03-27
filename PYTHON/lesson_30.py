@@ -8,32 +8,66 @@ Meta classes
 Сериализация
 """
 
-# 2 половины конструктора класса __init__ и __new__
+# Вложенные классы
+
+"""
+Вложенные классы, или внутренние классы, это классы, которые определены внутри другого класса. 
+Они используются по разным причинам:
+
+Инкапсуляция: Вложенный класс может быть скрыт от внешнего мира и использоваться 
+только внутри внешнего класса, что улучшает инкапсуляцию.
+
+Логическая структура: Если класс A является частью класса B и не имеет смысла 
+без класса B, его можно сделать вложенным классом.
+
+Улучшение читаемости и поддерживаемости кода: Если класс используется только 
+одним внешним классом, его удобно сделать вложенным, чтобы упростить код и улучшить его поддерживаемость.
+"""
 
 
-class First:
-    def __init__(self, name):
-        self.name = name
-        print("First.__init__")
-
-    def __new__(cls, *args, **kwargs):
-        print("First.__new__")
-        return super().__new__(cls)
-    
-    def custom_method(self, x):
-        print(f"First.custom_method {x}")
+from dataclasses import dataclass
 
 
-class Second(First):
-    def __init__(self, name, last_name):
-        self.last_name = last_name
-        print("Second.__init__")
-        super().__init__(name)
 
-    def custom_2_method(self, x):
-        print("Second.custom_2_method")
-        # First.custom_method(self, x)
-        super().custom_method(x)
+class Outer:
+    def __init__(self, outer_var, db_table, inner_dict: dict):
+        self.outer_var = outer_var
+        self.db_table = db_table
+        self.inner = self.Inner(**inner_dict)
 
-s = Second("Ivan", "Ivanov")
-s.custom_2_method(1111111111111111111111)
+    @dataclass
+    class Inner:
+        inner_var: int
+        db_table: str
+        
+        def get_all_params_dict(self):
+            return self.__dict__
+
+
+inner_dict_params = {"inner_var": 2, "db_table": "users"}
+
+outer = Outer(1, "users", inner_dict_params)
+print(outer.inner.get_all_params_dict())
+
+inner = Outer.Inner(**inner_dict_params)
+inner = Outer.Inner(inner_var=2, db_table="users")
+
+
+@dataclass
+class City:
+    name: str
+    country: str
+    population: int
+
+list_dict_cities = [
+    {"name": "Moscow", "country": "Russia", "population": 12615882},
+    {"name": "Paris", "country": "France", "population": 2140526},
+    {"name": "Berlin", "country": "Germany", "population": 3769495},
+]
+
+cities_2 = []
+for city in list_dict_cities:
+    cities_2.append(City(**city))
+
+
+cities = [City(**city) for city in list_dict_cities]
