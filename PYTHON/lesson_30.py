@@ -7,6 +7,7 @@ Meta classes
 Итераторы
 Теория сериализации и десериализации
 Библиотека pickle
+Практика pickle
 """
 
 import pickle
@@ -58,26 +59,20 @@ from data.cities import cities_list
 
 @dataclass
 class City:
+    coords: tuple
+    district: str
     name: str
     population: int
-    latitude: float
-    longitude: float
-    region: str
+    subject: str
+    
 
-cities = []
+cities = [City(**city) for city in cities_list]
 
-for city_info in cities_list:
-    city = City(
-        name=city_info["name"],
-        population=city_info["population"],
-        latitude=float(city_info["coords"]["lat"]),
-        longitude=float(city_info["coords"]["lon"]),
-        region=city_info["subject"]
-    )
-    cities.append(city)
 
 print(cities[:5])
-
+print(cities[0].coords)
+print(cities[1].coords)
+print(type(cities[0].coords))
 FILE = r"../data/cities.pickle"
 
 with open(FILE, "wb") as file:
@@ -91,3 +86,7 @@ with open(FILE, "rb") as file:
     print(type(cities[0]))
 
 
+print(cities[:5])
+print(cities[0].coords)
+print(cities[1].coords)
+print(type(cities[0].coords))
