@@ -8,41 +8,55 @@ Meta classes
 Сериализация
 """
 
-# Определим простой итератор для перебора чисел от 0 до заданного предела
-class SimpleIterator:
-    def __init__(self, limit):
-        self.limit = limit  # Максимальное значение для итерации
-        self.value = 0      # Начальное значение счетчика
+from dataclasses import dataclass
 
-    # Метод __iter__ возвращает сам объект итератора
+@dataclass
+class Person:
+    name: str
+    age: int
+
+    def __str__(self):
+        return f'Экземпляр класса Person: {self.name}, {self.age}'
+
+
+
+# Класс итератор, который примет назвнаие txt файла и будет возвращать по одной строке из файла
+# Преобразовывая это в экземпляр класса Person
+    
+class PersonTXTIterator:
+    def __init__(self, file_name: str, encoding: str = "utf-8"):
+        self.file_name = file_name
+        self.file = open(file_name, "r", encoding="utf-8")
+
     def __iter__(self):
         return self
 
-    # Метод __next__ возвращает следующее число и увеличивает счетчик
-    # next() 
-    def __next__(self):
-        if self.value < self.limit:
-            current = self.value
-            self.value += 1
-            return current
-        else:
-            # Когда достигнут предел, генерируется исключение StopIteration
+    def __next__(self) -> Person:
+        line = self.file.readline().strip()
+        if not line:
+            self.file.close()
             raise StopIteration
-
-# Создадим итератор для чисел от 0 до 5
-my_iterator = SimpleIterator(5)
-
-# Используем итератор в цикле for для вывода чисел
-for number in my_iterator:
-    print(number)
-
-# Делаем это через функцию iter() и next()
+        # Используем eval для преобразования строки в Person
+        result = None
+        try:
+           result: Person = eval(line)
+        except Exception as e:
+            print(e)
+        
+        return result
     
-# Создадим итератор для чисел от 0 до 5
-my_iterator = SimpleIterator(5)
 
-# Получим объект итератора
-iterator = iter(my_iterator)
+"""
+Датасет для теста (содержимое файла)
+Person(name='Тимур', age=25)
+Person(name='Павел', age=30)
+Person(name='Оксана', age=22)
+Person(name='Алексей', age=35)
+Person(name='Виталий', age=27)
+"""
 
-# Получим следующее число
-print(next(iterator))  # 0
+FILE = r"data\persons.txt"
+person_iterator = PersonTXTIterator(FILE)
+
+for person in person_iterator:
+    print(person)
