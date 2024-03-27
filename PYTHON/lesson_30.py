@@ -8,36 +8,32 @@ Meta classes
 Сериализация
 """
 
-# Определение метакласса, который добавляет методы и атрибут к классу
-class AddMethodsMeta(type):
-    def __new__(cls, name, bases, dct):
-        # Добавление нового атрибута к классу
-        dct['new_attribute'] = 'New Attribute Value'
-        
-        # Добавление новых методов к классу
-        def first_new_method(self):
-            return "First new method"
-        
-        def second_new_method(self):
-            return "Second new method"
-        
-        dct['first_new_method'] = first_new_method
-        dct['second_new_method'] = second_new_method
-        
-        # Создание нового класса с помощью super()
-        return super().__new__(cls, name, bases, dct)
+# 2 половины конструктора класса __init__ и __new__
 
-# Использование метакласса для создания нового класса
-class ExtendedClass(metaclass=AddMethodsMeta):
-    def original_method(self):
-        return "Original method"
 
-# Создание экземпляра класса
-instance = ExtendedClass()
+class First:
+    def __init__(self, name):
+        self.name = name
+        print("First.__init__")
 
-# Проверка работы добавленных методов и атрибута
-print(instance.new_attribute)
-print(instance.original_method())
-print(instance.first_new_method())
-print(instance.second_new_method())
+    def __new__(cls, *args, **kwargs):
+        print("First.__new__")
+        return super().__new__(cls)
+    
+    def custom_method(self, x):
+        print(f"First.custom_method {x}")
 
+
+class Second(First):
+    def __init__(self, name, last_name):
+        self.last_name = last_name
+        print("Second.__init__")
+        super().__init__(name)
+
+    def custom_2_method(self, x):
+        print("Second.custom_2_method")
+        # First.custom_method(self, x)
+        super().custom_method(x)
+
+s = Second("Ivan", "Ivanov")
+s.custom_2_method(1111111111111111111111)
