@@ -10,36 +10,34 @@ Meta classes
 """
 
 import pickle
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
-@dataclass
-class Person:
-    name: str
-    age: int
-    city: str
-
-
-# data = {"key": "value"}
-data = Person("Ivan", 30, "Moscow")
-
-
-serialized_data = pickle.dumps(data)
-print(serialized_data)
-
-
-FILE = r"data\data.pickle"
-
-
-with open(FILE, "wb") as file:
-    pickle.dump(data, file)
-
-
-with open(FILE, "rb") as file:
-    data = pickle.load(file)
-    print(data)
-    print(type(data))
-
-
+# @dataclass
+# class Person:
+#     name: str
+#     age: int
+#     city: str
+#
+#
+# # data = {"key": "value"}
+# data = Person("Ivan", 30, "Moscow")
+#
+#
+# serialized_data = pickle.dumps(data)
+# print(serialized_data)
+#
+#
+# FILE = r"data\data.pickle"
+#
+#
+# with open(FILE, "wb") as file:
+#     pickle.dump(data, file)
+#
+#
+# with open(FILE, "rb") as file:
+#     data = pickle.load(file)
+#     print(data)
+#     print(type(data))
 
 """
 # Практика!
@@ -50,3 +48,46 @@ with open(FILE, "rb") as file:
 5. Сериализуйте список экземпляров датакласса в файл cities.pickle
 6. Десериализуйте файл cities.pickle обратно в список экземпляров датакласса
 """
+
+# из data.cities import cities_list
+
+from data.cities import cities_list
+
+# print(cities_list)
+
+
+@dataclass
+class City:
+    name: str
+    population: int
+    latitude: float
+    longitude: float
+    region: str
+
+cities = []
+
+for city_info in cities_list:
+    city = City(
+        name=city_info["name"],
+        population=city_info["population"],
+        latitude=float(city_info["coords"]["lat"]),
+        longitude=float(city_info["coords"]["lon"]),
+        region=city_info["subject"]
+    )
+    cities.append(city)
+
+print(cities[:5])
+
+FILE = r"../data/cities.pickle"
+
+with open(FILE, "wb") as file:
+    pickle.dump(cities, file)
+
+
+with open(FILE, "rb") as file:
+    cities = pickle.load(file)
+    print(cities[:5])
+    print(type(cities))
+    print(type(cities[0]))
+
+
