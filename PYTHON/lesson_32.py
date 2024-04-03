@@ -4,10 +4,14 @@ Lesson 32
 
 - Повторяем marshmallow
 - Простой пример схемы
+- Схема с прелоад и постлоад
+- Схема с вложенными схемами
+- Схема на основе датакласса (marshmallow_dataclass)
 """
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from marshmallow import Schema, fields, pre_load, post_load
+import marshmallow_dataclass
 
 
 @dataclass
@@ -16,9 +20,7 @@ class City:
     population: int
     district: str
     subject: str
-    lat: float
-    lon: float
-    email: str
+    coords: dict = field(default_factory=dict)
 
 
 cities_list = [
@@ -35,7 +37,7 @@ cities_list = [
     {"coords": {
         "lat": "53.71667",
         "lon": "91.41667"
-                },
+    },
         "district": "Сибирский",
         "name": "Абакан",
         "population": 187239,
@@ -43,43 +45,12 @@ cities_list = [
     }]
 
 
-class CitySchema(Schema):
-    name = fields.Str()
-    population = fields.Int()
-    district = fields.Str()
-    subject = fields.Str()
-    lat = fields.Float()
-    lon = fields.Float()
-    email = fields.Str(load_default='info@default.com')  # Устанавливаем значение по умолчанию для email
+# Создание схемы на основе датакласса
+CitySchema = marshmallow_dataclass.class_schema(City)
 
-    @pre_load()
-    def unwrap_coords(self, data, **kwargs):
-        # Этот метод будет вызван до десериализации каждого элемента списка.
-        # Он изменяет структуру данных, извлекая координаты из вложенного словаря.
-        # Делаем копию словаря, чтобы не изменять оригинальные данные
-        data = data.copy()
-        data.update({
-            'lat': data['coords']['lat'],
-            'lon': data['coords']['lon']
-        })
-        del data['coords']  # Удаляем исходный вложенный словарь координат
-        return data
+# Создание экземпляра схемы
+city_schema = CitySchema(many=True)
 
-    @post_load
-    def make_city(self, data, **kwargs):
-        # Этот метод создает экземпляр City из десериализованных данных.
-        return City(**data)
-
-
-schema_many = CitySchema(many=True)
-schema = CitySchema()
-
-# Поштучно и множественно
-cities = schema_many.load(cities_list)
+# Десериализация данных
+cities = city_schema.load(cities_list)
 print(cities)
-city = schema.load(cities_list[0])
-print(city)
-
-# Сериализация - пробуем сделать dump
-city2 = schema.dump(city)
-print(city2)
