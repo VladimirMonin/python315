@@ -40,7 +40,7 @@ cities_list = [
         },
         "district": "Сибирский",
         "name": "Абакан",
-        "population": -165214,
+        "population": 165214,
         "subject": "Хакасия",
         "email": "abakan@a.ru"
     },
@@ -63,10 +63,10 @@ class CitySchema(Schema):
     name = fields.Str(validate=validate.Length(min=2, max=50))
     population = fields.Int(validate=validate.Range(min=0, max=50_000_000))
     subject = fields.Str()
-    coords = fields.Dict()
+    coords = fields.Dict(required=False)
     lat = fields.Float(required=False, validate=validate.Range(min=-90, max=90))
     lon = fields.Float(required=False, validate=validate.Range(min=-90, max=90))
-    email = fields.Email()
+    email = fields.Email(required=True)
 
     @post_load
     def make_city(self, data, **kwargs):
