@@ -1,11 +1,11 @@
-# pip install requests
+# pip install requests marshmallow marshmallow-dataclass marshmallow-jsonschema
 from dataclasses import dataclass
 from pprint import pprint
 from dataclasses import dataclass, field
 from marshmallow import Schema, fields, pre_load, post_load, INCLUDE
 import marshmallow_dataclass
 from marshmallow.validate import Range
-
+from marshmallow_jsonschema import JSONSchema
 import requests
 
 """
@@ -81,8 +81,8 @@ WeatherSchema = marshmallow_dataclass.class_schema(CityWeather)
 
 
 class ExtendedWeatherSchema(WeatherSchema):
-    class Meta:
-        unknown = INCLUDE
+    # class Meta:
+    #     unknown = INCLUDE
 
     temp = fields.Float(validate=Range(min=-80, max=80))
 
@@ -108,3 +108,9 @@ print(city_weather_dict)
 # Десериализация - невозможна, надо делать прелоад (расширять и добавлять новую логику)
 # city_weather = city_weather_schema.load(city_weather_dict)
 # print(city_weather)
+
+# На основе схемы создаем JSON схему
+json_schema = JSONSchema()
+schema = json_schema.dump(city_weather_schema)
+
+pprint(schema)
