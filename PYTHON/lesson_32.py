@@ -17,10 +17,13 @@ import marshmallow_dataclass
 @dataclass
 class City:
     name: str
-    population: int
     district: str
     subject: str
+    population: int
+    email: str = field(default="", metadata={"load_default": "",
+                                             "load_only": True})
     coords: dict = field(default_factory=dict)
+
 
 
 cities_list = [
@@ -30,7 +33,7 @@ cities_list = [
     },
         "district": "Сибирский",
         "name": "Абаза",
-        "population": 14816,
+        "population": -14816,
         "subject": "Хакасия"
     },
 
@@ -54,3 +57,7 @@ city_schema = CitySchema(many=True)
 # Десериализация данных
 cities = city_schema.load(cities_list)
 print(cities)
+
+# Сериализация данных
+data = city_schema.dump(cities)
+print(data)
