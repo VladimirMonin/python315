@@ -93,18 +93,23 @@ class BurgerBuilder(AbstractBurgerBuilder):
 
 
     
+class BuregerDirector:
+    def __init__(self) -> None:
+        self.builder: AbstractBurgerBuilder | None = None
 
-    
+    def __call__(self, burger_type: str) -> Burger:
+        if burger_type == 'burger':
+            self.builder = BurgerBuilder()
+        elif burger_type == 'fishburger':
+            self.builder = FishBurgerBuilder()
+        else:
+            raise ValueError('Неверный тип бургера')
 
-b_builder = BurgerBuilder()
-f_builder = FishBurgerBuilder()
-b_builder.create_burger()
-f_builder.create_burger()
+        self.builder.create_burger()
+        return self.builder.get_burger()
 
-b_burger = b_builder.get_burger()
-f_burger = f_builder.get_burger()
 
-print(b_burger.ingredients)
-print(f_burger.ingredients)
 
+director = BuregerDirector()
+b_burger = director('burger')
 print(b_burger.get_margeting_str())
