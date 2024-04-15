@@ -32,3 +32,89 @@ open и close.
 
 5. Пользователь вводит пароль, если пароль верный, то открывается файл, если нет, то выводится сообщение об ошибке.
 """
+
+class SecretFile(ABC):
+    @abstractmethod
+    def open(self):
+        pass
+
+    @abstractmethod
+    def close(self):
+        pass
+
+@dataclass
+class SecretImage(SecretFile):
+    """
+    Совершенно секретное изображение
+    """
+    data: str
+    password: str = "1234"
+         
+    
+    def open(self):
+        print(f"На данном снимке изображено: {self.data}")
+
+    def close(self):
+        print("Закрытие изображения")
+
+
+@dataclass
+class SecretVideo(SecretFile):
+    """
+    Совершенно секретное видео
+    """
+    data: str
+    password: str = "1234"
+    
+    def open(self):
+        print(f"На данном видео изображено: {self.data}")
+
+    def close(self):
+        print("Закрытие видео")
+
+    
+
+class SecretFileProxy(SecretFile):
+    def __init__(self, secret_file: SecretFile):
+        self.secret_file = secret_file
+        self.password = secret_file.password
+
+    def open(self):
+        password = input("Введите пароль: ")
+        if password == self.password:
+            self.secret_file.open()
+        else:
+            print("Неверный пароль, люди в черном уже в пути!")
+
+    def close(self):
+        self.secret_file.close()
+
+
+
+class FBISecretFacade:
+    """
+    Фасад для работы с секретными файлами
+    """
+    def __init__(self):
+        self.secret_file: SecretFile | None = None
+        self.secret_file_proxy: SecretFileProxy | None = None
+    
+    def __call__(self):
+        file_type = input("Выберите тип файла (image/video): ")
+        if file_type == "image":
+            self.secret_file = SecretImage("Секретное изображение Чупакабры")
+        elif file_type == "video":
+            self.secret_file = SecretVideo("Секретное видео Йетти")
+        else:
+            raise ValueError("Неверный тип файла")
+
+        self.secret_file_proxy = SecretFileProxy(self.secret_file)
+        self.secret_file_proxy.open()
+        self.secret_file_proxy.close()
+
+
+# Пример использования
+
+if __name__ == "__main__":
+    fbi_facade = FBISecretFacade()
+    fbi_facade()
