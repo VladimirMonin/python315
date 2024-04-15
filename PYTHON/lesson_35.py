@@ -12,45 +12,23 @@ from dataclasses import dataclass, field
 from abc import ABC, abstractmethod
 
 
-# Proxy - заместитель
-# Паттерн Proxy предоставляет объект-заместитель или заполнитель для другого объекта, чтобы контролировать доступ к нему.
-
 """
-Напишем простой пример с использованием паттерна Proxy.
-Асбтрактный класс Документ, который имеет метод открыть и закрыть документ.
-А так же класс ProxyDocument, который является заместителем для класса Document.
+Практика!
+
+1. Напишите абстрактный класс SecretFile с абстрактными методами 
+open и close.
+
+2. Напишите конкретный класс SecretImage и SecretVideo
+наследующиеся от SecretFile.
+
+3. Напишите класс SecretFileProxy, который будет замещать любой из них, и запрашивать пароль.
+Пароль будет записан в фасаде.
+
+4. Напишите класс FBISecretFacade, который будет хранить пароль и
+будет call 
+
+При его вызове, пользователю предложат посмотреть фото или видео секретных материалов.
+После выбра, будет создан экземпляр SecretImage или SecretVideo, а так же SecretFileProxy.
+
+5. Пользователь вводит пароль, если пароль верный, то открывается файл, если нет, то выводится сообщение об ошибке.
 """
-
-class Document(ABC):
-    @abstractmethod
-    def open(self):
-        pass
-
-    @abstractmethod
-    def close(self):
-        pass
-
-
-@dataclass
-class SecretDocument(Document):
-    secret: str
-
-    def open(self):
-        print("Открываем секретный документ")
-
-    def close(self):
-        print("Закрываем секретный документ")
-
-
-@dataclass
-class ProxyDocument(Document):
-    def __post_init__(self):
-        self.secret_document = SecretDocument(secret="Секретный текст")
-    
-    def open(self):
-        password = input("Введите пароль: ")
-        if password == "123":
-            self.secret_document.open()
-
-    def close(self):
-        self.secret_document.close()
