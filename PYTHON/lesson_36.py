@@ -2,100 +2,106 @@
 Lesson 36: Поведенческие паттерны
 - Strategy - стратегия
 - Observer - наблюдатель
+- Visitor - посетитель
 """
 
-# Observer - наблюдатель - это поведенческий паттерн проектирования, который создает механизм подписки, позволяющий одним объектам следить и реагировать на события, происходящие в других объектах.
+# Visitor - посетитель. Паттерн позволяет добавлять новые операции к объектам без изменения их классов.
+"""
+Абстрактный элемент дом
+Конкретный дом Совы
+Конкретный дом Ослика
+Конкретный дом Кролика
 
-# Напишем пример с датчиками умного дома и их наблюдателями.
+Абстрактный посетитель
+Конкретный посетитель Винни-Пух
+Конкретный посетитель Пятачок
+"""
 
 from abc import ABC, abstractmethod
-import time
 
-class Sensor(ABC):
-    """
-    Абстрактный класс датчика
-    """
-    def __init__(self, name: str):
-        self.name = name
-        self.observers = []
-
-    def add_observer(self, observer):
-        self.observers.append(observer)
-
-    def remove_observer(self, observer):
-        self.observers.remove(observer)
-
-    def notify_observers(self, value):
-        for observer in self.observers:
-            observer.update(self.name, value)
-
-    
-    def get_value(self):
-        threshold = 50
-        for i in range(threshold):
-            time.sleep(0.1)
-            if i == threshold - 1:
-                self.notify_observers(i)
-
-
-class TemperatureSensor(Sensor):
-    """
-    Класс датчика температуры
-    """
-    pass
-
-        
-    
-
-class HumiditySensor(Sensor):
-    """
-    Класс датчика влажности
-    """
-    pass
-    
-class AbstractObserver(ABC):
-    """
-    Абстрактный класс наблюдателя
-    """
+class House(ABC):
     @abstractmethod
-    def update(self, sensor_name, value):
+    def accept(self, visitor: 'Visitor'):
         pass
 
-class ConsoleObserver(AbstractObserver):
-    """
-    Консольный наблюдатель
-    """
-    def update(self, sensor_name, value):
-        print(f"Датчик {sensor_name} сообщает значение: {value} в {self.__class__.__name__}")
+class OwlHouse(House):
+
+    def __init__(self):
+        self.sweets = ['Пирожные', 'Мед', 'Молоко', 'Медовуха']
+
+    def accept(self, visitor: 'Visitor'):
+        visitor.visit_owl_house(self)
+
+class DonkeyHouse(House):
+    
+    def __init__(self):
+        self.stories = ['Моя жизнь - это боль', 'Я никому не нужен', 'Я никогда не найду свою любовь', 'Я никогда не стану счастливым']
+
+    def accept(self, visitor: 'Visitor'):
+        visitor.visit_donkey_house(self)
+
+class RabbitHouse(House):
+
+    def __init__(self):
+        self.food = ['Морковь', 'Капуста', 'Свекла', 'Картошка']
+
+    def accept(self, visitor: 'Visitor'):
+        visitor.visit_rabbit_house(self)
 
 
-class FileObserver(AbstractObserver):
-    """
-    Файловый наблюдатель
-    """
-    def update(self, sensor_name, value):
-        with open("log.txt", "a") as file:
-            file.write(f"Датчик {sensor_name} сообщает значение: {value} в {self.__class__.__name__}\n")
+class Visitor(ABC):
+    @abstractmethod
+    def visit_owl_house(self, house: OwlHouse):
+        pass
+
+    @abstractmethod
+    def visit_donkey_house(self, house: DonkeyHouse):
+        pass
+
+    @abstractmethod
+    def visit_rabbit_house(self, house: RabbitHouse):
+        pass
+
+class WinnieThePooh(Visitor):
+    def visit_owl_house(self, house: OwlHouse):
+        print("Винни-Пух посетил дом Совы, но там нечего есть")
+
+    def visit_donkey_house(self, house: DonkeyHouse):
+        story = set(house.stories).pop()
+        print(f"Винни-Пух посетил дом Ослика и послушал грустные суицидальные истории на тему: {story}")
+
+    def visit_rabbit_house(self, house: RabbitHouse):
+        food = set(house.food).pop()
+        print(f"Винни-Пух посетил дом Кролика и сожрал все, до чего смог дотянуться: {food}")
+
+class Piglet(Visitor):
+    def visit_owl_house(self, house: OwlHouse):
+        sweets = set(house.sweets).pop()
+        print(f"Пятачок посетил дом Совы и украл все пирожные: {sweets}")
+
+    def visit_donkey_house(self, house: DonkeyHouse):
+        print("Пятачок посетил дом Ослика и поддержал его в грусти")
+
+    def visit_rabbit_house(self, house: RabbitHouse):
+        print("Пятачок посетил дом Кролика и сделал уборку после Винни-Пуха")
 
 
-# Четыре датчика
-t1 = TemperatureSensor("Температурный датчик №1")
-t2 = TemperatureSensor("Температурный датчик №2")
-h1 = HumiditySensor("Датчик влажности №1")
-h2 = HumiditySensor("Датчик влажности №2")
+# Создаем дома персонажей к которым будут приходить Винни-Пух и Пятачок
+owl_house = OwlHouse()
+donkey_house = DonkeyHouse()
+rabbit_house = RabbitHouse()
 
-# Два наблюдателя
-c1 = ConsoleObserver()
-f1 = FileObserver()
+# Создаем посетителей
+winnie_the_pooh = WinnieThePooh()
+piglet = Piglet()
 
-devises = [t1, t2, h1, h2]
-observers = [c1, f1]
 
-# Подписываем все датчики на обоих наблюдателей
-for device in devises:
-    for observer in observers:
-        device.add_observer(observer)
+# Винни-Пух пошел объедать товарищей
+owl_house.accept(winnie_the_pooh)
+donkey_house.accept(winnie_the_pooh)
+rabbit_house.accept(winnie_the_pooh)
 
-# Запускаем "работу" датчиков
-for device in devises:
-    device.get_value()
+# Пятачок пошел воровать у товарищей
+owl_house.accept(piglet)
+donkey_house.accept(piglet)
+rabbit_house.accept(piglet)
