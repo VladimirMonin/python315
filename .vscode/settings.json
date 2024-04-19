@@ -1,0 +1,16 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "marvel",
+            "database": "C:\\PY\\ПРИМЕРЫ КОДА\\qa_313\\marvel.db"
+        },
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "marvel2",
+            "database": "C:\\PY\\ПРИМЕРЫ КОДА\\qa_313\\marvel.db"
+        }
+    ]
+}

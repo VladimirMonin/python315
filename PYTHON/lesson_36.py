@@ -17,18 +17,22 @@ Lesson 36: Поведенческие паттерны
 """
 
 from abc import ABC, abstractmethod
-from tkinter import N
+import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 
+class Chrome:
+    """
+    Singleton класс для создания экземпляра браузера Chrome
+    """
+    _instance = None
 
-class Chrome():
-    """
-    Класс создающий экземплер Браузера
-    """
-    def __init__(self, settings=None, implicity_wait=10):
-        self.settings = settings
-        self.implicity_wait = implicity_wait
+    def __new__(cls, settings=None, implicity_wait=10):
+        if cls._instance is None:
+            cls._instance = super(Chrome, cls).__new__(cls)
+            cls._instance.settings = settings
+            cls._instance.implicity_wait = implicity_wait
+        return cls._instance
 
     def get_options_object(self):
         """
@@ -42,27 +46,20 @@ class Chrome():
 
     def get_driver(self):
         """
-        Получение драйвера для Chrome
+        Создание и получение драйвера Chrome
         """
         options = self.get_options_object()
-        driver = webdriver.Chrome(options)
+        driver = webdriver.Chrome(options=options)
         driver.implicitly_wait(self.implicity_wait)
         return driver
-    
-    def __call__(self):
-        """
-        Получение драйвера для Chrome
-        """
-        return self.get_driver()
-
 
 
 class Browser:
-    def __init__(self, state: "State", driver: Chrome):
-        self.state = state
+    def __init__(self, driver):
+        self.state = None
         self.driver = driver
 
-    def change_state(self, state: "State"):
+    def change_state(self, state: 'State'):
         self.state = state
 
     def work(self):
@@ -70,46 +67,47 @@ class Browser:
 
 
 class State(ABC):
-    def __init__(self, driver: Chrome):
-        self.driver = driver
-
     @abstractmethod
-    def work(self):
+    def work(self, driver):
         pass
 
 
 class BookToscrapeState(State):
-    def work(self):
-        self.driver.get("http://books.toscrape.com")
+    def work(self, driver):
+        driver.get("http://books.toscrape.com")
         time.sleep(5)
 
 
 class GoogleState(State):
-    def work(self):
-        self.driver.get("http://google.com")
-        # Ищем поисковую форму title="Поиск"
-        search_form = self.driver.find_element(By.CSS_SELECTOR, "input[name='q']")
+    def work(self, driver):
+        driver.get("http://google.com")
+        search_form = driver.find_element(By.CSS_SELECTOR, "input[name='q']")
         search_form.send_keys("Котики")
         search_form.submit()
 
 
 class MainFacade:
     def __init__(self):
-        self.driver = Chrome()()
-        self.state = GoogleState(self.driver)
-        self.browser = Browser(self.state, self.driver)
+        self.driver = Chrome().get_driver()
+        self.browser = Browser(self.driver)
 
     def __call__(self):
         while True:
-            task = input("Введите задачу: ")
-            if task == "google":
-                self.browser.change_state(GoogleState(self.driver))
-            elif task == "book":
-                self.browser.change_state(BookToscrapeState(self.driver))
-            elif task == "exit":
+            print("1. Перейти на сайт book.toscrape.com")
+            print("2. Перейти на сайт Гугл")
+            print("3. Выход")
+            choice = input("Выберите действие: ")
+            if choice == "1":
+                self.browser.change_state(BookToscrapeState())
+                self.browser.work()
+            elif choice == "2":
+                self.browser.change_state(GoogleState())
+                self.browser.work()
+            elif choice == "3":
                 break
-            self.browser.work()
+            else:
+                print("Неверный выбор")
 
-
-if __name__ == "__main__":
-    MainFacade()()
+# Пример использования
+facade = MainFacade()
+facade()
