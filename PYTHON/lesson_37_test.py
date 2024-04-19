@@ -99,3 +99,26 @@ class TestClass:
 
     def test_not_dependency(self, level_one):
         assert level_one != "I'm level two"
+
+
+
+# Пишем фикстуру которая создает файл перед тестами, и удаляет после
+import os
+import time
+
+@pytest.fixture(scope='function')
+def file():
+    with open('test.txt', 'w') as f:
+        f.write('Hello, world')
+    yield
+    time.sleep(10)
+    os.remove('test.txt')
+
+def test_file(file):
+    with open('test.txt', 'r') as f:
+        assert f.read() == 'Hello, world'
+
+
+def test_file2(file):
+    with open('test.txt', 'r') as f:
+        assert f.read() == 'Hello, world'
