@@ -15,6 +15,9 @@ assert exception - проверка исключения
 @pytest.mark.parametrize - параметризация тестов
 xfail - тест который ожидает провал
 xfail в параметризации обычного текста
+@pytest.fixture - фикстуры, это заготовки для тестов
+scope - как часто будет пересоздаваться фикстура
+test_class - тестовый класс для группировки тестов
 """
 
 import pytest
@@ -63,3 +66,36 @@ def test_is_palindrome_fail():
 def test_is_palindrome_int_slice_type_error():
     with pytest.raises(Exception):
         is_palindrome(123), "Ваша функция не обрабатывает исключения"
+
+# scope - как часто будет пересоздаваться фикстура
+# session - один раз на все тесты
+# module - один раз на модуль
+# class - один раз на класс
+# function - один раз на функцию
+        
+@pytest.fixture(scope='session')
+def level_one():
+    print('Фикстура level_one создана')
+    return "I'm level one"
+
+# @pytest.fixture
+# def level_two(level_one):
+#     return f"{level_one}. I depend on level_one."
+
+def test_dependency(level_one):
+    assert level_one == "I'm level one"
+
+def test_not_dependency(level_one):
+    assert level_one != "I'm level two"
+
+
+# Тестовый класс - для группировки тестов
+# Название класса должно начинаться с Test
+# Каждый метод в классе - отдельный тест (или подготовка к тесту)
+    
+class TestClass:
+    def test_dependency(self, level_one):
+        assert level_one == "I'm level one"
+
+    def test_not_dependency(self, level_one):
+        assert level_one != "I'm level two"
