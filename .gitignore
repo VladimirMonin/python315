@@ -77,3 +77,4 @@ venv
 data/data.pickle
 log.txt
 /PYTHON/__pycache__/
+PYTHON/__pycache__/lesson_37_test.cpython-312-pytest-8.0.0.pyc
