@@ -12,5 +12,10 @@
             "name": "marvel2",
             "database": "C:\\PY\\ПРИМЕРЫ КОДА\\qa_313\\marvel.db"
         }
-    ]
+    ],
+    "python.testing.pytestArgs": [
+        "PYTHON"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true
 }

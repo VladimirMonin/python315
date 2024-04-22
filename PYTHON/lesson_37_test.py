@@ -23,7 +23,7 @@ test_class - тестовый класс для группировки тест�
 import pytest
 
 
-def is_palindrome(word):
+def is_palindrome(word) -> bool:
     return word.lower().replace(' ', '') == word[::-1].lower().replace(' ', '')
 
 
@@ -106,19 +106,19 @@ class TestClass:
 import os
 import time
 
-@pytest.fixture(scope='function')
+@pytest.fixture(scope='session')
 def file():
     with open('test.txt', 'w') as f:
-        f.write('Hello, world')
+        f.write('Hallo, world')
     yield
-    time.sleep(10)
+    time.sleep(2)
     os.remove('test.txt')
 
 def test_file(file):
     with open('test.txt', 'r') as f:
-        assert f.read() == 'Hello, world'
+        assert f.read() == 'Hello, world', "Строка не совпадает"
 
 
 def test_file2(file):
     with open('test.txt', 'r') as f:
-        assert f.read() == 'Hello, world'
+        assert f.read() == 'Hallo, world'

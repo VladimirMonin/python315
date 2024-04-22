@@ -76,5 +76,4 @@ venv
 /data/Books_files/ui.js
 data/data.pickle
 log.txt
-PYTHON/__pycache__/lesson_37_test.cpython-312-pytest-8.0.0.pyc
-PYTHON/__pycache__/lesson_37_test.cpython-312-pytest-8.0.0.pyc
+/PYTHON/__pycache__/
