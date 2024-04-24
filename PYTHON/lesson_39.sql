@@ -36,5 +36,57 @@ ORDER BY HAIR, name
 -- OR - или
 SELECT name, identify, hair, APPEARANCES
 FROM MarvelCharacters
-WHERE APPEARANCES > 100 AND sex = Female Characters
+WHERE APPEARANCES > 100 AND sex = "Female Characters"
 ORDER BY APPEARANCES DESC
+
+-- DISTINCT - уникальные значения
+
+SELECT DISTINCT eye
+FROM MarvelCharacters
+WHERE sex not null;
+
+-- LIMIT - ограничить количество строк
+-- OFFSET - пропустить строки
+SELECT name, APPEARANCES, year
+FROM MarvelCharacters
+WHERE year = 1962
+ORDER BY APPEARANCES DESC
+LIMIT 5
+OFFSET 5
+
+
+-- пример подзапроса - топ появлений по году человека паука)
+
+-- Получить персонажей с разным цветом глаз
+-- No Eyes, Compound Eyes, Multiple Eyes, Variable Eyes, One Eye,
+
+SELECT name, APPEARANCES, year, eye
+FROM MarvelCharacters
+WHERE eye = "No Eyes" OR eye = "Compound Eyes" OR eye = "Multiple Eyes" OR eye = "Variable Eyes" OR eye = "One Eye"
+ORDER BY APPEARANCES DESC
+
+-- IN - входит в список
+-- NOT IN - не входит в список
+
+SELECT name, APPEARANCES, year, eye
+FROM MarvelCharacters
+WHERE eye IN ("No Eyes", "Compound Eyes", "Multiple Eyes", "Variable Eyes", "One Eye")
+ORDER BY APPEARANCES DESC
+
+-- Список операторов которе мы сегодня посмотрели:
+-- SELECT - выбрать (столбцы)
+-- FROM - из (таблицы)
+-- ; - конец запроса
+-- WHERE - где
+-- ORDER BY - сортировать по (столбцу)
+-- DESC - по убыванию
+-- () - скобки
+-- AND - и
+-- OR - или
+-- NOT - не
+-- DISTINCT - уникальные значения
+-- LIMIT - ограничить количество строк
+-- OFFSET - пропустить строки
+-- IN - входит в список
+-- NOT IN - не входит в список
+
