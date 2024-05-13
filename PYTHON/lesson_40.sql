@@ -78,3 +78,59 @@ ORDER BY year, APPEARANCES DESC
 -- Найдите персонажей с  Variable Eyes
 -- Появлений больше 100, исключите все NULL значения
 -- Сортировка по году появления и по количеству появлений по убыванию
+
+SELECT name, eye, APPEARANCES, year
+FROM MarvelCharacters
+WHERE eye = 'Variable Eyes'
+AND APPEARANCES > 100
+AND eye NOT NULL
+AND year NOT NULL
+ORDER BY year, APPEARANCES DESC
+
+-- Похожий запрос, но мы ищем 4 варианта цвета глаз
+
+-- Посмотрим вообще какой цвет глаз есть
+SELECT DISTINCT eye
+FROM MarvelCharacters
+WHERE eye NOT NULL
+
+-- Amber Eyes, Black Eyeballs, Black Eyes, Compound Eyes, Yellow Eyeballs
+
+SELECT name, eye, APPEARANCES
+FROM MarvelCharacters
+WHERE eye = 'Amber Eyes'
+OR eye = 'Black Eyeballs'
+OR eye = 'Black Eyes'
+OR eye = 'Compound Eyes'
+
+-- IN - входит в список
+
+SELECT name, eye, APPEARANCES
+FROM MarvelCharacters
+WHERE eye IN ('Amber Eyes', 'Black Eyeballs', 'Black Eyes', 'Compound Eyes')
+AND APPEARANCES > 0
+ORDER BY eye, APPEARANCES DESC
+
+-- BETWEEN - между
+-- Как это может быть без BETWEEN
+
+SELECT name, year, appearances
+FROM MarvelCharacters
+WHERE year >= 1960 AND year <= 1970
+
+-- BETWEEN - между
+SELECT name, year, appearances
+FROM MarvelCharacters
+WHERE year BETWEEN 1960 AND 1970
+
+-- LIKE - похоже на
+-- % - любое количество символов
+-- _ - один символ
+
+-- Персонажи с именем начинающимся на Spider
+
+SELECT name, year, appearances
+FROM MarvelCharacters
+WHERE name LIKE '%Spider %'
+OR name LIKE 'Spider-%'
+OR name LIKE '%Spider'
