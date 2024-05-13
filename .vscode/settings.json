@@ -15,8 +15,8 @@
         {
             "previewLimit": 50,
             "driver": "SQLite",
-            "name": "marvel315",
-            "database": "${workspaceFolder:python315}/marvel_not_normal.db"
+            "database": "${workspaceFolder:python315}/marvel_not_normal.db",
+            "name": "python315_marvel_nm"
         }
     ],
     "python.testing.pytestArgs": [

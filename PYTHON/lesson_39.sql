@@ -19,7 +19,7 @@ FROM MarvelCharacters;
 -- Персонажи где появлений больше 100
 SELECT name, identify, hair, APPEARANCES
 FROM MarvelCharacters
-WHERE APPEARANCES > 100;
+WHERE APPEARANCES > 50+50;
 
 -- ORDER BY - сортировать по (столбцу) DESC - по убыванию
 -- Сортировка может быть по нескольким столбцам
@@ -81,9 +81,10 @@ ORDER BY APPEARANCES DESC
 -- ORDER BY - сортировать по (столбцу)
 -- DESC - по убыванию
 -- () - скобки
+-- NOT - не
 -- AND - и
 -- OR - или
--- NOT - не
+
 -- DISTINCT - уникальные значения
 -- LIMIT - ограничить количество строк
 -- OFFSET - пропустить строки
