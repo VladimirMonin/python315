@@ -9,12 +9,6 @@
         {
             "previewLimit": 50,
             "driver": "SQLite",
-            "name": "marvel2",
-            "database": "C:\\PY\\ПРИМЕРЫ КОДА\\qa_313\\marvel.db"
-        },
-        {
-            "previewLimit": 50,
-            "driver": "SQLite",
             "database": "${workspaceFolder:python315}/marvel_not_normal.db",
             "name": "python315_marvel_nm"
         }

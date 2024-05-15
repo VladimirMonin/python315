@@ -134,3 +134,12 @@ FROM MarvelCharacters
 WHERE name LIKE '%Spider %'
 OR name LIKE 'Spider-%'
 OR name LIKE '%Spider'
+
+
+SELECT name, year, appearances
+FROM MarvelCharacters
+WHERE name LIKE '%Loki%'
+
+SELECT name, year, eye, appearances
+FROM MarvelCharacters
+WHERE eye LIKE '%black%'
