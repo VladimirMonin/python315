@@ -95,6 +95,32 @@ LIMIT 1
 SELECT name, MAX(LENGTH(name))
 FROM MarvelCharacters
 
+-- Простой пример подзапроса
+SELECT name
+FROM MarvelCharacters
+WHERE APPEARANCES = (SELECT MAX(APPEARANCES) FROM MarvelCharacters);
+
+-- Без поздапроса
+SELECT name, MAX(APPEARANCES)
+FROM MarvelCharacters
+
+SELECT name
+FROM MarvelCharacters
+WHERE MAX(APPEARANCES)
+
+SELECT name
+FROM MarvelCharacters
+ORDER BY APPEARANCES DESC
+LIMIT 1
+
+SELECT name, Year
+FROM MarvelCharacters
+WHERE Year IN (SELECT Year FROM MarvelCharacters WHERE name
+LIKE '%Spider%' OR name LIKE '%Man%')
+
+
+
+
 -- 18. **Название: Персонажи с максимальным количеством появлений в десятилетие**
 --     - **Описание:** Найти персонажа с максимальным количеством появлений в каждом десятилетии начиная с 1940-х. Вывести десятилетие, имя персонажа и количество появлений.
 --     - **Выборка:** Группировка по десятилетиям (используя год), определение персонажа с максимальным количеством появлений в каждом десятилетии.
