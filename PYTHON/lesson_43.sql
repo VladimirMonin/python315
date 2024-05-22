@@ -98,6 +98,23 @@ CREATE TABLE PhotosPeople (
 -- У студентов не может быть двух студенческих билетов, и у студенческого билета не может быть двух студентов.
 
 
+CREATE TABLE Students (
+    StudentID INTEGER PRIMARY KEY AUTOINCREMENT,
+    FirstName TEXT,
+    LastName TEXT,
+    StudentCardID INTEGER UNIQUE,
+    FOREIGN KEY (StudentCardID) REFERENCES StudentCards (StudentCardID)
+);
+
+CREATE TABLE StudentCards (
+    StudentCardID INTEGER PRIMARY KEY AUTOINCREMENT,
+    StudentID INTEGER UNIQUE,
+    DateOfIssue TEXT,
+    DateOfExpiry TEXT,
+    FOREIGN KEY (StudentID) REFERENCES Students (StudentID)
+);
+
+
 -- 2. Студенты и факультеты (один ко многим)
 -- Students: Таблица уже есть. Надо добавить поле FacultyID (Команда ALTER TABLE) или пересоздать таблицу.
 -- Faculties: FacultyID, FacultyName, Director
