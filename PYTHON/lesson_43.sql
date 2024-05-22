@@ -85,3 +85,14 @@ CREATE TABLE PhotosPeople (
     FOREIGN KEY (PersonID) REFERENCES People (PersonID)
 
 );
+
+
+-- Практика
+-- Студенты, Студенческие билеты, Преподаватели
+
+-- 1. Студенты и студенческие билеты
+-- Students: StudentID, FirstName, LastName, StudentCardID
+-- StudentCards: StudentCardID, StudentID, DateOfIssue, DateOfExpiry
+-- Подумайте, как обеспечить связь один - к - одному между студентами и студенческими билетами.
+
+-- У студентов не может быть двух студенческих билетов, и у студенческого билета не может быть двух студентов.
