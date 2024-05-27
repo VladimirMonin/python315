@@ -11,6 +11,12 @@
             "driver": "SQLite",
             "database": "${workspaceFolder:python315}/marvel_not_normal.db",
             "name": "python315_marvel_nm"
+        },
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "database": "C:\\Users\\user\\Desktop\\test_1.db",
+            "name": "test"
         }
     ],
     "python.testing.pytestArgs": [
