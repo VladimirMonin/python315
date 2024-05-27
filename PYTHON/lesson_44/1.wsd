@@ -1,0 +1,19 @@
+@startuml
+entity "Students" as students {
+    * StudentID : INTEGER
+    --
+    FirstName : TEXT
+    LastName : TEXT
+    StudentCardID : INTEGER
+}
+
+entity "StudentCards" as studentcards {
+    * StudentCardID : INTEGER
+    --
+    StudentID : INTEGER
+    DateOfIssue : TEXT
+    DateOfExpiry : TEXT
+}
+
+students ||--|| studentcards : "possesses"
+@enduml

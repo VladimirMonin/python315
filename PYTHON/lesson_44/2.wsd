@@ -1,0 +1,19 @@
+@startuml
+entity "Students" as students {
+    * StudentID : INTEGER
+    --
+    FirstName : TEXT
+    LastName : TEXT
+    StudentCardID : INTEGER
+    FacultyID : INTEGER
+}
+
+entity "Faculties" as faculties {
+    * FacultyID : INTEGER
+    --
+    FacultyName : TEXT
+    Director : TEXT
+}
+
+faculties ||--o{ students : "has"
+@enduml
