@@ -121,6 +121,23 @@ CREATE TABLE StudentCards (
 -- Подумайте, как обеспечить связь один - ко - многим между студентами и факультетами.
 -- У студента может быть только один факультет, но у факультета может быть много студентов.
 
+CREATE TABLE Students (
+    StudentID INTEGER PRIMARY KEY AUTOINCREMENT,
+    FirstName TEXT,
+    LastName TEXT,
+    StudentCardID INTEGER UNIQUE,
+    FacultyID INTEGER,  -- Если тут даем UNIQUE - это будет один к одному
+
+    FOREIGN KEY (StudentCardID) REFERENCES StudentCards (StudentCardID),
+    FOREIGN KEY (FacultyID) REFERENCES Faculties (FacultyID)
+);
+
+CREATE TABLE Faculties (
+    FacultyID INTEGER PRIMARY KEY AUTOINCREMENT,
+    FacultyName TEXT,
+    Director TEXT
+);
+
 
 -- 3. Преподаватели и факультеты (многие ко многим)
 -- Teachers: TeacherID, FirstName, LastName
