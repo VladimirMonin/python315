@@ -84,3 +84,4 @@ marvel_not_normal.db
 python315_marvel_nm.session.sql
 .vscode/settings.json
 test.session.sql
+marvel_normal.db
