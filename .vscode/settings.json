@@ -17,6 +17,18 @@
             "driver": "SQLite",
             "database": "C:\\Users\\user\\Desktop\\test_1.db",
             "name": "test"
+        },
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "315_marvel_normal",
+            "database": "${workspaceFolder:python315}/marvel_normal.db"
+        },
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "database": "${workspaceFolder:python315}/lesson_47.db",
+            "name": "python315_lesson_47"
         }
     ],
     "python.testing.pytestArgs": [
