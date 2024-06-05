@@ -27,7 +27,7 @@
         {
             "previewLimit": 50,
             "driver": "SQLite",
-            "database": "${workspaceFolder:python315}/lesson_47.db",
+            "database": "${workspaceFolder:python315}/PYTHON/lesson_47/lesson_47.db",
             "name": "lesson_47_python315"
         }
     ],
