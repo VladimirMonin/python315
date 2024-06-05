@@ -53,9 +53,15 @@ INSERT INTO Cats (CatName, ShopID) VALUES
 
 """
 
-# Создание объекта подключения к базе данных lesson_47.db
+import os
 
-conn = sqlite3.connect(r'./lesson_47.db')
+# Определение пути к базе данных относительно текущего местоположения скрипта
+script_dir = os.path.dirname(__file__)
+db_path = os.path.join(script_dir, 'lesson_47.db')
+
+print(db_path)
+
+conn = sqlite3.connect(db_path)
 
 # Создание объекта курсора - это основной объект для выполнения запросов
 cursor = conn.cursor()
@@ -66,4 +72,3 @@ cursor.executescript(ROW_SQL)
 # Сохранение изменений
 conn.commit()
 
-#TODO - Почему база создалась в директории на 2 уровня выше а не в текущей?

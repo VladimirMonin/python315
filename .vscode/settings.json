@@ -28,7 +28,7 @@
             "previewLimit": 50,
             "driver": "SQLite",
             "database": "${workspaceFolder:python315}/lesson_47.db",
-            "name": "python315_lesson_47"
+            "name": "lesson_47_python315"
         }
     ],
     "python.testing.pytestArgs": [
