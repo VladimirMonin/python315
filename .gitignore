@@ -85,3 +85,5 @@ python315_marvel_nm.session.sql
 .vscode/settings.json
 test.session.sql
 marvel_normal.db
+lesson_47_python315.session.sql
+python315_lesson_47.session.sql
